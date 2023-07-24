@@ -1,4 +1,1 @@
-let version = "0.01"
-if(version === "0.01"){
-  alert("Test")
-}
+export let version = "0.01"
