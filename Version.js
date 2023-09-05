@@ -1,1 +1,1 @@
-let versionData = "0.01"
+export let versionData = "0.01"
