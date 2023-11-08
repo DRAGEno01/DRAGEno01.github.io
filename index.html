@@ -1,12 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test</title>
+    <style>
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            height: 90vh;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>THIS IS A TEST, LEAVE NOW!</h1>
-</body>
+    <br><br><br><br><br>
+    <center style="color: white;">
+        <h1>Oh dear...</h1>
+        <p>It seems like you got the wrong link address. Check the link address.</p>
+        <p>You are on: <i id="web"></i></p>
+    </center>
+    <script>
+        document.getElementById("web").innerHTML = window.location.href
+    </script>
 </html>
