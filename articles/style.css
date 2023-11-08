@@ -186,8 +186,25 @@ input::placeholder {
     background-color: rgb(124, 205, 255);
     height: 30px;
     margin-left: 30%;
-    width: 40%;
+    width: 43%;
     font-size: 20px;
     text-align: center;
     border-radius: 20px;
+}
+
+#blockedContent {
+    display: none;
+}
+
+#bibliographyTableWN {
+    width: 70%;
+    text-align: center;
+}
+#bibliographyTableDA {
+    width: 19%;
+    text-align: center;
+}
+#bibliographyTableName {
+    width: 16%;
+    text-align: center;
 }
