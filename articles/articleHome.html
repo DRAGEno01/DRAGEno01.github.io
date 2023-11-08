@@ -172,7 +172,7 @@
             <h1 id="headerWelcome">Articles</h1>
         </center>
     </div>
-    <br><br><br><br>
+    <br><br><br>
 
     <center>
         <div class="articleOne">
@@ -194,7 +194,7 @@
                 <p class="fadeText">It is just a game right? "Well, not quite." researches say.</p>
             </div>
             <br>
-            <button id="button" onclick="alert('Your current subscriptions does not allow you to vist this news article. Please upgrade or contact your administrator if you believe this is a mistake. This could also happen if your account is linked with a school subject. Contact our support if you wish to view this article.')">Read More</button>
+            <a href="./accessGranted/mcGoodForYou.html"><button id="button">Read More</button></a>
             <br><br>
         </div>
         <div class="articleThree">
@@ -205,8 +205,9 @@
                 <p class="fadeText">Last week we sent out one of our reports to Queensland...</p>
             </div>
             <br>
-            <button id="button" onclick="alert('Your current subscriptions does not allow you to vist this news article. Please upgrade or contact your administrator if you believe this is a mistake. This could also happen if your account is linked with a school subject. Contact our support if you wish to view this article.')">Read More</button>
-            <br><br>
+            <button id="button" onclick="contBlock()">Read More</button>
+            <p id="blockedContent">Learn why you cant view this <a href="./contentBlocked.html">here</a>.</p>
+            <br id="blockedContentBr"><br id="blockedContentBr">
         </div>
     </center>
 
@@ -223,5 +224,13 @@
             </div>
         </b>
     </div>
+
+    <script>
+        function contBlock(){
+            document.getElementById("blockedContent").style.display = "block"
+            document.getElementById("blockedContentBr").style.display = "none"
+            alert('Your current subscriptions does not allow you to vist this news article. Please upgrade or contact your administrator if you believe this is a mistake. This could also happen if your account is linked with a school subject. Contact our support if you wish to view this article.')
+        }
+    </script>
 </body>
 </html>
