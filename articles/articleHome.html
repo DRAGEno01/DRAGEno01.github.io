@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meat or Veg Diet?</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .Iam {
+            padding: 2em 5em;
+            font: normal 40px/50px Montserrat, sans-serif;
+            color: #999;
+        }
+    
+        .Iam p {
+            height: 50px;
+            float: left;
+            margin-right: 0.3em;
+        }
+    
+        .Iam b {
+            float: left;
+            overflow: hidden;
+            position: relative;
+            height: 50px;
+            top: 40px;
+        }
+    
+        .Iam .innerIam {
+            display: inline-block;
+            color: #e74c3c;
+            position: relative;
+            white-space: nowrap;
+            top: 0;
+            left: 0;
+    
+    
+            /*animation*/
+            -webkit-animation: move 5s;
+            -moz-animation: move 5s;
+            -ms-animation: move 5s;
+            -o-animation: move 5s;
+            animation: move 5s;
+            /*animation-iteration-count*/
+            -webkit-animation-iteration-count: 1;
+            -moz-animation-iteration-count: 1;
+            -ms-animation-iteration-count: 1;
+            -o-animation-iteration-count: 1;
+            animation-iteration-count: 1;
+            /*animation-delay*/
+            -webkit-animation-delay: 1s;
+            -moz-animation-delay: 1s;
+            -ms-animation-delay: 1s;
+            -o-animation-delay: 1s;
+            animation-delay: 1s;
+        }
+    
+        @keyframes move {
+            0% {
+                top: 0px;
+            }
+    
+            20% {
+                top: -50px;
+            }
+    
+            40% {
+                top: -100px;
+            }
+    
+            60% {
+                top: -150px;
+            }
+    
+            80% {
+                top: -200px;
+            }
+        }
+    
+        @-webkit-keyframes move {
+            0% {
+                top: 0px;
+            }
+    
+            20% {
+                top: -50px;
+            }
+    
+            40% {
+                top: -100px;
+            }
+    
+            60% {
+                top: -150px;
+            }
+    
+            80% {
+                top: -200px;
+            }
+        }
+    
+        @-moz-keyframes move {
+            0% {
+                top: 0px;
+            }
+    
+            20% {
+                top: -50px;
+            }
+    
+            40% {
+                top: -100px;
+            }
+    
+            60% {
+                top: -150px;
+            }
+    
+            80% {
+                top: -200px;
+            }
+        }
+    
+        @-o-keyframes move {
+            0% {
+                top: 0px;
+            }
+    
+            20% {
+                top: -50px;
+            }
+    
+            40% {
+                top: -100px;
+            }
+    
+            60% {
+                top: -150px;
+            }
+    
+            80% {
+                top: -200px;
+            }
+        }
+    
+        @keyframes move {
+            0% {
+                top: 0px;
+            }
+    
+            20% {
+                top: -50px;
+            }
+    
+            40% {
+                top: -100px;
+            }
+    
+            60% {
+                top: -150px;
+            }
+    
+            80% {
+                top: -200px;
+            }
+        }
+    </style>
+</head>
+<body class="loginBody">
+    <div class="loginHeader">
+        <center>
+            <h1 id="headerWelcome">Articles</h1>
+        </center>
+    </div>
+    <br><br><br><br>
+
+    <center>
+        <div class="articleOne">
+            <br>
+            <img src="./images/meat and veg mind.jpg" class="articleImageA">
+            <h3 class="articleTitle">Veg or Meat, whats better for the world?</h3>
+            <div class="rotateColorBack">
+                <p class="fadeText">Is a Vegitarian/Vegan diet better for the world?</p>
+            </div>
+            <br>
+            <a href="./accessGranted/vegOrMeatBetterForWorld.html"><button id="button">Read More</button></a>
+            <br><br>
+        </div>
+        <div class="articleTwo">
+            <br>
+            <img src="./images/mcGrassBlock.webp" class="articleImageB">
+            <h3 class="articleTitle">See how Minecraft is changing lives!</h3>
+            <div class="rotateColorBack">
+                <p class="fadeText">It is just a game right? "Well, not quite." researches say.</p>
+            </div>
+            <br>
+            <button id="button" onclick="alert('Your current subscriptions does not allow you to vist this news article. Please upgrade or contact your administrator if you believe this is a mistake. This could also happen if your account is linked with a school subject. Contact our support if you wish to view this article.')">Read More</button>
+            <br><br>
+        </div>
+        <div class="articleThree">
+            <br>
+            <img src="./images/goldCoastPreview.jpg" class="articleImageC">
+            <h3 class="articleTitle">Could Gold Coast be Scamming Tourists?</h3>
+            <div class="rotateColorBack">
+                <p class="fadeText">Last week we sent out one of our reports to Queensland...</p>
+            </div>
+            <br>
+            <button id="button" onclick="alert('Your current subscriptions does not allow you to vist this news article. Please upgrade or contact your administrator if you believe this is a mistake. This could also happen if your account is linked with a school subject. Contact our support if you wish to view this article.')">Read More</button>
+            <br><br>
+        </div>
+    </center>
+
+
+    <div class="Iam">
+        <p>This is</p>
+        <b>
+            <div class="innerIam">
+                news.<br />
+                updates.<br />
+                videos.<br />
+                on demand.<br />
+                what we do.
+            </div>
+        </b>
+    </div>
+</body>
+</html>
