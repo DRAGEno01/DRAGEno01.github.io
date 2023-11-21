@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Notepad</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Dosis&family=Kdam+Thmor+Pro&family=PT+Serif&family=Playpen+Sans&display=swap');
+    
+        #notepad {
+            width: 95%;
+            height: 75vh;
+            resize: vertical;
+            font-size: large;
+            border-radius: 10px;
+        }
+    
+        #title {
+            margin-left: 4.5vh;
+            font-family: "Kdam Thmor Pro", cursive;
+        }
+    
+        input {
+            border-radius: 10px;
+            border-width: 0;
+            width: 30vh;
+            height: 3vh;
+            text-align: center;
+        }
+    
+        body {
+            background-color: #c7c7c7;
+        }
+    
+        button {
+            width: 15vh;
+            border-radius: 10px;
+            border-width: 0;
+            height: 3vh;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="title">Online Notepad</h1>
+    <div class="settings"></div>
+    <center>
+        <textarea id="notepad" placeholder="Place your cursor inside the box by clicking or tapping on it.
+Once the cursor is positioned, you can start typing your desired text.
+The text you enter will appear directly within the box as you type."></textarea>
+        <input type="text" placeholder="File Name (.txt)" id="filename">
+        <button onclick="getFileName()" id="downloadBtn">Download</button>
+    </center>
+    
+
+    <script>
+        function getFileName(){
+            var fileName = document.getElementById("filename")
+            var filenamegiven = fileName.value
+            if(filenamegiven === ""){
+                filenamegiven = "onlineNotepad-download"
+            }
+            saveTextAsFile(notepad.value,filenamegiven+".txt")
+        }
+        function saveTextAsFile(textToWrite, fileNameToSaveAs) {
+            var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+            var downloadLink = document.createElement("a");
+            downloadLink.download = fileNameToSaveAs;
+            downloadLink.innerHTML = "Download File";
+            if (window.webkitURL != null) {
+                downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+            }
+            else {
+                downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+                downloadLink.onclick = destroyClickedElement;
+                downloadLink.style.display = "none";
+                document.body.appendChild(downloadLink);
+            }
+
+            downloadLink.click();
+        }
+    </script>
+</body>
+
+</html>
