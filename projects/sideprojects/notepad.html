@@ -69,9 +69,13 @@ The text you enter will appear directly within the box as you type."></textarea>
             downloadLink.download = fileNameToSaveAs;
             downloadLink.innerHTML = "Download File";
             if (window.webkitURL != null) {
+                // Chrome allows the link to be clicked
+                // without actually adding it to the DOM.
                 downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
             }
             else {
+                // Firefox requires the link to be added to the DOM
+                // before it can be clicked.
                 downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
                 downloadLink.onclick = destroyClickedElement;
                 downloadLink.style.display = "none";
@@ -80,6 +84,27 @@ The text you enter will appear directly within the box as you type."></textarea>
 
             downloadLink.click();
         }
+
+        document.onkeydown = (e) => {
+            if (e.key == 123) {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.shiftKey && e.key == 'I') {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.shiftKey && e.key == 'C') {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.shiftKey && e.key == 'J') {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.key == 'U') {
+                e.preventDefault();
+            }
+        };
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
     </script>
 </body>
 
