@@ -1,1 +1,1 @@
-export let versionData = "0.01"
+export let drageGitHubVersion = "Alpha 0.02"
