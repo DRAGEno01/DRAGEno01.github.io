@@ -52,7 +52,7 @@
 
         function checkLoginInfo() {
             if (user.value == "FoodDep" && pass.value == "FoodLearning23") {
-                window.location.replace("./articleHome.html")
+                window.location.replace("./articles/articleHome.html")
             } else {
                 incorrectUserInfo()
             }
@@ -113,7 +113,7 @@
     </script>
 
     <script>
-        window.history.pushState("pageTitle", "Login - Articles", "/articleLogin");
+        window.history.pushState("pageTitle", "Login - Articles", "/?articleLogin");
     </script>
 </body>
 
