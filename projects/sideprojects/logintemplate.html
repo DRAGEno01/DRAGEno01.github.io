@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRAGEno01</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kenia&family=Lilita+One&family=Notable&display=swap');
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            height: 90vh;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        #title {
+            font-family: 'Lilita One',cursive;
+            font-size: 50px;
+            cursor: default;
+        }
+    </style>
+    <style>
+        .login{
+            background-color: #191919d2;
+            color: rgb(218, 218, 218);
+            border-radius: 20px;
+            width: 35%;
+            height: 50vh;
+            position: absolute;
+            left: 34%;
+            right: 30%;
+            top: 25%;
+            /* margin-left: -10px; */
+            margin-top: -10px;
+        }
+        .login input{
+            width: 80%;
+            /* height: 35px; */
+            height: 10%;
+            border-radius: 10px;
+            border: white;
+            background-color: #ffffff21;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .login input:hover{
+            background-color: #ffffff31;
+        }
+        .login .options{
+            margin-left: -23dvw;
+            font-size: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            cursor: default;
+        }
+        .login button{
+            width: 40%;
+            height: 10%;
+            margin-top: -8px;
+            border-radius: 20px;
+            border: 0;
+            background-color: #23d57f94;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .login button:hover{
+            background-color: #23d57fb4;
+            cursor: pointer;
+        }
+        .login .signup{
+            color: white;
+            text-align: center;
+            margin-top: 0.5dvh;
+            font-size: 80%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .login .signup:hover{
+            color: rgba(255, 255, 255, 0.616);
+            text-align: center;
+            margin-top: 0.5dvh;
+            font-size: 80%;
+            font-family: Arial, Helvetica, sans-serif;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <div class="login">
+            <br>
+            <h1 id="title" style="font-weight: lighter;">Login</h1>
+            <p style="margin-top: -1.5dvh;" class="options">Username</p>
+            <input type="text" placeholder="Username" id="username">
+            <br>
+            <p class="options">Password</p>
+            <input type="password" placeholder="Password" id="password">
+            <br><br><br>
+            <button onclick="loginFunction()">Login</button>
+            <p class="signup">Sign Up</p>
+        </div>
+    </center>
+    <script>
+        if(window.location.href != "https://drageno01.github.io/"){
+            if(window.location.href == "https://drageno01.github.io/?notepad" || window.location.href == "https://drageno01.github.io/#notepad"){
+                window.location.replace("https://drageno01.github.io/projects/sideprojects/notepad.html")
+            }
+            if(window.location.href == "https://drageno01.github.io/?articles" || window.location.href == "https://drageno01.github.io/#articles"){
+                window.location.replace("https://drageno01.github.io/articles/index.html")
+            }
+            if(window.location.href == "https://drageno01.github.io/?articleLogin" || window.location.href == "https://drageno01.github.io/#articleLogin"){
+                window.location.replace("https://drageno01.github.io/articles/index.html")
+            }
+        }
+    </script>
+
+    <script>
+        let username = document.getElementById("username")
+        let password = document.getElementById("password")
+        let loginStatus = getCookie("username")
+
+        if(loginStatus != undefined){
+            window.location.replace("./auth/home.html")
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function loginFunction(){
+            if(username.value === "" || password.value === ""){
+                alert("You can not leave one of these fields empty.")
+            }
+            if(username.value === "drage" && password.value === "admin"){
+                document.cookie = `username=${username.value}`
+                window.location.href = window.location.href
+            }
+        }
+    </script>
+</html>
