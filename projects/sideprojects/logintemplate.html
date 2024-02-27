@@ -134,9 +134,9 @@
         let password = document.getElementById("password")
         let loginStatus = getCookie("username")
 
-        if(loginStatus != undefined){
-            window.location.replace("./auth/home.html")
-        }
+        // if(loginStatus != undefined){
+        //     window.location.replace("./auth/home.html")
+        // }
 
         function getCookie(name) {
             const value = `; ${document.cookie}`;
@@ -145,13 +145,14 @@
         }
 
         function loginFunction(){
-            if(username.value === "" || password.value === ""){
-                alert("You can not leave one of these fields empty.")
-            }
-            if(username.value === "drage" && password.value === "admin"){
-                document.cookie = `username=${username.value}`
-                window.location.href = window.location.href
-            }
+            // if(username.value === "" || password.value === ""){
+            //     alert("You can not leave one of these fields empty.")
+            // }
+            // if(username.value === "drage" && password.value === "admin"){
+            //     document.cookie = `username=${username.value}`
+            //     window.location.href = window.location.href
+            // }
+            alert("Logged in.")
         }
     </script>
 </html>
