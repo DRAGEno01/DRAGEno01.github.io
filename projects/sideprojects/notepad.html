@@ -153,8 +153,8 @@
             <div class="modal-body" id="modalbackground">
                 <table>
                     <tbody><tr><td style="width: 30%;"><h3>Background Color</h3></td>
-                    <td style="width: 30%;"><input type="color" name="backgroundcolor" id="backgroundcolorpicker" onchange="setbackground()"></td>
-                    <td style="width: 30%;"><button id="change1" onclick="resetbackground()">Reset Color</button></td>
+                    <td style="width: 30%;"><input type="color" name="backgroundcolor" id="backgroundcolorpicker" onchange="setbackgroundcolor()"></td>
+                    <td style="width: 30%;"><button id="change1" onclick="resetbackgroundcolor()">Reset Color</button></td>
                 </tr></tbody></table>
                 <table>
                     <tbody><tr><td style="width: 30%;"><h3>Text Color (All Text)</h3></td>
@@ -183,7 +183,7 @@
     <center>
         <textarea id="notepad" placeholder="Place your cursor inside the box by clicking or tapping on it.
 Once the cursor is positioned, you can start typing your desired text.
-The text you enter will appear directly within the box as you type."></textarea>
+The text you enter will appear directly within the box as you type." onchange="saveText()"></textarea>
         <input type="text" placeholder="File Name (.txt)" id="filename">
         <button id="change5" onclick="getFileName()" id="downloadBtn">Download</button>
     </center>
@@ -207,39 +207,59 @@ The text you enter will appear directly within the box as you type."></textarea>
             document.getElementById("modalbackground1").style.backgroundColor = getCookie("notepadBackgroundColor")
             document.getElementById("modalbackground2").style.backgroundColor = getCookie("notepadBackgroundColor") 
         }
-        if(getCookie("notepadTextColor"))
+        if(getCookie("notepadTextColor")){
+            document.getElementById("mainbody").style.color = getCookie("notepadTextColor")
+            document.getElementById("notepad").style.color = getCookie("notepadTextColor")
+        }
+        if(getCookie("notepadNotepadBackgroundColor")){
+            document.getElementById("notepad").style.backgroundColor = getCookie("notepadNotepadBackgroundColor")
+            document.getElementById("filename").style.backgroundColor = getCookie("notepadNotepadBackgroundColor")
+        }
+        if(getCookie("notepadButtonColor")){
+            document.getElementById("myBtn").style.backgroundColor = getCookie("notepadButtonColor")
+            document.getElementById("change1").style.backgroundColor = getCookie("notepadButtonColor")
+            document.getElementById("change2").style.backgroundColor = getCookie("notepadButtonColor")
+            document.getElementById("change3").style.backgroundColor = getCookie("notepadButtonColor")
+            document.getElementById("change4").style.backgroundColor = getCookie("notepadButtonColor")
+            document.getElementById("change5").style.backgroundColor = getCookie("notepadButtonColor")
+        }
 
-        function setbackground(){
+        function setbackgroundcolor(){
             document.cookie = `notepadBackgroundColor=${backgroundcolorpicker.value}`
             document.getElementById("mainbody").style.backgroundColor = backgroundcolorpicker.value
             document.getElementById("modalbackground").style.backgroundColor = backgroundcolorpicker.value
             document.getElementById("modalbackground1").style.backgroundColor = backgroundcolorpicker.value
             document.getElementById("modalbackground2").style.backgroundColor = backgroundcolorpicker.value
         }
-        function resetbackground(){
-            document.cookie = `notepadBackgroundColor=#c7c7c7`
+        function resetbackgroundcolor(){
+            document.cookie = `notepadBackgroundColor=${undefined}`
             document.getElementById("mainbody").style.backgroundColor = "#c7c7c7"
             document.getElementById("modalbackground").style.backgroundColor = "#FFFFFF"
             document.getElementById("modalbackground1").style.backgroundColor = "#FFFFFF"
             document.getElementById("modalbackground2").style.backgroundColor = "#757575"
         }
         function settextcolor(){
+            document.cookie = `notepadTextColor=${textcolorpicker.value}`
             document.getElementById("mainbody").style.color = textcolorpicker.value
             document.getElementById("notepad").style.color = textcolorpicker.value
         }
         function resettext(){
+            document.cookie = `notepadTextColor=#000000`
             document.getElementById("mainbody").style.color = "#000000"
             document.getElementById("notepad").style.color = "#000000"
         }
         function setnotepadcolor(){
+            document.cookie = `notepadNotepadBackgroundColor=${notebackgroundcolorpicker.value}`
             document.getElementById("notepad").style.backgroundColor = notebackgroundcolorpicker.value
             document.getElementById("filename").style.backgroundColor = notebackgroundcolorpicker.value
         }
         function resetnotepadcolor(){
+            document.cookie = `notepadNotepadBackgroundColor=#FFFFFF`
             document.getElementById("notepad").style.backgroundColor = "#FFFFFF"
             document.getElementById("filename").style.backgroundColor = "#FFFFFF"
         }
         function setbuttoncolor(){
+            document.cookie = `notepadButtonColor=${buttonbackgroundcolorpicker.value}`
             document.getElementById("myBtn").style.backgroundColor = buttonbackgroundcolorpicker.value
             document.getElementById("change1").style.backgroundColor = buttonbackgroundcolorpicker.value
             document.getElementById("change2").style.backgroundColor = buttonbackgroundcolorpicker.value
@@ -248,12 +268,13 @@ The text you enter will appear directly within the box as you type."></textarea>
             document.getElementById("change5").style.backgroundColor = buttonbackgroundcolorpicker.value
         }
         function resetbuttoncolor(){
-            document.getElementById("myBtn").style.backgroundColor = "#FFFFFF"
-            document.getElementById("change1").style.backgroundColor = "#FFFFFF"
-            document.getElementById("change2").style.backgroundColor = "#FFFFFF"
-            document.getElementById("change3").style.backgroundColor = "#FFFFFF"
-            document.getElementById("change4").style.backgroundColor = "#FFFFFF"
-            document.getElementById("change5").style.backgroundColor = "#FFFFFF"
+            document.cookie = `notepadButtonColor=#e6e6e6`
+            document.getElementById("myBtn").style.backgroundColor = "#e6e6e6"
+            document.getElementById("change1").style.backgroundColor = "#e6e6e6"
+            document.getElementById("change2").style.backgroundColor = "#e6e6e6"
+            document.getElementById("change3").style.backgroundColor = "#e6e6e6"
+            document.getElementById("change4").style.backgroundColor = "#e6e6e6"
+            document.getElementById("change5").style.backgroundColor = "#e6e6e6"
         }
 
 
@@ -284,7 +305,6 @@ The text you enter will appear directly within the box as you type."></textarea>
 
             downloadLink.click();
         }
-
 
         document.onkeydown = (e) => {
             if (e.key == 123) {
