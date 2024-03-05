@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv='cache-control' content='no-cache'> 
-    <meta http-equiv='expires' content='0'> 
-    <meta http-equiv='pragma' content='no-cache'>
     <title>Online Notepad</title>
-    <!-- Main CSS -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Dosis&family=Kdam+Thmor+Pro&family=PT+Serif&family=Playpen+Sans&display=swap');
     
@@ -45,7 +40,6 @@
             background-color: #e6e6e6;
         }
     </style>
-    <!-- Modal CSS -->
     <style>
         .modal {
             display: none;
@@ -144,7 +138,6 @@
         }
     </style>
 </head>
-
 <body id="mainbody">
     <h1 id="title" style="display: inline-block;">Online Notepad</h1>
     <div class="settings" style="display: inline-block;margin-left: 20px;">
@@ -152,32 +145,32 @@
         <!-- The Modal -->
         <div id="myModal" class="modal">
         <!-- Modal content -->
-        <div class="modal-content">
-            <div class="modal-header">
-            <span class="close">&times;</span>
+        <div class="modal-content" id="modalbackground1">
+            <div class="modal-header" id="modalbackground2">
+            <span class="close">×</span>
                 <h2>Notepad Settings</h2>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="modalbackground">
                 <table>
-                    <td style="width: 30%;"><h3>Background Color</h3></td>
+                    <tbody><tr><td style="width: 30%;"><h3>Background Color</h3></td>
                     <td style="width: 30%;"><input type="color" name="backgroundcolor" id="backgroundcolorpicker" onchange="setbackground()"></td>
-                    <td style="width: 30%;"><button onclick="resetbackground()">Reset Color</button></td>
-                </table>
+                    <td style="width: 30%;"><button id="change1" onclick="resetbackground()">Reset Color</button></td>
+                </tr></tbody></table>
                 <table>
-                    <td style="width: 30%;"><h3>Text Color (All Text)</h3></td>
+                    <tbody><tr><td style="width: 30%;"><h3>Text Color (All Text)</h3></td>
                     <td style="width: 30%;"><input type="color" name="textcolor" id="textcolorpicker" onchange="settextcolor()"></td>
-                    <td style="width: 30%;"><button onclick="resettext()">Reset Color</button></td>
-                </table>
+                    <td style="width: 30%;"><button id="change2" onclick="resettext()">Reset Color</button></td>
+                </tr></tbody></table>
                 <table>
-                    <td style="width: 30%;"><h3>Notepad Background Color</h3></td>
+                    <tbody><tr><td style="width: 30%;"><h3>Notepad Background Color</h3></td>
                     <td style="width: 30%;"><input type="color" name="notebackgroundcolor" id="notebackgroundcolorpicker" onchange="setnotepadcolor()"></td>
-                    <td style="width: 30%;"><button onclick="resetnotepadcolor()">Reset Color</button></td>
-                </table>
+                    <td style="width: 30%;"><button id="change3" onclick="resetnotepadcolor()">Reset Color</button></td>
+                </tr></tbody></table>
                 <table>
-                    <td style="width: 30%;"><h3>Button Color (All Buttons)</h3></td>
-                    <td style="width: 30%;"><input type="color" name="notebackgroundcolor" id="notebackgroundcolorpicker" onchange="setbuttoncolor()"></td>
-                    <td style="width: 30%;"><button onclick="resetbuttoncolor()">Reset Color</button></td>
-                </table>
+                    <tbody><tr><td style="width: 30%;"><h3>Button Color (All Buttons)</h3></td>
+                    <td style="width: 30%;"><input type="color" name="buttonbackgroundcolor" id="buttonbackgroundcolorpicker" onchange="setbuttoncolor()"></td>
+                    <td style="width: 30%;"><button id="change4" onclick="resetbuttoncolor()">Reset Color</button></td>
+                </tr></tbody></table>
             </div>
             <!-- <div class="modal-footer">
                 <h3>Modal Footer</h3>
@@ -192,21 +185,43 @@
 Once the cursor is positioned, you can start typing your desired text.
 The text you enter will appear directly within the box as you type."></textarea>
         <input type="text" placeholder="File Name (.txt)" id="filename">
-        <button onclick="getFileName()" id="downloadBtn">Download</button>
+        <button id="change5" onclick="getFileName()" id="downloadBtn">Download</button>
     </center>
     
     <!-- Everything Else JS -->
     <script>
         var backgroundcolorpicker = document.getElementById("backgroundcolorpicker")
         var textcolorpicker = document.getElementById("textcolorpicker")
+        var notebackgroundcolorpicker = document.getElementById("notebackgroundcolorpicker")
+        var buttonbackgroundcolorpicker = document.getElementById("buttonbackgroundcolorpicker")
 
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        if(getCookie("notepadBackgroundColor")){
+            document.getElementById("mainbody").style.backgroundColor = getCookie("notepadBackgroundColor")
+            document.getElementById("modalbackground").style.backgroundColor = getCookie("notepadBackgroundColor")
+            document.getElementById("modalbackground1").style.backgroundColor = getCookie("notepadBackgroundColor")
+            document.getElementById("modalbackground2").style.backgroundColor = getCookie("notepadBackgroundColor") 
+        }
+        if(getCookie("notepadTextColor"))
 
         function setbackground(){
+            document.cookie = `notepadBackgroundColor=${backgroundcolorpicker.value}`
             document.getElementById("mainbody").style.backgroundColor = backgroundcolorpicker.value
-            console.error(backgroundcolorpicker.value)
+            document.getElementById("modalbackground").style.backgroundColor = backgroundcolorpicker.value
+            document.getElementById("modalbackground1").style.backgroundColor = backgroundcolorpicker.value
+            document.getElementById("modalbackground2").style.backgroundColor = backgroundcolorpicker.value
         }
         function resetbackground(){
+            document.cookie = `notepadBackgroundColor=#c7c7c7`
             document.getElementById("mainbody").style.backgroundColor = "#c7c7c7"
+            document.getElementById("modalbackground").style.backgroundColor = "#FFFFFF"
+            document.getElementById("modalbackground1").style.backgroundColor = "#FFFFFF"
+            document.getElementById("modalbackground2").style.backgroundColor = "#757575"
         }
         function settextcolor(){
             document.getElementById("mainbody").style.color = textcolorpicker.value
@@ -218,15 +233,27 @@ The text you enter will appear directly within the box as you type."></textarea>
         }
         function setnotepadcolor(){
             document.getElementById("notepad").style.backgroundColor = notebackgroundcolorpicker.value
+            document.getElementById("filename").style.backgroundColor = notebackgroundcolorpicker.value
         }
         function resetnotepadcolor(){
             document.getElementById("notepad").style.backgroundColor = "#FFFFFF"
+            document.getElementById("filename").style.backgroundColor = "#FFFFFF"
         }
-        function setnotepadcolor(){
-            document.getElementById("notepad").style.backgroundColor = notebackgroundcolorpicker.value
+        function setbuttoncolor(){
+            document.getElementById("myBtn").style.backgroundColor = buttonbackgroundcolorpicker.value
+            document.getElementById("change1").style.backgroundColor = buttonbackgroundcolorpicker.value
+            document.getElementById("change2").style.backgroundColor = buttonbackgroundcolorpicker.value
+            document.getElementById("change3").style.backgroundColor = buttonbackgroundcolorpicker.value
+            document.getElementById("change4").style.backgroundColor = buttonbackgroundcolorpicker.value
+            document.getElementById("change5").style.backgroundColor = buttonbackgroundcolorpicker.value
         }
-        function resetnotepadcolor(){
-            document.getElementById("notepad").style.backgroundColor = "#FFFFFF"
+        function resetbuttoncolor(){
+            document.getElementById("myBtn").style.backgroundColor = "#FFFFFF"
+            document.getElementById("change1").style.backgroundColor = "#FFFFFF"
+            document.getElementById("change2").style.backgroundColor = "#FFFFFF"
+            document.getElementById("change3").style.backgroundColor = "#FFFFFF"
+            document.getElementById("change4").style.backgroundColor = "#FFFFFF"
+            document.getElementById("change5").style.backgroundColor = "#FFFFFF"
         }
 
 
@@ -312,6 +339,8 @@ The text you enter will appear directly within the box as you type."></textarea>
     <script>
         window.history.pushState("pageTitle", "Online Notpad", "/?notepad");
     </script>
-</body>
 
+
+
+</body>
 </html>
