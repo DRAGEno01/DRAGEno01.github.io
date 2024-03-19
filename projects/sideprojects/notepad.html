@@ -277,6 +277,19 @@ The text you enter will appear directly within the box as you type." onchange="s
             document.getElementById("change5").style.backgroundColor = "#e6e6e6"
         }
 
+        if(getCookie("allowCookies")){
+            return
+        }else{
+            let text = "Do you agree to us storing cookies?\nIf you press no, you will be redirected.";
+            if (confirm(text) == true) {
+                alert("Thank you.")
+                document.cookie = "allowCookies=true"
+            } else {
+                document.location.replace("https://drageno01.github.io")
+            }
+        }
+        
+
 
         function getFileName(){
             var fileName = document.getElementById("filename")
