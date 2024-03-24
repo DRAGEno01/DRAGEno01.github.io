@@ -23,7 +23,7 @@
 
 
     <script>
-        if(document.cookie.indexOf('status=') !== -1){
+        if(document.cookie.indexOf('AndersonRPstatus=') !== -1){
             window.location.replace("./auth/index.html")
         }
 
@@ -54,7 +54,7 @@
             if (index !== -1) {
                 if(index === index2){
                     alert("Logged In")
-                    document.cookie = `status=${usernameInput}; expires=${new Date(new Date().setHours(new Date().getHours() + 2))}; path=/`
+                    document.cookie = `AndersonRPstatus=${usernameInput}; expires=${new Date(new Date().setHours(new Date().getHours() + 2))}; path=/`
                     window.location.replace("./auth/index.html")
                 }else {
                     alert("Incorrect username or password.")
