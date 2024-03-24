@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highway Patrol</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <center>
+        <div class="loginForm">
+            <br><br>
+            <h3>Anderson State Highway Patrol</h3>
+            <h1>MDT Login</h1>
+            <br><br>
+            <input type="number" id="username" placeholder="Police Username"><br><br>
+            <input type="password" id="password" placeholder="Police Password">
+            <br><br><br>
+            <button onclick="login()">Login to MDT</button>
+            <br><br><br><br>
+        </div>
+    </center>
 
+
+    <script>
+        if(document.cookie.indexOf('status=') !== -1){
+            window.location.replace("./auth/index.html")
+        }
+
+        let username = document.getElementById("username");
+        let password = document.getElementById("password");
+        var usernameInput = parseInt(username.value);
+        var passwordInput = parseInt(password.value);
+
+        var useridinfo = ["DRAGEno01", "Zack (James)", "Peter", "BenFynn1"]
+        var usernames = [450786916, 2947222224, 2985600217, 917030480]
+        var passwords = [230707, 5052009, 221130, 12345]
+
+      
+        
+        var index = usernames.indexOf(usernameInput);
+        var index2 = usernames.indexOf(passwordInput);
+
+        function login(){
+
+            console.log(document.cookie)
+
+            usernameInput = parseInt(username.value);
+            passwordInput = parseInt(password.value);
+            index = usernames.indexOf(usernameInput);
+            index2 = passwords.indexOf(passwordInput);
+
+            let cookieExpire = new Date(new Date().setHours(new Date().getHours() + 2))
+
+            if (index !== -1) {
+                if(index === index2){
+                    alert("Logged In")
+                    document.cookie = `status=${usernameInput}; expires=${new Date(new Date().setHours(new Date().getHours() + 2))}; path=/`
+                    window.location.replace("./auth/index.html")
+                }else {
+                    alert("Incorrect username or password.")
+                }
+            } else {
+                alert("Incorrect username or password.")
+            }
+
+        }
+    </script>
+</body>
+</html>
