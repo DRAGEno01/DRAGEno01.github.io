@@ -1,0 +1,36 @@
+body {
+    background-color: rgb(0, 0, 75);
+}
+
+.loginForm {
+    background-color: rgb(0, 0, 177);
+    width: 30%;
+    margin-top: 10%;
+    border-radius: 30px;
+}
+
+.loginForm h1 {
+    color: rgb(238, 176, 19);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: lighter;
+    width: 100%;
+}
+
+.loginForm h3 {
+    color: rgb(195, 195, 195);
+}
+
+.loginForm input {
+    border: 0;
+    border-radius: 20px;
+    text-align: center;
+    width: 40%;
+    height: 20px;
+}
+
+.loginForm button {
+    border: 0;
+    border-radius: 20px;
+    width: 40%;
+    height: 25px;
+}
