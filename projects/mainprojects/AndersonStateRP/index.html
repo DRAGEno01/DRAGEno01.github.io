@@ -24,7 +24,7 @@
 
     <script>
         if(document.cookie.indexOf('AndersonRPstatus=') !== -1){
-            window.location.replace("./auth/index.html")
+            window.location.replace("https://drageno01.github.io/projects/mainprojects/AndersonStateRP/auth/index.html")
         }
 
         let username = document.getElementById("username");
@@ -55,7 +55,7 @@
                 if(index === index2){
                     alert("Logged In")
                     document.cookie = `AndersonRPstatus=${usernameInput}; expires=${new Date(new Date().setHours(new Date().getHours() + 2))}; path=/`
-                    window.location.replace("./auth/index.html")
+                    window.location.replace("https://drageno01.github.io/projects/mainprojects/AndersonStateRP/auth/index.html")
                 }else {
                     alert("Incorrect username or password.")
                 }
