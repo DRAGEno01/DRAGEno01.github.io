@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCC - Login</title>
+    <style>
+        body {
+            /* background-size: 100% 150dvh; */
+            /* background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/25589cd0-92ad-4490-9bf3-02e4b8af0ce9/d55vt9t-475348d6-a33b-4704-b7e5-bf7413e02810.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzI1NTg5Y2QwLTkyYWQtNDQ5MC05YmYzLTAyZTRiOGFmMGNlOVwvZDU1dnQ5dC00NzUzNDhkNi1hMzNiLTQ3MDQtYjdlNS1iZjc0MTNlMDI4MTAucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.IYKJj7ggUyizMqOgfAJ-s1Ibh4HcYxldT7Lh58UxPcg'); */
+            background-size: 150% 150%;
+            background-image: url('https://www.minecraft.net/content/dam/archive/edcc03be9f6e838c9c67e11df8cbab45-grassblock.jpg');
+        }
+        .login {
+            margin-top: 38dvh;
+            background-color: #937a65bd;
+            width: 400px;
+            border-radius: 20px;
+            height: 225px;
+        }
+        .login button{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            border: 0;
+            border-radius: 7px;
+            width: 35%;
+            height: 25px;
+            background-color: #69492f;
+            color: white;
+        }
+        .login input{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            border: 0;
+            border-radius: 4px;
+            width: 60%;
+            height: 25px;
+            background-color: #69492f;
+            color: white;
+        }
+        .login input::placeholder {
+            color: white;
+        }
+        .login h1{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: bolder;
+            font-size: 50px;
+            color: #caff89;
+        }
+        #smol {
+            font-size: xx-small;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <div class="login">
+            <h1>MC Club</h1>
+            <input type="text" placeholder="Username" id="user" name="mccuser"><p id="smol"></p>
+            <input type="password" placeholder="Password" id="pass" name="mccpass"><br><br>
+            <button onclick="login()">Login</button>
+        </div>
+    </center>
+
+    <script>
+        let username = "\x6D\x63\x63"
+        let password = "\x6D\x63\x63\x32\x30\x32\x34"
+        let loginPassPass = `\x61\x6C\x6C\x6F\x77\x65\x64`
+        let user = document.getElementById("user")
+        let pass = document.getElementById("pass")
+
+        let loginPass = getCookie("loginPass")
+
+        function login(){
+            if(user.value == username && pass.value == password){
+                document.cookie = `loginPass=${loginPassPass}`
+                window.location.replace("auth/home.html")
+            }else{
+                alert("Incorrect Username or Password")
+            }
+        }
+
+        function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function checkCookie(){
+            if(loginPass == loginPassPass){
+                window.location.replace("auth/home.html")
+            }
+        }
+        setInterval(checkCookie,100)
+    </script>
+</body>
+</html>
