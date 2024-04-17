@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - MCC</title>
+    <style>
+        #header {
+            background-color: #637F40;
+            width: 100dvw;
+            height: 120px;
+            margin-left: -8px;
+            margin-right: -8px;
+            margin-top: -8px;
+        }
+        #header button {
+            /* margin-top: 12.5px; */
+            /* margin-left: 85dvw; */
+            width: 200px;
+            height: 40px;
+            border-radius: 10px;
+            border: 0;
+            background-color: #8aae5e;
+            color: white;
+            font-weight: bolder;
+            font-size: larger;
+        }
+        #header button:hover {
+            background-color: #5b990a;
+        }
+        #header h1 {
+            font-size: 50px;
+            color: white;
+        }
+        body {
+            background-color: #694e38;
+        }
+        #events #eventid1 {
+            background-color: #926d4e;
+            width: 30%;
+            border-radius: 20px;
+        }
+        #events #eventid1 #eid1date {
+            font-weight: 600;
+        }
+        #events #eventid1 #eid1info {
+            border-radius: 10px;
+            border: 0;
+            background-color: #694e38;
+            color: white;
+            width: 50%;
+            height: 30px;
+        }
+        #events #eventid1 #eid1info:hover {
+            border-radius: 10px;
+            border: 0;
+            background-color: #7b5c42;
+            color: white;
+            width: 50%;
+            height: 30px;
+        }
+        .session {
+            background-color: #926d4e;
+            width: 100%;
+            border-radius: 20px;
+        }
+        .session .timers {
+            font-weight: bold;
+        }
+        .session .sessh1 {
+            color: #88d720;
+        }
+        .error h1 {
+            color: white;
+            font-weight: bolder;
+        }
+        .error p {
+            color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="all" id="main">
+        <div id="header">
+            <table>
+                <td width="5%"></td>
+                <td width="80%"><h1>Minecraft Club</h1></td>
+                <td width="15%"><button onclick="logout()">Logout</button></td>
+            </table>
+        </div>
+        <br>
+        <div id="events" style="display: none;">
+            <center>
+                <div id="eventid1">
+                    <center>
+                        <br>
+                        <h1>The Start</h1>
+                        <p id="eid1date">19.4.2024 - 26.4.2024</p>
+                        <p>Welcome to the very start. Welcome to the journey.<br>We will be letting everyone who has Minecraft to join the world and start playing. If need be, we will decrease the border to make sure you guys stay close together, and we will expand if need be. For now there is no border, but be warned: Chaos will soon arise...</p>
+                        <button id="eid1info" onclick="window.location.href='?eventId=1'">More Info</button>
+                        <br>
+                        <br>
+                    </center>
+                </div>
+            </center>
+        </div>
+        <br>
+        <div id="sessions">
+            <center>
+                <table width="90%">
+                    <td>
+                        <center>
+                            <div class="session" id="sessone">
+                                <br>
+                                <h1 class="sessh1">Week One</h1>
+                                <p id="demoa" class="timers">Starts in: Loading...</p>
+                                <br>
+                            </div>
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            <div class="session" id="sesstwo">
+                                <br>
+                                <h1 class="sessh1">Week Two</h1>
+                                <p id="demob" class="timers">Starts in: Loading...</p>
+                                <br>
+                            </div>
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            <div class="session" id="sessthree">
+                                <br>
+                                <h1 class="sessh1">Week Four</h1>
+                                <p id="democ" class="timers">Starts in: Loading...</p>
+                                <br>
+                            </div>
+                        </center>
+                    </td>
+                </table>
+            </center>
+            <script src="./timer.js"></script>
+            
+        </div>
+    </div>
+    <div class="error" id="warn" style="display: none;">
+        <center>
+            <h1>Oh no!</h1>
+            <p>Your device is too small to view this webpage.</p>
+            <p>Increase screen width, or switch devices.</p>
+        </center>
+    </div>
+    
+    <script>
+        setInterval(checkWidth, 10);
+        function checkWidth(){
+            var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            if(width<565){
+                document.getElementById("main").style.display = "none"
+                document.getElementById("warn").style.display = "block"
+            }else{
+                document.getElementById("main").style.display = "block"
+                document.getElementById("warn").style.display = "none"
+            }
+        }
+    </script>
+    <script>
+        let loginPassPass = `\x61\x6C\x6C\x6F\x77\x65\x64`
+        let loginPass = getCookie("loginPass")
+
+        if(loginPass.value != loginPassPass){
+            window.location.replace("../index.html")
+        }
+
+        function logout(){
+            document.cookie = "loginPass=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.replace("../index.html")
+        }
+
+        function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+    </script>
+</body>
+</html>
