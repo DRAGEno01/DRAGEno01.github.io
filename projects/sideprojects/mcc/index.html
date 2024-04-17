@@ -71,8 +71,8 @@
 
         function login(){
             if(user.value == username && pass.value == password){
-                document.cookie = `loginPass=${loginPassPass}`
-                window.location.replace("https://www.drageno01.github.io/projects/sideprojects/mcc/auth/home.html")
+                document.cookie = `loginPass=${loginPassPass}; expires=Tue, 31 Dec 2024 00:00:00 UTC;`
+                window.location.replace("https://drageno01.github.io/projects/sideprojects/mcc/auth/home.html")
             }else{
                 alert("Incorrect Username or Password")
             }
@@ -86,7 +86,7 @@
 
         function checkCookie(){
             if(loginPass == loginPassPass){
-                window.location.replace("https://www.drageno01.github.io/projects/sideprojects/mcc/auth/home.html")
+                window.location.replace("https://drageno01.github.io/projects/sideprojects/mcc/auth/home.html")
             }
         }
         setInterval(checkCookie,100)
