@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCC - Login</title>
+    <style>
+        /* body { */
+            /* background-size: 100% 150dvh; */
+            /* background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/25589cd0-92ad-4490-9bf3-02e4b8af0ce9/d55vt9t-475348d6-a33b-4704-b7e5-bf7413e02810.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzI1NTg5Y2QwLTkyYWQtNDQ5MC05YmYzLTAyZTRiOGFmMGNlOVwvZDU1dnQ5dC00NzUzNDhkNi1hMzNiLTQ3MDQtYjdlNS1iZjc0MTNlMDI4MTAucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.IYKJj7ggUyizMqOgfAJ-s1Ibh4HcYxldT7Lh58UxPcg'); */
+            /* background-size: 150% 150%; */
+            /* background-image: url('https://www.minecraft.net/content/dam/archive/edcc03be9f6e838c9c67e11df8cbab45-grassblock.jpg'); */
+        /* } */
+        .login {
+            margin-top: 38dvh;
+            background-color: #937a65bd;
+            width: 400px;
+            border-radius: 20px;
+            height: 225px;
+        }
+        .login button{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            border: 0;
+            border-radius: 7px;
+            width: 35%;
+            height: 25px;
+            background-color: #69492f;
+            color: white;
+        }
+        .login input{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            border: 0;
+            border-radius: 4px;
+            width: 60%;
+            height: 25px;
+            background-color: #69492f;
+            color: white;
+        }
+        .login input::placeholder {
+            color: white;
+        }
+        .login h1{
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: bolder;
+            font-size: 50px;
+            color: #62ad00;
+        }
+        #smol {
+            font-size: xx-small;
+        }
+    </style>
+    <style>
+        #header {
+            background-color: #637F40;
+            width: 100dvw;
+            height: 120px;
+            margin-left: -8px;
+            margin-right: -8px;
+            margin-top: -8px;
+        }
+        #header button {
+            /* margin-top: 12.5px; */
+            /* margin-left: 85dvw; */
+            width: 200px;
+            height: 40px;
+            border-radius: 10px;
+            border: 0;
+            background-color: #8aae5e;
+            color: white;
+            font-weight: bolder;
+            font-size: larger;
+        }
+        #header button:hover {
+            background-color: #5b990a;
+        }
+        #header h1 {
+            font-size: 50px;
+            color: white;
+        }
+        body {
+            background-color: #694e38 !important;
+        }
+        #events #eventid1 {
+            background-color: #926d4e;
+            width: 30%;
+            border-radius: 20px;
+        }
+        #events #eventid1 #eid1date {
+            font-weight: 600;
+        }
+        #events #eventid1 #eid1info {
+            border-radius: 10px;
+            border: 0;
+            background-color: #694e38;
+            color: white;
+            width: 50%;
+            height: 30px;
+        }
+        #events #eventid1 #eid1info:hover {
+            border-radius: 10px;
+            border: 0;
+            background-color: #7b5c42;
+            color: white;
+            width: 50%;
+            height: 30px;
+        }
+        .session {
+            background-color: #926d4e;
+            width: 100%;
+            border-radius: 20px;
+        }
+        .session .timers {
+            font-weight: bold;
+        }
+        .session .sessh1 {
+            color: #88d720;
+        }
+        .error h1 {
+            color: white;
+            font-weight: bolder;
+        }
+        .error p {
+            color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <center id="login">
+        <div class="login">
+            <div class="login">
+                <h1>MC Club</h1>
+                <input type="text" placeholder="Username" id="user" name="mccuser"><p id="smol"></p>
+                <input type="password" placeholder="Password" id="pass" name="mccpass"><br><br>
+                <button onclick="login()">Login</button>
+            </div>
+        </div>
+    </center>
+    <div class="logedin" id="logedin" style="display: none;">
+        <div class="all" id="main">
+            <div id="header">
+                <table>
+                    <td width="5%"></td>
+                    <td width="80%"><h1>Minecraft Club</h1></td>
+                    <td width="15%"><button onclick="logout()">Logout</button></td>
+                </table>
+            </div>
+            <br>
+            <div id="events" style="display: none;">
+                <center>
+                    <div id="eventid1">
+                        <center>
+                            <br>
+                            <h1>The Start</h1>
+                            <p id="eid1date">19.4.2024 - 26.4.2024</p>
+                            <p>Welcome to the very start. Welcome to the journey.<br>We will be letting everyone who has Minecraft to join the world and start playing. If need be, we will decrease the border to make sure you guys stay close together, and we will expand if need be. For now there is no border, but be warned: Chaos will soon arise...</p>
+                            <button id="eid1info" onclick="window.location.href='?eventId=1'">More Info</button>
+                            <br>
+                            <br>
+                        </center>
+                    </div>
+                </center>
+            </div>
+            <br>
+            <div id="sessions">
+                <center>
+                    <table width="90%">
+                        <td>
+                            <center>
+                                <div class="session" id="sessone">
+                                    <br>
+                                    <h1 class="sessh1">Week One</h1>
+                                    <p id="demoa" class="timers">Starts in: Loading...</p>
+                                    <br>
+                                </div>
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                <div class="session" id="sesstwo">
+                                    <br>
+                                    <h1 class="sessh1">Week Two</h1>
+                                    <p id="demob" class="timers">Starts in: Loading...</p>
+                                    <br>
+                                </div>
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                <div class="session" id="sessthree">
+                                    <br>
+                                    <h1 class="sessh1">Week Four</h1>
+                                    <p id="democ" class="timers">Starts in: Loading...</p>
+                                    <br>
+                                </div>
+                            </center>
+                        </td>
+                    </table>
+                </center>
+            </div>
+        </div>
+        <div class="error" id="warn" style="display: none;">
+            <center>
+                <h1>Oh no!</h1>
+                <p>Your device is too small to view this webpage.</p>
+                <p>Increase screen width, or switch devices.</p>
+            </center>
+        </div>
+    </div>
+
+    <script>
+        setInterval(checkWidth, 10);
+        function checkWidth(){
+            var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            if(width<565){
+                document.getElementById("main").style.display = "none"
+                document.getElementById("warn").style.display = "block"
+            }else{
+                document.getElementById("main").style.display = "block"
+                document.getElementById("warn").style.display = "none"
+            }
+        }
+    </script>
+    <script>
+        let username = "\x6D\x63\x63"
+        let password = "\x6D\x63\x63\x32\x30\x32\x34"
+        let loginPassPass = `\x61\x6C\x6C\x6F\x77\x65\x64`
+        let user = document.getElementById("user")
+        let pass = document.getElementById("pass")
+
+        let loginPass = getCookie("loginPass")
+
+        function login(){
+            if(user.value == username && pass.value == password){
+                document.cookie = `loginPass=${loginPassPass}`
+                showLoggedIn()
+            }else{
+                alert("Incorrect Username or Password")
+            }
+        }
+
+        function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function checkCookie(){
+            if(loginPass == loginPassPass){
+                showLoggedIn()
+            }
+        }
+
+        function showLoggedIn(){
+            document.getElementById("logedin").style.display = "block"
+            document.getElementById("login").style.display = "none"
+        }
+
+        function logout(){
+            document.cookie = "loginPass=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.href = window.location.href
+        }
+        setInterval(checkCookie,100)
+    </script>
+    <script>
+        var countDownDatea = new Date("April 19, 2024 13:10:00").getTime();
+        var countDownDateb = new Date("April 26, 2024 13:10:00").getTime();
+        var countDownDatec = new Date("May 10, 2024 13:10:00").getTime();
+
+        var xa = setInterval(function() {
+        var nowa = new Date().getTime();
+        var distancea = countDownDatea - nowa;
+        var daysa = Math.floor(distancea / (1000 * 60 * 60 * 24));
+        var hoursa = Math.floor((distancea % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutesa = Math.floor((distancea % (1000 * 60 * 60)) / (1000 * 60));
+        var secondsa = Math.floor((distancea % (1000 * 60)) / 1000);
+        document.getElementById("demoa").innerHTML = "Starts in: "+daysa + "d " + hoursa + "h "
+        + minutesa + "m " + secondsa + "s ";
+        if (distancea < 0) {
+            clearInterval(x);
+            document.getElementById("demoa").innerHTML = "EXPIRED";
+        }
+        }, 1000);
+
+        var xb = setInterval(function() {
+        var nowb = new Date().getTime();
+        var distanceb = countDownDateb - nowb;
+        var daysb = Math.floor(distanceb / (1000 * 60 * 60 * 24));
+        var hoursb = Math.floor((distanceb % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutesb = Math.floor((distanceb % (1000 * 60 * 60)) / (1000 * 60));
+        var secondsb = Math.floor((distanceb % (1000 * 60)) / 1000);
+        document.getElementById("demob").innerHTML = "Starts in: "+daysb + "d " + hoursb + "h "
+        + minutesb + "m " + secondsb + "s ";
+        if (distanceb < 0) {
+            clearInterval(x);
+            document.getElementById("demob").innerHTML = "EXPIRED";
+        }
+        }, 1000);
+
+        var xc = setInterval(function() {
+        var nowc = new Date().getTime();
+        var distancec = countDownDatec - nowc;
+        var daysc = Math.floor(distancec / (1000 * 60 * 60 * 24));
+        var hoursc = Math.floor((distancec % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutesc = Math.floor((distancec % (1000 * 60 * 60)) / (1000 * 60));
+        var secondsc = Math.floor((distancec % (1000 * 60)) / 1000);
+        document.getElementById("democ").innerHTML = "Starts in: "+daysc + "d " + hoursc + "h "
+        + minutesc + "m " + secondsc + "s ";
+        if (distancec < 0) {
+            clearInterval(x);
+            document.getElementById("democ").innerHTML = "EXPIRED";
+        }
+        }, 1000);
+    </script>
+    <script>
+        window.history.pushState("pageTitle", "Login - MCC", "/?mcc");
+    </script>
+</body>
+</html>
