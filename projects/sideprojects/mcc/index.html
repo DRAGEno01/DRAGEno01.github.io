@@ -246,9 +246,10 @@
         }
 
         function checkCookie(){
+            loginPass = getCookie("loginPass")
             if(loginPass == loginPassPass){
                 showLoggedIn()
-            }else{
+            }else if(loginPass != loginPassPass){
                 hideLoggedIn()
             }
         }
