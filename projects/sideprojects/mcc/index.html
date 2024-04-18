@@ -142,7 +142,7 @@
                 <table>
                     <td width="5%"></td>
                     <td width="80%"><h1>Minecraft Club</h1></td>
-                    <td width="15%"><button onclick="logout()">Logout</button></td>
+                    <td width="15%"><button onclick="logoutOfCookies()">Logout</button></td>
                 </table>
             </div>
             <br>
@@ -264,7 +264,7 @@
             document.getElementById("login").style.display = "block"
         }
 
-        function logout(){
+        function logoutOfCookies(){
             document.cookie = "loginPass=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         }
         setInterval(checkCookie,100)
