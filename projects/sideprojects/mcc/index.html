@@ -248,6 +248,8 @@
         function checkCookie(){
             if(loginPass == loginPassPass){
                 showLoggedIn()
+            }else{
+                hideLoggedIn()
             }
         }
 
@@ -256,9 +258,13 @@
             document.getElementById("login").style.display = "none"
         }
 
+        function hideLoggedIn(){
+            document.getElementById("logedin").style.display = "none"
+            document.getElementById("login").style.display = "block"
+        }
+
         function logout(){
             document.cookie = "loginPass=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            window.location.href = window.location.href
         }
         setInterval(checkCookie,100)
     </script>
