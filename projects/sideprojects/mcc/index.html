@@ -231,7 +231,7 @@
 
         function login(){
             if(user.value == username && pass.value == password){
-                document.cookie = `loginPass=${loginPassPass}; expires=Tue, 31 Dec 2024 00:00:00 UTC;`
+                document.cookie = `loginPass=${loginPassPass}`
                 showLoggedIn()
             }else{
                 alert("Incorrect Username or Password")
