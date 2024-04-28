@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solo Majors</title>
+    <link rel="shortcut icon" href="./logo.png" type="image/x-icon">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jersey+15&family=Righteous&display=swap');
+        .warning {
+            color: white;
+        }
+        body {
+            background-color: #333;
+        }
+        .header {
+            background-color: #4f4f4f;
+            border-radius: 20px;
+            height: 202px;
+        }
+        .header h1 {
+            font-family: 'Bebas Neue', cursive;
+            color: white;
+            font-size: 75px;
+            font-weight: lighter;
+            margin-left: 2.5dvw;
+        }
+        .header img {
+            margin-left: 3dvw;
+            width: 150px;
+        }
+
+        .eventdropbtn {
+            background-color: #7f7f7f;
+            color: white;
+            /* padding: 16px; */
+            font-size: 16px;
+            border: none;
+            /* margin-left: 2dvw; */
+            width: 150px;
+            height: 50px;
+            border-radius: 20px;
+        }
+
+        .eventdropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .eventdropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #c4c4c4;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .eventdropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-radius: 5px;
+        }
+
+        .eventmajor {
+            background-color: #7f7f7f;
+        }
+
+        .eventdropdown-content a:hover {background-color: rgb(111, 111, 111)0b0;}
+        .eventdropdown:hover .eventdropdown-content {display: block; border-radius: 5px;}
+        .eventdropdown:hover .eventdropbtn {background-color: #2f2f2f;}
+    </style>
+</head>
+<body>
+    <div class="all" id="all">
+        <div class="header">
+            <table>
+                <td>
+                    <a href="./index.html"><img src="./logo.png" style="border-radius: 20px;"></a>
+                </td>
+                <td>
+                    <h1 onclick="window.location.href = `./index.html`">Solo Battlegrounds</h1>
+                </td>
+                <td style="width: 2dvw;"></td>
+                <td>
+                    <div class="eventdropdown">
+                        <button class="eventdropbtn">Events</button>
+                        <div class="eventdropdown-content">
+                          <a href="./events/pro league/seasonone.html">Pros League - Season I</a>
+                          <a href="./events/major/budapest24.html" class="eventmajor">Budapest 2024</a>
+                          <a href="./events/redirect.html">Pros League - Season II</a>
+                          <a href="./events/major/tallinn25.html" class="eventmajor">Tallinn 2024</a>
+                          <a href="./events/redirect.html">Pros League - Season III</a>
+                          <a href="./events/major/melbourne26.html" class="eventmajor">Melbourne 2025</a>
+                          <a href="./events/redirect.html">Pros League - Season IV</a>
+                        </div>
+                    </div>
+                </td>
+            </table>
+        </div>
+        <br>
+        <div class="body">
+            
+        </div>
+    </div>
+    <div class="warning" id="warn">
+        <center>
+            <h1>Sorry!</h1>
+            <p id="tellUserWidth">This webpage only supports screens with a witdth of 905 or more.</p>
+            <p>If you are using a mobile, please switch to a PC or Laptop.<br>If you are using a PC or Laptop, incrase the window screen width.</p>
+            <p>Please do <b>not</b> report this bug, we are working to make mobile support.</p>
+        </center>
+    </div>
+
+    <script>
+        var requiredWidth = 905
+        document.getElementById("tellUserWidth").innerHTML = `This webpage only supports screens with a witdth of ${requiredWidth} or more.`
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        function checkWidth(){
+            width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            if(width < requiredWidth){
+                document.getElementById("all").style.display = "none";
+                document.getElementById("warn").style.display = "block";
+            }else {
+                document.getElementById("all").style.display = "block";
+                document.getElementById("warn").style.display = "none";
+            };
+        };
+        setInterval(checkWidth, 10);
+    </script>
+</body>
+</html>
