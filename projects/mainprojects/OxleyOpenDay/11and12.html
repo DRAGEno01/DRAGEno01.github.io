@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year 11 & 12 - OxleyCC IT</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./Picture5.png" type="image/x-icon">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5327146535138725" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="mobileBanner" id="mobileBanner">
+        <a href="./index.html"><img src="./Picture5.png" id="modBanImage"></a>
+    </div>
+    <div class="header" id="menu">
+        <a href="./index.html"><img src="./Picture5.png" width="100px;"></a>
+        <a href="./index.html"><button id="buttonHeader">Home</button></a>
+        <a href="./7and8.html"><button id="buttonHeader">7 & 8</button></a>
+        <a href="./9and10.html"><button id="buttonHeader">9 & 10</button></a>
+        <a href="./11and12.html"><button id="buttonHeader" class="selected">11 & 12</button></a>
+        <a href="./contact.html"><button id="contact">Contact</button></a>
+    </div>
+
+    <p><br></p>
+
+    <div>
+        <center>
+            <!--<a href="./index.html"><img src="./HTML Classwork/Picture5.png"></a>-->
+            <a href="./index.html"><img src="./Picture5.png"></a>
+            <h1 id="title">Year 11 & 12 Information Technology</h1>
+            <br><br><br><br>
+            <div id="mobileMenu">
+                <center>
+                    <a href="./index.html"><button id="mobButton">Home</button></a>
+                    <a href="./7and8.html"><button id="mobButton">7 & 8</button></a><br><br>
+                    <a href="./9and10.html"><button id="mobButton">9 & 10</button></a>
+                    <a href="./11and12.html"><button id="mobButton" class="selected">11 & 12</button></a>
+                    <!--<a href="./contact.html"><button id="mobButton">Contact</button></a>-->
+                </center>
+            </div>
+            <table>
+                <td><b id="title">VCE IT</b><br>
+                    Year 11 Information Technology is the first step in VCE Information Technology. Year 11 covers the first
+                    two units, Units 1 and 2.
+                    <br><br>
+                    <b id="title2">UNIT 1</b><br>
+                    This unit covers how individuals and organizations use ICT (information and communications technology)
+                    in their daily lives.<br>
+                    Students acquire and apply a range of knowledge and skills to understand different data types, to create
+                    solutions that can be applied to real life.<br>
+                    Students also reflect on how their lives are affected by technology, developing ways to efficiently
+                    manage the ways that technology is used in their daily lives.<br>
+                    Learning and examining how networked information systems allow data to be exchanged within a global and
+                    local environment,<br>as well as exploring how mobile devices are used within these networks is also
+                    introduced.
+    
+                    <br><br><b id="title2">UNIT 2</b><br>
+                    This unit focuses on how individuals and organizations use ICT for a range of purposes. Students apply a
+                    range of knowledge and skills to create Android Apps in Java.<br>
+                    Students learn and apply all stages of the problem-solving methodology when creating these solutions.
+                    Careers that use ICT will also be investigated.
+    
+                    <br><br><br>
+                    <b id="title">YEAR 12</b><br>
+                    Year 12 Information Technology focuses on programming as a strategy for solving problems for a specific
+                    audience in a network environment and how ICT can be used to help society.<br>
+                    Students develop a broader knowledge in a programming language which will be used in both Units 3 & 4.
+                    
+                    <br><br><b id="title2">UNIT 3</b><br>
+                    This unit focuses on programming, a strategy which is used for solving problems aimed towards a specific
+                    audience in a networked environment.<br>
+                    Students are expected to have a clear overview of the problem-solving methodology,<br>
+                    which involves students developing and applying knowledge in determining the requirements of solutions,<br>identifying
+                    relevant constraints that should be taken into account when designing the solutions as well as
+                    establishing the scope.
+    
+                    <br><br><b id="title2">UNIT 4</b><br>
+                    This unit focuses on how the data or information needs of individuals, organizations and society can be
+                    met through the creation of designed<br>solutions within a networked environment while revisiting the four
+                    stages of the problem-solving methodology.</td>
+            </table>
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5327146535138725"
+                 crossorigin="anonymous"></script>
+            <!-- Some Kind of Square -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5327146535138725"
+                 data-ad-slot="7258583238"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <img src="./Picture3.png" height="100px" id="image3">
+            <img src="./Picture4.png" height="100px" id="compImage">
+            <img src="./Picture4.png" id="mobImage" class="eletweMobImg">
+        </center>
+    </div>
+
+    <script>
+        var menu = document.getElementById("menu")
+        var mobileMenu = document.getElementById("mobileMenu")
+        var mobileImage = document.getElementById("mobImage")
+        var computerImage = document.getElementById("image3")
+        var computerImage2 = document.getElementById("compImage")
+        var mobileBanner = document.getElementById("mobileBanner")
+
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        console.log("This device has a screen width of: "+width)
+        //alert(width)
+        if(width <= "825"){
+            menu.style.display = 'none'
+            mobileMenu.style.display = 'block'
+            mobileImage.style.display = 'block'
+            computerImage.style.display = 'none'
+            computerImage2.style.display = 'none'
+            mobileBanner.style.display = 'block'
+        }else {
+            menu.style.display = 'block'
+            mobileMenu.style.display = 'none'
+            mobileImage.style.display = 'none'
+            computerImage.style.display = 'inline'
+            computerImage2.style.display = 'inline'
+            mobileBanner.style.display = 'none'
+        }
+    </script>
+</body>
+
+</html>

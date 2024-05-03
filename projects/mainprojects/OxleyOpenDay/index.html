@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - OxleyCC IT</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./Picture5.png" type="image/x-icon">
+    <script src="./main.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5327146535138725" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="mobileBanner" id="mobileBanner">
+        <a href="./index.html"><img src="./Picture5.png" id="modBanImage"></a>
+    </div>
+    <div class="header" id="menu">
+        <a href="./index.html"><img src="./Picture5.png" width="100px;"></a>
+        <a href="./index.html"><button id="homebtn" class="selected">Home</button></a>
+        <a href="./7and8.html"><button id="seveig">7 & 8</button></a>
+        <a href="./9and10.html"><button id="ninten">9 & 10</button></a>
+        <a href="./11and12.html"><button id="eletwe">11 & 12</button></a>
+        <a href="./contact.html"><button id="contact">Contact</button></a>
+    </div>
+
+    <p><br></p>
+
+    <div>
+        <center>
+            <a href="./index.html"><img src="./Picture5.png"></a>
+            <h1 id="computerHeader" class="title">Information Technology (Senior School)</h1>
+            <h1 id="mobileHeader1" class="title">Information Technology</h1>
+            <h1 id="mobileHeader2" class="title">(Senior School)</h1>
+            <br><br>
+            <div id="mobileMenu">
+                <center>
+                    <br><br>
+                    <a href="./index.html"><button id="mobButton" class="selected">Home</button></a>
+                    <a href="./7and8.html"><button id="mobButton">7 & 8</button></a><br><br>
+                    <a href="./9and10.html"><button id="mobButton">9 & 10</button></a>
+                    <a href="./11and12.html"><button id="mobButton">11 & 12</button></a>
+                    <!--<a href="./contact.html"><button id="mobButton">Contact</button></a>-->
+                </center>
+            </div>
+            
+            <br><br>
+            <p>
+                At <i id="title2">Oxley Christian College</i>, Information Technology (IT) subjects are offered
+                throughout Years 7 to 12.<br>
+                We are hoping to help students become competent and responsible users of technologies.<br>
+                Through this website, you can explore each IT course offered at different year levels.
+            </p>
+            <br><br>
+            <div class="outline" style="width: 795px;">
+                <img src="./Picture6.png" height="200px;" id="schoolImage">
+                <img src="./Picture7.png" height="200px;" id="computerImage">
+            </div>
+            <div id="mobileImage">
+                <img src="./Picture7.png" id="mobile-image">
+            </div>
+        </center>
+    </div>
+    
+    
+    <script>
+        var menu = document.getElementById("menu")
+        var schoolImage = document.getElementById("schoolImage")
+        var computerImage = document.getElementById("computerImage")
+        var mobileImage = document.getElementById("mobile-image")
+        var mobileMenu = document.getElementById("mobileMenu")
+        var computerHeader = document.getElementById("computerHeader")
+        var mobileHeader1 = document.getElementById("mobileHeader1")
+        var mobileHeader2 = document.getElementById("mobileHeader2")
+        var mobileBanner = document.getElementById("mobileBanner")
+
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        console.log("This device has a screen width of: "+width)
+        //alert(width)
+        if(width <= "825"){
+            menu.style.display = 'none'
+            schoolImage.style.display = 'none'
+            computerImage.style.display = 'none'
+            mobileMenu.style.display = 'block'
+            mobileImage.style.display = 'inline'
+
+            computerHeader.style.display = 'none'
+            mobileHeader1.style.display = 'block'
+            mobileHeader2.style.display = 'block'
+            mobileBanner.style.display = 'block'
+        }else {
+            menu.style.display = 'block'
+            schoolImage.style.display = 'inline'
+            computerImage.style.display = 'inline'
+            mobileMenu.style.display = 'none'
+            mobileImage.style.display = 'none'
+
+            computerHeader.style.display = 'block'
+            mobileHeader1.style.display = 'none'
+            mobileHeader2.style.display = 'none'
+            mobileBanner.style.display = 'none'
+        }
+    </script>
+</body>
+
+</html>

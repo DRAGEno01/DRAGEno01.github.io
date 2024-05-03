@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year 7 & 8 - OxleyCC IT</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./Picture5.png" type="image/x-icon">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5327146535138725" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="mobileBanner" id="mobileBanner">
+        <a href="./index.html"><img src="./Picture5.png" id="modBanImage"></a>
+    </div>
+    <div id="menu" class="header">
+        <a href="./index.html"><img src="./Picture5.png" width="100px;"></a>
+        <a href="./index.html"><button id="buttonHeader">Home</button></a>
+        <a href="./7and8.html"><button id="buttonHeader" class="selected">7 & 8</button></a>
+        <a href="./9and10.html"><button id="buttonHeader">9 & 10</button></a>
+        <a href="./11and12.html"><button id="buttonHeader">11 & 12</button></a>
+        <a href="./contact.html"><button id="contact">Contact</button></a>
+    </div>
+
+    <p><br></p>
+
+    <div>
+        <center>
+            <!--<a href="./index.html"><img src="./HTML Classwork/Picture5.png"></a>-->
+            <a href="./index.html"><img src="./Picture5.png"></a>
+            <h1 id="title">Year 7 & 8 Information Technology</h1>
+            <br><br>
+            <div id="mobileMenu">
+                <center>
+                    <br><Br>
+                    <a href="./index.html"><button id="mobButton">Home</button></a>
+                    <a href="./7and8.html"><button id="mobButton" class="selected">7 & 8</button></a><br><br>
+                    <a href="./9and10.html"><button id="mobButton">9 & 10</button></a>
+                    <a href="./11and12.html"><button id="mobButton">11 & 12</button></a>
+                    <!--<a href="./contact.html"><button id="mobButton">Contact</button></a>-->
+                </center>
+            </div>
+            <table>
+                <td><p><b id="title2">OVERVIEW</b><br>Information Technology is a core subject in Years 7 & 8, enabling students to become equipped with the
+                    essential computer skills to use a range of software applications, which can be used in other
+                    disciplinary studies.<br><br><br>
+                    <b id="title">YEAR 7</b><br>
+                    Year 7 focuses on developing confidence in using a computer and builds skills in using a word processor,
+                    spreadsheet software and school learning management system and making short movies and websites.<br>
+                    During this course, students will develop touch-typing skills and learn how to manage files on the
+                    computer as well as on cloud storage.<br><br><br>
+                    <b id="title">YEAR 8</b><br>
+                    IT in Year 8 focuses on further developing confidence and learning new skills in various programs.<br>
+                    Students will further build on their understanding of the skills developed in Year 7 plus the
+                    introduction of programming.
+                </p></td>
+            </table>
+            <img src="./Picture1.png" style="height: 20%;width:20%;" id="computer">
+        </center>
+    </div>
+
+
+    <script>
+        var menu = document.getElementById("menu")
+        var mobileMenu = document.getElementById("mobileMenu")
+        var mobileBanner = document.getElementById("mobileBanner")
+
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        console.log("This device has a screen width of: "+width)
+        //alert(width)
+        if(width <= "825"){
+            menu.style.display = 'none'
+            mobileMenu.style.display = 'block'
+            mobileBanner.style.display = 'block'
+        }else {
+            menu.style.display = 'block'
+            mobileMenu.style.display = 'none'
+            mobileBanner.style.display = 'none'
+        }
+    </script>
+</body>
+
+</html>

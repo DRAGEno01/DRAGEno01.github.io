@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - OxleyCC IT</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./Picture5.png" type="image/x-icon">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5327146535138725" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="mobileBanner" id="mobileBanner">
+        <a href="./index.html"><img src="./Picture5.png" id="modBanImage"></a>
+    </div>
+    <div class="header" id="menu">
+        <a href="./index.html"><img src="./Picture5.png" width="100px;"></a>
+        <a href="./index.html"><button id="buttonHeader">Home</button></a>
+        <a href="./7and8.html"><button id="buttonHeader">7 & 8</button></a>
+        <a href="./9and10.html"><button id="buttonHeader">9 & 10</button></a>
+        <a href="./11and12.html"><button id="buttonHeader">11 & 12</button></a>
+        <a href=""><button id="contact" class="selected">Contact</button></a>
+    </div>
+
+    <p><br></p>
+
+    <div>
+        <center>
+            <a href="./index.html"><img src="./Picture5.png"></a>
+            <h1 id="title">Contact</h1>
+            <br>
+            <div id="mobileMenu">
+                <center>
+                    <br><Br>
+                    <a href="./index.html"><button id="mobButton">Home</button></a>
+                    <a href="./7and8.html"><button id="mobButton">7 & 8</button></a>
+                    <a href="./9and10.html"><button id="mobButton">9 & 10</button></a>
+                    <a href="./11and12.html"><button id="mobButton">11 & 12</button></a>
+                    <a href="./contact.html"><button id="mobButton" class="selected">Contact</button></a>
+                </center>
+            </div>
+            <p>
+                <b id="title2">Any Questions?</b><br>
+                We would love to hear your questions and answer them for you.
+            </p>
+            <p>Please feel free to contact us on <b id="title2"><a href="mailto:admin@oxley.vic.edu.au">admin@oxley.vic.edu.au</a></b>, should you have any questions.</p>
+            <br><br><br>
+            <div class="outline" style="width: 1400px;">
+                <img src="./Picture3.png" height="200px;" id="compImage">
+                <img src="./Picture4.png" height="200px;" id="compImage2">
+                <img src="./Picture2.png" height="200px;" id="compImage3">
+                <img src="./Picture1.png" height="200px;" id="compImage4">
+                <!--<img src="./HTML Classwork/Picture7.png" height="200px;">-->
+            </div>
+        </center>
+    </div>
+
+
+    <script>
+        var menu = document.getElementById("menu")
+        var mobileMenu = document.getElementById("mobileMenu")
+        var computerImage = document.getElementById("compImage")
+        var computerImage2 = document.getElementById("compImage2")
+        var computerImage3 = document.getElementById("compImage3")
+        var computerImage4 = document.getElementById("compImage4")
+        var mobileBanner = document.getElementById("mobileBanner")
+
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        console.log("This device has a screen width of: "+width)
+        //alert(width)
+        if(width <= "825"){
+            menu.style.display = 'none'
+            mobileMenu.style.display = 'block'
+            computerImage.style.display = 'none'
+            computerImage2.style.display = 'none'
+            computerImage3.style.display = 'none'
+            computerImage4.style.display = 'none'
+            mobileBanner.style.display = 'block'
+        }else {
+            menu.style.display = 'block'
+            mobileMenu.style.display = 'none'
+            computerImage.style.display = 'inline'
+            computerImage2.style.display = 'inline'
+            computerImage3.style.display = 'inline'
+            computerImage4.style.display = 'inline'
+            mobileBanner.style.display = 'none'
+        }
+    </script>
+</body>
+
+</html>
