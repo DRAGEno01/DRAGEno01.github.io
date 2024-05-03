@@ -78,29 +78,33 @@
         var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
         console.log("This device has a screen width of: "+width)
         //alert(width)
-        if(width <= "825"){
-            menu.style.display = 'none'
-            schoolImage.style.display = 'none'
-            computerImage.style.display = 'none'
-            mobileMenu.style.display = 'block'
-            mobileImage.style.display = 'inline'
-
-            computerHeader.style.display = 'none'
-            mobileHeader1.style.display = 'block'
-            mobileHeader2.style.display = 'block'
-            mobileBanner.style.display = 'block'
-        }else {
-            menu.style.display = 'block'
-            schoolImage.style.display = 'inline'
-            computerImage.style.display = 'inline'
-            mobileMenu.style.display = 'none'
-            mobileImage.style.display = 'none'
-
-            computerHeader.style.display = 'block'
-            mobileHeader1.style.display = 'none'
-            mobileHeader2.style.display = 'none'
-            mobileBanner.style.display = 'none'
+        function widthChecker(){
+            width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            if(width <= "825"){
+                menu.style.display = 'none'
+                schoolImage.style.display = 'none'
+                computerImage.style.display = 'none'
+                mobileMenu.style.display = 'block'
+                mobileImage.style.display = 'inline'
+    
+                computerHeader.style.display = 'none'
+                mobileHeader1.style.display = 'block'
+                mobileHeader2.style.display = 'block'
+                mobileBanner.style.display = 'block'
+            }else {
+                menu.style.display = 'block'
+                schoolImage.style.display = 'inline'
+                computerImage.style.display = 'inline'
+                mobileMenu.style.display = 'none'
+                mobileImage.style.display = 'none'
+    
+                computerHeader.style.display = 'block'
+                mobileHeader1.style.display = 'none'
+                mobileHeader2.style.display = 'none'
+                mobileBanner.style.display = 'none'
+            }
         }
+        window.history.pushState("pageTitle", "Home - OxleyCC IT", "/?oxley");
     </script>
 </body>
 
