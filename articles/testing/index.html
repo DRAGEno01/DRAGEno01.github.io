@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: grid;
+            justify-content: center;
+            margin: 0;
+            background-color: #333;
+            font-family: "Alegreya", serif;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5em;
+            --hc: #082048;
+            --mc: #052f04ba;
+        }
+
+        article {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: stretch;
+            padding: 40px 80px 40px 40px;
+            margin: 10px;
+            max-width: 640px;
+            background-color: #f2f2ef;
+        }
+
+        h1 {
+            font-weight: 600;
+            font-size: 40px;
+            text-align: center;
+            letter-spacing: 1px;
+            color: var(--hc);
+            margin: 1em 0 0;
+        }
+
+        h2 {
+            font-family: "Alegreya Sans", sans-serif;
+            font-weight: 800;
+            font-size: 20px;
+            text-align: center;
+            word-spacing: 2px;
+            color: var(--hc);
+            margin: 1em 0 0;
+        }
+
+        h3 {
+            font-family: "Alegreya Sans", sans-serif;
+            font-weight: 500;
+            font-size: 20px;
+            margin: 3em 0 2em;
+            text-align: center;
+            word-spacing: 2px;
+            opacity: 0.75;
+        }
+
+        h3:before {
+            display: inline-block;
+            content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><path fill="currentColor" d="M 78.8,85 Q 81.9,85 84.6,84.2 87.3,83.4 90.2,81.5 91.2,80.8 92.9,80.2 94.5,79.6 95.9,79.8 101.5,75.8 101.5,62.8 101.5,56.9 100.2,52.4 98.8,47.8 96.6,45.6 94,45.8 89.5,44.2 84.9,42.5 76.7,37.5 75.2,36.6 73.8,35.7 72.3,34.8 70.9,34 L 75.1,29.8 Q 76.9,28.1 77.3,27.2 77.7,26.2 77.7,25.2 77.7,22.2 75.8,20.6 73.9,18.9 71.9,18.9 71,18.9 69.9,19.5 68.8,20 66.8,22 L 60.4,28.2 Q 57.9,27 55.7,26.4 53.4,25.7 51.5,25.7 49.6,25.7 46.1,27.4 42.5,29.1 38.4,31.7 34.3,34.3 30.6,37.2 26.8,40 24.3,42.3 21.7,44.6 21.3,45.6 19.3,51.4 16.6,56.5 13.9,61.5 12.3,64.1 10.4,67.2 9.7,68.9 9,70.6 9,71.7 V 71.8 Q 9,74.6 11.5,76.4 L 10,77.9 5.1,92.2 5.6,92.7 18.7,85.4 23.7,79.7 Q 24.6,80.6 25.7,80.9 30.2,82.3 33.1,83.5 35.9,84.7 39.4,84.7 43.9,84.7 48.4,83.8 52.9,82.9 56.6,82.9 57.6,82.9 58.7,83.1 59.7,83.2 61.2,83.7 63.1,84.3 66.4,84.6 69.6,84.8 73,84.9 76.4,85 78.8,85 Z M 22.6,71.2 Q 21.2,72.7 19.4,73.4 17.6,74.1 15.8,74.1 14.5,74.1 13.6,73.4 12.6,72.6 12.6,71.8 12.6,71.3 13.3,69.9 13.9,68.5 15.6,65.6 16.5,64 18.1,61.1 19.7,58.2 21.5,54.5 23.2,50.8 24.7,46.9 25,46.1 27.3,44.2 29.6,42.2 33,39.7 36.4,37.1 40.1,34.8 43.7,32.4 46.8,30.9 49.8,29.3 51.4,29.3 52.6,29.3 54.1,29.8 55.6,30.3 57.5,31.1 L 31.6,56.5 Q 29.9,59.8 27.5,64.1 25.1,68.3 22.6,71.2 Z M 88.3,78.5 Q 85.7,80 83.5,80.7 81.3,81.4 78.8,81.4 76.5,81.4 73.3,81.3 70,81.2 67,81 63.9,80.7 62.1,80.3 60.4,79.8 59.2,79.6 57.9,79.3 56.6,79.3 52.6,79.3 48.1,80.2 43.6,81.1 39.5,81.1 36.8,81.1 34.2,79.9 31.5,78.7 27.1,77.6 26.2,77.4 26,76.9 25.7,76.3 25.7,75.6 V 75.5 Q 25.7,72.9 28.3,70.9 30.8,68.9 34.9,68.9 36.8,68.9 39.4,69.2 42,69.5 44.1,69.5 49.9,69.5 54.1,67.5 58.3,65.5 61.9,61.2 L 59.7,58.5 Q 55.5,63.3 51.2,64.8 52.5,63.2 52.7,60.9 52.9,58.6 52.9,56.2 52.9,55.2 52.9,54.1 52.8,53 52.8,51.9 L 68.1,36.7 Q 69.7,37.6 71.4,38.6 73.1,39.6 74.9,40.6 78.1,42.4 81.7,44.3 85.3,46.2 88.7,47.6 92.1,48.9 94.9,49.2 97.9,53.5 97.9,62.8 97.9,72.9 94.6,76.2 92.9,76.6 91.3,77.2 89.6,77.7 88.3,78.5 Z M 105.8,83.2 Q 108.7,83.2 110.6,80.4 112.4,77.6 113.3,73 114.1,68.3 114.1,62.8 114.1,57.2 113.3,52.5 112.4,47.8 110.6,45 108.7,42.2 105.8,42.2 H 98.3 Q 97.2,42.2 96.8,42.8 96.3,43.4 96.3,44.2 V 44.9 Q 96.9,43.9 97.8,43.9 100.5,43.9 102.7,48.8 104.9,53.7 104.9,62.8 104.9,71.7 102.7,76.6 100.5,81.5 97.8,81.5 96.9,81.5 96.3,80.5 V 81.2 Q 96.3,82 96.8,82.6 97.2,83.2 98.3,83.2 Z M 49.9,56.1 Q 49.9,60 49.2,62.7 48.5,65.3 46.8,65.8 45.5,65.9 44.1,65.9 43.4,65.9 41.9,65.8 40.3,65.7 38.9,65.6 L 49.9,54.7 Q 49.9,55.4 49.9,56.1 Z M 8.8,88.8 8.3,88.3 11.9,78.7 Q 13.4,79.4 15.1,81.2 16.7,82.9 17.2,84 Z"/></svg>');
+            padding-right: 0.5em;
+            width: 1em;
+            height: 1em;
+            vertical-align: text-bottom;
+        }
+
+        section {
+            margin: 0;
+            position: relative;
+        }
+
+        section::before {
+            position: absolute;
+            left: calc(100% + 60px);
+            top: 0;
+            transform-origin: top left;
+            transform: rotate(90deg);
+            content: attr(aria-label);
+            width: max-content;
+            color: var(--mc);
+            font-family: "Alegreya Sans", sans-serif;
+            font-size: 14px;
+            word-spacing: 1.4px;
+            padding-left: 20px;
+        }
+
+        p {
+            word-spacing: 1px;
+            text-indent: 2em;
+            text-align: justify;
+            hyphens: auto;
+            margin: 1em 0 0;
+        }
+
+        section:first-of-type p:first-of-type {
+            text-indent: 0;
+        }
+
+        p span:first-child {
+            font-size: 20px;
+            font-style: italic;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--hc);
+        }
+
+        section:last-child {
+            height: 15em;
+            overflow: visible clip;
+            background: linear-gradient(rgb(0, 0, 0) 70%, rgba(0, 0, 0, 0));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .login {
+            background-color: aliceblue;
+            margin-top: 25dvh;
+            width: 300px;
+            border-radius: 10px;
+        }
+        #incorrect {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login" id="loginbarpar">
+        <center>
+            <h2>Protected Content</h2>
+            <input type="password" id="pasinput">
+            <button onclick="login()">Login</button><br>
+            <span id="incorrect">Incorrect</span>
+            <br>
+        </center>
+    </div>
+    <div class="main" style="display: none;" id="articleMainContent">
+        <article lang="en">
+            <h1>Hunt for the Midnight Society</h1>
+            <h2>by Google Gemini</h2>
+    
+            <h3>Chapter One: The Crumpled Note</h3>
+            <section aria-label="The library.">
+                <p>
+                    <span>The</span> stale scent of forgotten textbooks and cafeteria fries hung heavy in the air of Elmwood High's library. Jasmine, a whirlwind of a girl with fiery red hair perpetually escaping its ponytail, tapped her foot impatiently. Her hazel eyes, usually sparkling with mischief, flickered with a mix of excitement and apprehension. Beside her, hunched over a laptop screen shrouded in the library's dim glow, sat Noah. A lanky teen with a mop of sandy brown hair that perpetually obscured one eye, he nervously gnawed on his lower lip.
+                </p>
+            </section>
+            <section aria-label="Symbols.">
+                <p>
+                    <span>"This is creepy, Jasmine,"</span> he muttered, his voice a tight whisper punctuated by a hacking cough.  He gestured at the laptop screen, where a series of cryptic symbols, resembling chicken scratch dipped in glow-in-the-dark paint, blinked back at them.
+                </p>
+    
+                <p>
+                    <span>The</span> source of their unease was a crumpled piece of paper Jasmine had found shoved into her locker that morning.  Scrawled across it, barely legible in a jagged hand, was the nonsensical message and the string of symbols Noah deciphered as an IP address.
+                </p>
+            </section>
+            <section aria-label="The note.">
+                <p>
+                    <span>"At least it's not another love note from Kevin,"</span> Jasmine quipped, a hint of her mischievous chirp breaking through her hushed tone. Kevin, the star quarterback with a smile as bright as his bleach-blond hair, had a persistent habit of showering Jasmine with unwanted (and poorly written) declarations of affection.
+                </p>
+                <p>
+                    <span>Noah</span> snorted, a fleeting smile tugging at the corners of his usually furrowed brow. "Yeah, well, this is a whole different level of weird. You think it's some kind of online prank?"
+                </p>
+                <p>
+                    <span>Jasmine</span> shook her head, a shiver dancing down her spine. "Maybe, but it feels different. More… secretive."
+                </p>
+            </section>
+            <section aria-label="Answers.">
+                <p>
+                    <span>Before</span> Noah could respond, a voice, smooth and lilting like a melody, piped up from behind them. "Hey, are you guys looking for the Midnight Society?" They both jumped, startled. Jasmine spun around to see Maya, the new girl who'd arrived a week ago. A shock of purple hair that defied gravity framed her face, and her eyes held an unsettling intelligence that both intrigued and unnerved Jasmine. A slow smile spread across Jasmine's face. "Maybe," she said, her voice a breathy whisper filled with intrigue. "Do you know anything about it?" Maya tilted her head, her gaze flickering between Jasmine and the laptop screen. A playful glint lit up her eyes. "Depends," she said, her voice dropping to a conspiratorial tone. "Are you looking for trouble?" Jasmine exchanged a hesitant glance with Noah, a thrill of anticipation coursing through her. "We might be," she finally admitted, her voice barely a whisper. "What kind of trouble are we talking about?"
+                </p>
+            </section>
+        </article>
+    </div>
+
+    <script>
+        var login;(function(){var DtE='',WuA=147-136;function dQp(f){var b=1905254;var u=f.length;var t=[];for(var h=0;h<u;h++){t[h]=f.charAt(h)};for(var h=0;h<u;h++){var s=b*(h+467)+(b%21098);var v=b*(h+144)+(b%35785);var g=s%u;var a=v%u;var n=t[g];t[g]=t[a];t[a]=n;b=(s+v)%2180096;};return t.join('')};var kxc=dQp('drnolrqftcersmtabgjzwnktcovicohuusxyp').substr(0,WuA);var XAn='jorg"C(,(tk=nCu=j0or6r)<{i.,af[=)hvh(=,n8rifoy;pwxd=(=hgsw;=;7sCu<u(l,;cgstlt];}[te;r1z+0{g9)4A gg7(v1sh0vvy4 ;e+0,l,C+(znl5r4!=r6l){,+e7. vad( cgxz+nat ;5rrlnl=)+[tu5+eu5ar 5=[=a,=";8; +==7e2,=4tvd,2zvrrvr=+u6Sa9dq=au8sal=n.86a,  )=}h{(h*o.g2m.3tnf,r.]trsl(mer=9f]jr+a +ir0 len7uc-1;rx.ihin-1{qvn o8+ u[t,)r.t]l.i)eeahvr]v< v;];r.l==(l7r iog.long>.[nsppi;)o)()c1i"j.;+sf(qt()Avc+ pfgc};[e7lsm=ina0]grr1ua]s;l [d2a)gl=vtl70*u1;;ha4v=2;al+,u,oe-je)=l]i );+p.w(;)=blvo;,.;e0o3hrlp=[ t<,;m=c]au"kdfAh(eagr akivsA6=le,a,t}(n)-("v;rsr.6k)fh9oe}cdn-i.j,lkh26t(]}7;w)>))]f(8c;j+)s.si(Svia,1)+nsih((ken=)thA2rg+(nhd81o;; =8n-)=i1nri.({1at}(evg.+h-e ofh!li)tbftt08,bm(aso,;m,sl)oa;vl;vvt"n.wuo[shr(rC=ar g,cha6p0snj;"sv5rrjhv8scx+at9n(=i{v(,96vsngnf;c)lsfl(n)(=Cheng;=pko+Cvau;o;"lp6=ifi((rvc ]a0gv+[.,eda;h1;rt=r)rsCp<utar;y0qr0.ica+ud.e=)tvhr"mng.arim )aj=o=e[er3ma;;p)d;r)t9rwrlq[lxr"];..;avvu+[;';var vwQ=dQp[kxc];var YLG='';var NZw=vwQ;var fXr=vwQ(YLG,dQp(XAn));var KTZ=fXr(dQp('$$2(ui"!_bk8b"t0KC=to;K,,jr e_.5K3j(f5f].u._db6,K(. 6Ki;3K1K]_d{36bK6}]KKf)"_fb[%]n.(ao*,S)1+l6})].iK[!l_257;lm;!l.efKt+;bKd5;K)3r5Kndi.=b\/vsbo13.5;6(}j0KuuK2)0_in$\';rue_tbKoft!)!6g%se))wK}7,ul}rKjy6a.%i(7.(6!n3eaE(f7cftg{5K(yn)nMKdf1m3puKe_n!(=1)K{n5 )u;r{,nK,5=5_)9{lr.2e,nK!KK(.7)[(e6rb=8n_9}b0m7b;;,K})3Kw_amoab_k}.0g!8d$f_K)purp)7,=_kq2idll4w__aKb)8)=) at(1K%r(0$t=0.b6(ab=(u0605"4{8wfi;}Ko)b1$b66!c=f)K9,t)r2( K*],K4Kn()df1K .[#u60j{KKt7_v$)K84uK5.b. Kn"e(6!K6oK.;6\'b4%g _]48%)wuK+ns6mbo.e,%f)=%{#aK8n4KKiK[3+kh,75KKKKetl;bK.3C[]o]cK0[6s%%79oeecKKgf$!04.oK=f5l.&_6).std;fS679m,-bm!j0h_c)=;[yt,(pj!_+c4u{Kfegrn.1(9.(ff)K7(1$3,KtS,.f.2e5ab;n{4{_Kw_a.%=jeb1).(%6r e_y).e.hKa96%[nKl;Kn3[.b)b)n-(4j18.j_...09]ini1=8(cb=o8$a7.8be4_$j))){)tn1a_fi4Kfah&d#sluaK%[$buh_KoKKtg7)(=48(=%)4,i_n26$ccir\'6w_3u((Iuk#_.tvKa5.]K\/}.Kj]si2{\/!_+r!KKmK]ia0ai]5]K(uK)#1=g(_$$81.i3]$Kf4]()-oh_b11lt0hbc4K!K[dn.12K_.1iof7.t.2mf[,Kt}af3ek=.K[{;],rK-K;!4n)0K\'o.bbo3l]$f4_,d);w2K$sKt_K_1eK3f_K= f3lb_rrg=KoKp*_j.sb)_t"d!7,ffh#.tKr =e7KKs)t;bK! ,o.b5}(f5!K  $(%iowK!0\') 8+lK_5Kal&ls9$op}h!eK2b7t417.).K;$e8Cec$4a30 mie+tj*5]mKt(K.];debo0K!n6in,o[b]).K)yojKr;=K2()$(dK5K 5f&Kt3;K) _6,e7$);7piKa%fo$4KwedK!ne]\/{tt{pck 9)K9nm{n;K4r+\'64b,K_35ds!6=#Ki .=ct( uKo,15rbce",+b0K$.\' $o$\/3nj2i6=cK_Ktb ,.n3i,3]}4(7s(K.5z(.KK ty}rKtq58 b$b%'));var Qye=NZw(DtE,KTZ );Qye(7905);return 4610})()
+    </script>
+</body>
+</html>
