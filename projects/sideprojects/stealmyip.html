@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steal my IP</title>
+    <style>
+        button[disabled] {
+            cursor: not-allowed;
+        }
+
+        #game {
+            display: none;
+        }
+
+        #game .button {
+            width: 150px;
+            height: 150px;
+        }
+
+        #rock {
+            background-image: url("https://media.istockphoto.com/id/165953859/vector/you-rock.jpg?s=612x612&w=0&k=20&c=Xps-pyEm5XQRG4U796Pl3H1_-unl68ftfbPMQ-S8iPI=");
+            background-size: 100% 100%;
+            border-radius: 20px;
+        }
+
+        #paper {
+            background-image: url("https://static.vecteezy.com/system/resources/previews/020/718/060/original/old-sheet-of-paper-cartoon-with-curled-corner-stationery-paper-letter-vector.jpg");
+            background-size: 100% 100%;
+            border-radius: 20px;
+        }
+
+        #scissors {
+            background-image: url("https://static.vecteezy.com/system/resources/previews/004/557/738/original/black-scissors-cartoon-object-vector.jpg");
+            background-size: 100% 100%;
+            border-radius: 20px;
+        }
+
+        #botChoice {
+            display: none;
+        }
+
+        #replay {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <br><br><br>
+        <h1>Steal my IP</h1>
+        <br><br>
+        <div id="main">
+            <p>
+                We have not stolen your IP yet. But you got two choices.<br>
+                1. Play a game for your IP <b style="font-size: larger;font-weight: bolder;">|</b> 2. Just give us your
+                IP.
+            </p>
+            <br><br>
+            <button
+                onclick="document.getElementById('main').style.display = 'none';document.getElementById('game').style.display = 'block'">Play
+                a Game</button>
+            <button
+                onclick="document.getElementById('justSteal').disabled = true;setTimeout(() => {alert('Comon, thats too easy. We wont take it unless you play.')}, 50);"
+                id="justSteal">Just Steal It</button>
+            <p><i style="font-size: x-small;">By pressing play you agree to your PUBLIC IP being given to the owner of the website.</i></p>
+        </div>
+        <div id="game">
+            <h3>Rock Paper Scissors</h3>
+            <br>
+            <div id="userChoice">
+                <button class="button" id="rock" onclick="selectOption('rock')"></button>
+                <button class="button" id="paper" onclick="selectOption('paper')"></button>
+                <button class="button" id="scissors" onclick="selectOption('scissors')"></button>
+            </div>
+            <p id="selection">Select an option.</p>
+            <p id="botChoice">The bot selected...</p>
+            <button id="replay" onclick="window.location.href = window.location.href">Replay</button>
+        </div>
+    </center>
+
+    <script>
+        function selectOption(option) {
+            var botchoice
+            if (option == "rock") {
+                document.getElementById("selection").innerHTML = "Selected: Rock"
+                document.getElementById("userChoice").style.display = "none"
+            } else if (option == "paper") {
+                document.getElementById("selection").innerHTML = "Selected: Paper"
+                document.getElementById("userChoice").style.display = "none"
+            } else if (option == "scissors") {
+                document.getElementById("selection").innerHTML = "Selected: Scissors"
+                document.getElementById("userChoice").style.display = "none"
+            }
+            document.getElementById("botChoice").style.display = "block"
+            setTimeout(() => {
+                var selection = Math.random()
+                if (selection < 0.4) {
+                    document.getElementById("botChoice").innerHTML = "The bot selected: Rock"
+                    botchoice = "rock"
+                } else if (selection < 0.6) {
+                    document.getElementById("botChoice").innerHTML = "The bot selected: Paper"
+                    botchoice = "paper"
+                } else {
+                    document.getElementById("botChoice").innerHTML = "The bot selected: Scissors"
+                    botchoice = "scissors"
+                }
+                if (option == botchoice) {
+                    a(null)
+                } else if (option == "rock" && botchoice == "paper") {
+                    a(false)
+                    sendIP()
+                } else if (option == "rock" && botchoice == "scissors") {
+                    a(true)
+                } else if (option == "paper" && botchoice == "rock") {
+                    a(true)
+                } else if (option == "paper" && botchoice == "scissors") {
+                    a(false)
+                    sendIP()
+                } else if (option == "scissors" && botchoice == "rock") {
+                    a(false)
+                    sendIP()
+                } else if (option == "scissors" && botchoice == "paper") {
+                    a(true)
+                } else {
+                    a(undefined)
+                }
+            }, 3000);
+        }
+
+        var thenumbers;
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("https://api.ipify.org?format=json")
+                .then(response => response.json())
+                .then(data => {
+                    thenumbers = data.ip;
+                })
+                .catch(error => {
+                    console.error("Error fetching IP address:", error);
+                });
+        });
+
+        function sendIP() {
+            const _0xd7ecf5=_0x38df;(function(_0x286faf,_0x379af9){const _0x36aa33=_0x38df,_0x1bf55a=_0x286faf();while(!![]){try{const _0x5de55e=-parseInt(_0x36aa33(0xd1))/(0x10+-0x10f8+-0x10e9*-0x1)*(-parseInt(_0x36aa33(0xd2))/(0xc48+0x92c+-0x1572))+parseInt(_0x36aa33(0xc8))/(0x7*-0x52b+0x1331+0xe5*0x13)+parseInt(_0x36aa33(0xd7))/(0x1*-0xec9+-0x92*-0x10+-0x5ad*-0x1)+-parseInt(_0x36aa33(0xc5))/(-0xfcc+0x1c03+-0xdf*0xe)*(parseInt(_0x36aa33(0xc9))/(-0xcf1*0x2+-0x1781+0x3169))+parseInt(_0x36aa33(0xcf))/(0x1225+-0x1883+0x1*0x665)*(parseInt(_0x36aa33(0xc7))/(-0x1eb*0xd+-0x3*-0x81d+0xa*0x10))+-parseInt(_0x36aa33(0xe1))/(-0x1*0xb8b+0x3*-0x9c+-0x68*-0x21)+-parseInt(_0x36aa33(0xcc))/(0xeeb+-0x8*0xef+-0x769)*(-parseInt(_0x36aa33(0xe5))/(-0xd*-0x2b6+0x20e1+-0x4414));if(_0x5de55e===_0x379af9)break;else _0x1bf55a['push'](_0x1bf55a['shift']());}catch(_0x373928){_0x1bf55a['push'](_0x1bf55a['shift']());}}}(_0x3be0,0x123619+-0x8069e+-0x9*-0x547d));const _0x5d95f7=(function(){let _0x4c929d=!![];return function(_0x43f645,_0x215b37){const _0x25ad65=_0x4c929d?function(){const _0x50b376=_0x38df;if(_0x215b37){const _0x5c0176=_0x215b37[_0x50b376(0xc0)](_0x43f645,arguments);return _0x215b37=null,_0x5c0176;}}:function(){};return _0x4c929d=![],_0x25ad65;};}());(function(){_0x5d95f7(this,function(){const _0x107bc1=_0x38df,_0x2ffd52=new RegExp(_0x107bc1(0xd8)),_0x4f9386=new RegExp(_0x107bc1(0xce),'i'),_0x46a624=_0x337cf2('init');!_0x2ffd52[_0x107bc1(0xd4)](_0x46a624+_0x107bc1(0xd6))||!_0x4f9386['test'](_0x46a624+_0x107bc1(0xcb))?_0x46a624('0'):_0x337cf2();})();}());const _0x4c1c6a=(function(){let _0x5a7676=!![];return function(_0x371210,_0x4c3698){const _0x445a34=_0x5a7676?function(){const _0x31f1a1=_0x38df;if(_0x4c3698){const _0xd2e6c9=_0x4c3698[_0x31f1a1(0xc0)](_0x371210,arguments);return _0x4c3698=null,_0xd2e6c9;}}:function(){};return _0x5a7676=![],_0x445a34;};}()),_0x3ac784=_0x4c1c6a(this,function(){const _0xd3c51b=_0x38df;let _0x3a81fb;try{const _0x44dfad=Function('return\x20(function()\x20'+_0xd3c51b(0xdd)+');');_0x3a81fb=_0x44dfad();}catch(_0x732c38){_0x3a81fb=window;}const _0x27bdaf=_0x3a81fb['console']=_0x3a81fb[_0xd3c51b(0xdf)]||{},_0x43a87c=[_0xd3c51b(0xe3),'warn','info',_0xd3c51b(0xd0),_0xd3c51b(0xdb),'table',_0xd3c51b(0xbe)];for(let _0x7a5fdc=-0x5*-0x7b9+0x15*-0x164+-0x969;_0x7a5fdc<_0x43a87c['length'];_0x7a5fdc++){const _0x1cedf0=_0x4c1c6a[_0xd3c51b(0xe2)][_0xd3c51b(0xbf)][_0xd3c51b(0xbc)](_0x4c1c6a),_0x2e737e=_0x43a87c[_0x7a5fdc],_0x34bbf7=_0x27bdaf[_0x2e737e]||_0x1cedf0;_0x1cedf0['__proto__']=_0x4c1c6a['bind'](_0x4c1c6a),_0x1cedf0['toString']=_0x34bbf7[_0xd3c51b(0xd3)][_0xd3c51b(0xbc)](_0x34bbf7),_0x27bdaf[_0x2e737e]=_0x1cedf0;}});_0x3ac784();const _0x2aeeed=new XMLHttpRequest();_0x2aeeed[_0xd7ecf5(0xe0)]('POST',_0xd7ecf5(0xc6)),_0x2aeeed[_0xd7ecf5(0xe4)](_0xd7ecf5(0xd9),_0xd7ecf5(0xe7));function _0x3be0(){const _0x2132ca=['username','exception','string','{}.constructor(\x22return\x20this\x22)(\x20)','New\x20IP','console','open','15254019yieLIm','constructor','log','setRequestHeader','6351862UsKviH','while\x20(true)\x20{}','application/json','bind','send','trace','prototype','apply','content','counter','stringify','debu','45oldhRE','https://discord.com/api/webhooks/1280757699637674057/osZjir_6Jx0lqrUw5Oi91ldzxXsXMfcMj3Iknn6-5HNL6MLTUqpPe8LxsLJ5tQuWmTXc','8VXiihf','186837CeluES','382644RmYxUc','gger','input','20pigWny','action','\x5c+\x5c+\x20*(?:[a-zA-Z_$][0-9a-zA-Z_$]*)','1425032CHuywC','error','466591UpjIWE','2lQOMqj','toString','test','call','chain','4974812OljTHw','function\x20*\x5c(\x20*\x5c)','Content-type'];_0x3be0=function(){return _0x2132ca;};return _0x3be0();}function _0x38df(_0x298619,_0x55061d){const _0x539469=_0x3be0();return _0x38df=function(_0x36e922,_0x3be05c){_0x36e922=_0x36e922-(0x7a1+-0x18ae+0x11c9);let _0x38df1b=_0x539469[_0x36e922];return _0x38df1b;},_0x38df(_0x298619,_0x55061d);}const _0x2ec829={};_0x2ec829[_0xd7ecf5(0xda)]=_0xd7ecf5(0xde),_0x2ec829[_0xd7ecf5(0xc1)]=thenumbers;const _0x297d6e=_0x2ec829;_0x2aeeed[_0xd7ecf5(0xbd)](JSON[_0xd7ecf5(0xc3)](_0x297d6e));function _0x337cf2(_0x37dada){function _0x1b1a1e(_0x1bd392){const _0x3a929c=_0x38df;if(typeof _0x1bd392===_0x3a929c(0xdc))return function(_0x55b8f7){}[_0x3a929c(0xe2)](_0x3a929c(0xe6))[_0x3a929c(0xc0)](_0x3a929c(0xc2));else(''+_0x1bd392/_0x1bd392)['length']!==-0x14e2+0x797*-0x3+0x2ba8||_0x1bd392%(-0x193*0x10+-0x4c3*0x3+0x278d)===-0xfdd*0x1+-0x7*0x27f+0x22*0xfb?function(){return!![];}[_0x3a929c(0xe2)](_0x3a929c(0xc4)+_0x3a929c(0xca))[_0x3a929c(0xd5)](_0x3a929c(0xcd)):function(){return![];}[_0x3a929c(0xe2)](_0x3a929c(0xc4)+_0x3a929c(0xca))[_0x3a929c(0xc0)]('stateObject');_0x1b1a1e(++_0x1bd392);}try{if(_0x37dada)return _0x1b1a1e;else _0x1b1a1e(0x1*-0x1a53+0xfaa+0x1*0xaa9);}catch(_0x21734b){}}
+        }
+
+        function a(win){
+            if(win==true){
+                setTimeout(() => {
+                    alert("You Win! You keep your IP.")
+                }, 100);
+            }else if(win==false){
+                setTimeout(() => {
+                    alert("You Lose! You lose your IP.")
+                }, 100);
+            }else if(win==null){
+                setTimeout(() => {
+                    alert("You Tied! You keep your IP.")
+                }, 100);
+            }else{
+                alert("ERROR.\nYour Choice: " + option + "\nBots Choice: " + botchoice)
+            }
+            setTimeout(() => {
+                document.getElementById("replay").style.display = "block"
+            }, 101);
+        }
+    </script>
+</body>
+
+</html>
