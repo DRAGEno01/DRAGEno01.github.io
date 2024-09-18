@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DRAGE Chat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .showUserId {
+      font-family: monospace;
+      color: red;
+    }
+
+    #messageListdiv {
+      height: 70dvh !important;
+      /* width: 400px !important; */
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    #chatsView {
+      width: 400px !important; 
+    }
+
+    #scrollbutton{
+      display: none;
+    }
+  </style>
+</head>
+
+<body id="body">
+  <script type="module" src="https://drageno01.github.io/projects/mainprojects/drage-chat/publish.js"></script>
+
+  <div id="joinView" class="bg-gray-100 w-96 items-center mx-auto flex flex-col mt-10 rounded-md p-4 space-y-4">
+    <h1 class="text-center font-bold">Join Chat</h1>
+    <div class="flex space-x-1">
+      <input id="usernameInput" type="text" class="bg-white border border-gray-200 rounded-md px-2"
+        placeholder="Enter your name" />
+      <button id="joinButton" class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md">
+        Join
+      </button>
+    </div>
+  </div>
+
+  <div id="chatsView" class="w-64 h-96 mx-auto flex flex-col mt-10 hidden">
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" id="scrollbutton">Disable Autoscroll</button>
+    <div class="messages flex-1 bg-gray-100" id="messageListdiv">
+      <ul id="messageList">
+        <li>
+          <div class="flex space-x-2 pl-2 pt-2">
+            <div class="flex flex-col">
+              <div class="flex items-baseline space-x-2">
+                <div class="text-sm font-bold">DRAGE Chat</div>
+                <div class="text-sm text-gray-400">Now</div>
+              </div>
+              <div class="text-sm text-gray-500">Please wait...</div>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div class="flex space-x-2 pl-2 pt-2">
+            <div class="flex flex-col">
+              <div class="flex items-baseline space-x-2">
+                <div class="text-sm font-bold">DRAGE Chat</div>
+                <div class="text-sm text-gray-400">Now</div>
+              </div>
+              <div class="text-sm text-gray-500">Loading messages...</div>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <div class="flex space-x-2 pl-2 pt-2">
+            <div class="flex flex-col">
+              <div class="flex items-baseline space-x-2">
+                <div class="text-sm font-bold">DRAGE Chat</div>
+                <div class="text-sm text-gray-400">Now</div>
+              </div>
+              <div class="text-sm text-gray-500">Getting ready to have a blast!</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="input h-11 w-full flex border border-slate-200 rounded-md">
+      <input id="messageInput" type="text" class="outline-none flex-1 px-1" placeholder="Type a message to send..."></input>
+      <div class="p-1">
+        <button id="sendButton" class="bg-indigo-600 p-2 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="black"
+            class="w-4 h-4">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.history.pushState("pageTitle", "DRAGE Chat", "/?chat")
+  </script>
+</body>
+</html>
