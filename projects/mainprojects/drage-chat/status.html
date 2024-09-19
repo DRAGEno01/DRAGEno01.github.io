@@ -39,42 +39,42 @@
         }
 
         .timelinebox-green {
-            width: 20px;
+            width: 1.5dvw;
             height: 40px;
             border-radius: 7.5px;
             background-color: rgb(56, 219, 38);
         }
 
         .timelinebox-yellowgreen {
-            width: 20px;
+            width: 1.5dvw;
             height: 40px;
             border-radius: 7.5px;
             background-color: rgb(168, 219, 38);
         }
 
         .timelinebox-yellow {
-            width: 20px;
+            width: 1.5dvw;
             height: 40px;
             border-radius: 7.5px;
             background-color: rgb(219, 210, 38);
         }
 
         .timelinebox-redyellow {
-            width: 20px;
+            width: 1.5dvw;
             height: 40px;
             border-radius: 7.5px;
             background-color: rgb(219, 138, 38);
         }
 
         .timelinebox-red {
-            width: 20px;
+            width: 1.5dvw;
             height: 40px;
             border-radius: 7.5px;
             background-color: rgb(219, 38, 38);
         }
 
         .timelinebox {
-            width: 20px;
+            width: 1.5dvw;
             height: 40px;
             border-radius: 7.5px;
             background-color: rgb(128, 128, 128);
@@ -95,8 +95,8 @@
         }
         .maindiv {
             background-color: #f3f3f3;
-            width: 80%;
-            height: 90dvh;
+            width: 90%;
+            /* height: 100dvh; */
             border-radius: 20px;
         }
         /* .timelines div {
@@ -126,7 +126,7 @@
             <br><br><br>
             <table>
                 <td><h1>Current Status:  </h1></td>
-                <td><div class="timelinebox-red" id="tooltip"><span class="tooltiptext">Major Outage</span></div></td>
+                <td><div class="timelinebox-yellowgreen" id="tooltip"><span class="tooltiptext">Operational with Limited Features</span></div></td>
             </table>
             <br><br>
             <div class="timelines">
@@ -215,14 +215,14 @@
                             <div class="timelinebox" id="tooltip"><span class="tooltiptext">No Data</span></div>
                         </td>
                         <td>
-                            <div class="timelinebox" id="tooltip"><span class="tooltiptext">No Data</span></div>
-                        </td>
-                        <td>
                             <div class="timelinebox-green" id="tooltip"><span class="tooltiptext">Operational</span>
                             </div>
                         </td>
                         <td>
                             <div class="timelinebox-red" id="tooltip"><span class="tooltiptext">Major Outage</span></div>
+                        </td>
+                        <td>
+                            <div class="timelinebox-yellowgreen" id="tooltip"><span class="tooltiptext">Slight Outage</span></div>
                         </td>
                     </table>
                 </div>
@@ -312,14 +312,14 @@
                             <div class="timelinebox" id="tooltip"><span class="tooltiptext">No Data</span></div>
                         </td>
                         <td>
-                            <div class="timelinebox" id="tooltip"><span class="tooltiptext">No Data</span></div>
-                        </td>
-                        <td>
                             <div class="timelinebox-green" id="tooltip"><span class="tooltiptext">Operational</span>
                             </div>
                         </td>
                         <td>
                             <div class="timelinebox-red" id="tooltip"><span class="tooltiptext">Major Outage</span></div>
+                        </td>
+                        <td>
+                            <div class="timelinebox-green" id="tooltip"><span class="tooltiptext">Operational</span></div>
                         </td>
                     </table>
                 </div>
@@ -409,27 +409,25 @@
                             <div class="timelinebox" id="tooltip"><span class="tooltiptext">No Data</span></div>
                         </td>
                         <td>
-                            <div class="timelinebox" id="tooltip"><span class="tooltiptext">No Data</span></div>
-                        </td>
-                        <td>
                             <div class="timelinebox-green" id="tooltip"><span class="tooltiptext">Operational</span>
                             </div>
                         </td>
                         <td>
                             <div class="timelinebox-red" id="tooltip"><span class="tooltiptext">Major Outage</span></div>
                         </td>
+                        <td>
+                            <div class="timelinebox-yellow" id="tooltip"><span class="tooltiptext">Partial Outage</span></div>
+                        </td>
                     </table>
                 </div>
             </div>
-            <br><br><br>
-            <p style="font-size: x-small;"><b>Last server update:</b> <i>19th of September 2024</i> <b>at</b> <i>15:00 AEST</i></p>
+            <p style="font-size: x-small;"><b>Last server update:</b> <i>20th of September 2024</i> <b>at</b> <i>00:00 AEST</i></p>
             <a href="https://drageno01.github.io/?chat"><button id="returnHome">Return to Homepage</button></a>
         </div>
     </center>
 
     <script>
-      window.history.pushState("pageTitle", "Status - DRAGE Chat", "/?chatstatus");
+        window.history.pushState("pageTitle", "Status - DRAGE Chat", "/?chatstatus");
     </script>
 </body>
-
 </html>
