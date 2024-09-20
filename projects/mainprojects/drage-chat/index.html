@@ -24,7 +24,8 @@
     }
 
     #chatsView {
-      width: 400px !important;
+      width: 60% !important;
+      height: 80dvh !important;
     }
 
     #scrollbutton {
@@ -36,18 +37,27 @@
 <body id="body">
   <br>
   <div class="container mt-3">
+    <div class="alert alert-danger alert-dismissible fade show" id="usageshutdown" style="display: none;">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <strong>Oh no!</strong> We have currently shutdown our servers for some maintenance. Please be patient wit us while we fix this issue!
+    </div> 
+
+    <div class="alert alert-warning alert-dismissible fade show" id="outofdateclient" style="display: none;">
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <strong>Hey!</strong> If you are seeing this message, it means that you are viewing an outdated version! Follow <a href=""><u>these (CLICK ME)</u></a> steps in order to continue using out platform!
+    </div>
     <!-- <div class="alert alert-danger alert-dismissible fade show">
       <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       <strong>Systems Down</strong> There is currently an issue with our servers. We will be back once we have patched
       the issue... This may take a few hours.
-    </div> -->
+    </div> 
     <div class="alert alert-info alert-dismissible fade show">
       <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       <strong>Info!</strong> The servers are back up, you can check the status <a
         href="https://drageno01.github.io/?chatstatus"><u>here</u></a>!
-    </div>
+    </div> -->
   </div>
-  <script type="module" src="https://drageno01.github.io/projects/mainprojects/drage-chat/publish.js"></script>
+  <script type="module" src="publish.js"></script>
 
   <div id="joinView" class="bg-gray-100 w-96 items-center mx-auto flex flex-col mt-10 rounded-md p-4 space-y-4">
     <h1 class="text-center font-bold" style="font-size: xx-large;">Join Chat</h1>
@@ -120,10 +130,20 @@
     </center>
   </div>
 
+  <center style="display: none;" id="staffButtons">
+    <br>
+    <table>
+      <td><button class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md" onclick="window.open('https://forms.gle/xEntAFhwddWAgsAb7','_blank')">Bug Report Form</button></td>
+      <td><button class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md" onclick="window.open('https://forms.gle/fGiDMQvJaDpyaWZA8','_blank')">User Report Form</button></td>
+    </table>
+  </center>
+
 
   <script>
     window.history.pushState("pageTitle", "DRAGE Chat", "/?chat");
   </script>
+
+  <!-- <img src="https://c.tenor.com/jqv9q8ho5BEAAAAC/tenor.gif" width="80%"> -->
 </body>
 
 </html>
