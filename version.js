@@ -1,4 +1,4 @@
-export var dragechatServerVersion = 0.00004;
+export var dragechatServerVersion = 0.00005;
 export var dragechatAllowUsage = true;
 
 // export var drageGitHubVersion = "Alpha 0.02";
