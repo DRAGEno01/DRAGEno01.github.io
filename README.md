@@ -11,6 +11,7 @@ A free online notepad that allows you to download the file you have been working
 
 ## [DRAGE Chat](https://drageno01.github.io/?chat)
 A free chat platform that allows people to communicate in one big chat room. Currently being updated and moderated.
+Paid Patreon members will recieve a special chat badge.
 
 ## AdersonMDT
 Made for fun for a roleplay game, but the people were racist so I removed their login.
