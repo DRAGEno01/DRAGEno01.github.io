@@ -3,15 +3,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebas
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"; //signInAnonymously, 
 import { getFirestore, addDoc, collection, onSnapshot, doc, getDocs, query, where, } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
-let clientVersion = 0.00009;
-if(dragechatServerVersion == clientVersion){
+let clientVersion = 0.00011;
+if (dragechatServerVersion == clientVersion) {
     document.getElementById("outofdateclient").style.display = "none";
-}else {
+} else {
     document.getElementById("outofdateclient").style.display = "block";
 }
-if(!dragechatAllowUsage){
+if (!dragechatAllowUsage) {
     document.getElementById("usageshutdown").style.display = "block";
-}else {
+} else {
     document.getElementById("usageshutdown").style.display = "none";
 }
 
@@ -22,10 +22,10 @@ function getCookie(name) {
 }
 
 let cookieforsession = getCookie("session")
-if(cookieforsession == "" || cookieforsession == null || cookieforsession == false){
+if (cookieforsession == "" || cookieforsession == null || cookieforsession == false) {
     document.cookie = `session=${true}; path=/`;
     window.location.reload(true);
-}else {
+} else {
     document.cookie = `session=${false}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`
 }
 
@@ -43,9 +43,11 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 auth.languageCode = 'en';
-let staffEmails = ["drageno110@gmail.com"];
-let testerEmails = ["sinxbax301@outlook.com"];
-let vipEmails = ["drageno110@gmail.com", "b.drageno01@gmail.com", "sinxbax301@outlook.com"];
+let staffUID = ["tgtee2L2iKhvXznmgzAx9u3ApKi1"];
+let testerUID = ["Sq3kcDSwZQVGSW4jmQ56r788GOv2"];
+let vipUID = ["tgtee2L2iKhvXznmgzAx9u3ApKi1", "n37sgpejBkW8768m6cyjgCf47sA2", "Sq3kcDSwZQVGSW4jmQ56r788GOv2"];
+let dragecsUID = ["tgtee2L2iKhvXznmgzAx9u3ApKi1", "jWbwKwxqC5cXTD9xEKWblHQBcuh2"];
+let allowHTMLtags = ["tgtee2L2iKhvXznmgzAx9u3ApKi1", "Sq3kcDSwZQVGSW4jmQ56r788GOv2"];
 const date = new Date();
 let authenticatedLogin = false;
 let day = date.getDate();
@@ -63,14 +65,14 @@ const joinView = document.getElementById("joinView");
 const chatsView = document.getElementById("chatsView");
 const audioMuteButton = document.getElementById("audioMute");
 const clientIdDisplay = document.getElementById("clientVersion");
-if(clientVersion==dragechatServerVersion && dragechatAllowUsage){
+if (clientVersion == dragechatServerVersion && dragechatAllowUsage) {
     clientIdDisplay.style.color = "green";
-}else {
+} else {
     clientIdDisplay.style.color = "red";
 }
 clientIdDisplay.innerHTML = `Client Version: ${clientVersion} | Server Version: ${dragechatServerVersion} | Chat Usage Allowed: ${dragechatAllowUsage}`;
 
-let messageCooldown = 12500;
+let messageCooldown = 5000;
 let messages = [];
 let specifiedUsername = "";
 let userLoggedIn = false;
@@ -83,33 +85,34 @@ let tabFocused = true;
 let newMessagesSinceTabNotFocused = 0;
 let audioMuteStatus = false;
 const regex = /\p{Extended_Pictographic}/ug;
+const regexb = /[\xCC\xCD]/;
 
-function playSound(){
+function playSound() {
     const audio = new Audio("https://notificationsounds.com/storage/sounds/file-sounds-1233-elegant.mp3");
     audio.play();
 };
 
 audioMuteButton.addEventListener("click", () => {
-    if(!audioMuteStatus){
+    if (!audioMuteStatus) {
         audioMuteStatus = true;
         document.getElementById("audioMute").innerHTML = "Unmute Audio";
-    }else {
+    } else {
         audioMuteStatus = false;
         document.getElementById("audioMute").innerHTML = "Mute Audio";
     }
 });
 
 joinButton.addEventListener("click", () => {
-    if(!(dragechatServerVersion == clientVersion)){
+    if (!(dragechatServerVersion == clientVersion)) {
         alert("You can not use our platform until you update your client side!");
         return;
     }
-    if(!dragechatAllowUsage){
+    if (!dragechatAllowUsage) {
         alert("You are unable to join the chat currently!");
         return;
     }
     specifiedUsername = usernameInput.value;
-    if(regex.test(specifiedUsername)){
+    if (regex.test(specifiedUsername)) {
         alert("You have something in the username your not allowed to have.");
         return;
     }
@@ -125,41 +128,80 @@ joinButton.addEventListener("click", () => {
             const user = result.user;
             uid = user.uid;
             email = user.email;
-            if(vipEmails.includes(email)){
-                document.getElementById("patreonThanks").style.display = "block";
-                if(testerEmails.includes(email)){
-                    authenticatedLogin = true;
-                    specifiedUsername = "<b style='color:green;'><u>"+specifiedUsername+"</u></b> 🪲💎✔️";
-                    document.getElementById("staffButtons").style.display = "block";
-                }else if (staffEmails.includes(email)) {
-                    authenticatedLogin = true;
-                    messageInput.setAttribute('maxlength','3000');
-                    document.getElementById("body").style.backgroundColor = "#333";
-                    document.getElementById("staffButtons").style.display = "block";
-                    adminStatus = true;
-                    specifiedUsername = "<b style='color:red;'><u>"+specifiedUsername+"</u></b> 🛠️💎✔️";
-                }else {
-                    if (specifiedUsername == "DRAGEno01" && adminStatus == false) {
-                        specifiedUsername = Math.round(Math.random() * 100000);
+            if (dragecsUID.includes(uid)) {
+                if (vipUID.includes(uid)) {
+                    document.getElementById("patreonThanks").style.display = "block";
+                    if (testerUID.includes(uid)) {
+                        authenticatedLogin = true;
+                        specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> 🪲🔥💎✔️";
+                        document.getElementById("staffButtons").style.display = "block";
+                    } else if (staffUID.includes(uid)) {
+                        authenticatedLogin = true;
+                        messageInput.setAttribute('maxlength', '3000');
+                        document.getElementById("body").style.backgroundColor = "#333";
+                        document.getElementById("staffButtons").style.display = "block";
+                        adminStatus = true;
+                        specifiedUsername = "<b style='color:red;'><u>" + specifiedUsername + "</u></b> 🛠️🔥💎✔️";
+                    } else {
+                        if (specifiedUsername == "DRAGEno01" && adminStatus == false) {
+                            specifiedUsername = Math.round(Math.random() * 100000);
+                        };
+                        specifiedUsername = "<span style='color:#17F1F4'>" + specifiedUsername + "</span> 🔥💎";
                     };
-                    specifiedUsername = "<span style='color:#17F1F4'>"+specifiedUsername+"</span> 💎";
+                } else {
+                    if (testerUID.includes(uid)) {
+                        authenticatedLogin = true;
+                        specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> 🪲🔥✔️";
+                        document.getElementById("staffButtons").style.display = "block";
+                    } else if (staffUID.includes(uid)) {
+                        authenticatedLogin = true;
+                        messageInput.setAttribute('maxlength', '3000');
+                        document.getElementById("body").style.backgroundColor = "#333";
+                        document.getElementById("staffButtons").style.display = "block";
+                        adminStatus = true;
+                        specifiedUsername = "<b style='color:red;'><u>" + specifiedUsername + "</u></b> 🛠️🔥✔️";
+                    } else if (specifiedUsername == "DRAGEno01" && adminStatus == false) {
+                        specifiedUsername = Math.round(Math.random() * 100000);
+                    }
                 };
-            }else {
-                if(testerEmails.includes(email)){
-                    authenticatedLogin = true;
-                    specifiedUsername = "<b style='color:green;'><u>"+specifiedUsername+"</u></b> 🪲✔️";
-                    document.getElementById("staffButtons").style.display = "block";
-                }else if (staffEmails.includes(email)) {
-                    authenticatedLogin = true;
-                    messageInput.setAttribute('maxlength','3000');
-                    document.getElementById("body").style.backgroundColor = "#333";
-                    document.getElementById("staffButtons").style.display = "block";
-                    adminStatus = true;
-                    specifiedUsername = "<b style='color:red;'><u>"+specifiedUsername+"</u></b> 🛠️✔️";
-                }else if(specifiedUsername == "DRAGEno01" && adminStatus == false) {
-                    specifiedUsername = Math.round(Math.random() * 100000);
-                }
-            };
+            } else {
+                if (vipUID.includes(uid)) {
+                    document.getElementById("patreonThanks").style.display = "block";
+                    if (testerUID.includes(uid)) {
+                        authenticatedLogin = true;
+                        specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> 🪲💎✔️";
+                        document.getElementById("staffButtons").style.display = "block";
+                    } else if (staffUID.includes(uid)) {
+                        authenticatedLogin = true;
+                        messageInput.setAttribute('maxlength', '3000');
+                        document.getElementById("body").style.backgroundColor = "#333";
+                        document.getElementById("staffButtons").style.display = "block";
+                        adminStatus = true;
+                        specifiedUsername = "<b style='color:red;'><u>" + specifiedUsername + "</u></b> 🛠️💎✔️";
+                    } else {
+                        if (specifiedUsername == "DRAGEno01" && adminStatus == false) {
+                            specifiedUsername = Math.round(Math.random() * 100000);
+                        };
+                        specifiedUsername = "<span style='color:#17F1F4'>" + specifiedUsername + "</span> 💎";
+                    };
+                } else {
+                    if (testerUID.includes(uid)) {
+                        authenticatedLogin = true;
+                        specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> 🪲✔️";
+                        document.getElementById("staffButtons").style.display = "block";
+                    } else if (staffUID.includes(uid)) {
+                        authenticatedLogin = true;
+                        messageInput.setAttribute('maxlength', '3000');
+                        document.getElementById("body").style.backgroundColor = "#333";
+                        document.getElementById("staffButtons").style.display = "block";
+                        adminStatus = true;
+                        specifiedUsername = "<b style='color:red;'><u>" + specifiedUsername + "</u></b> 🛠️✔️";
+                    } else if (specifiedUsername == "DRAGEno01" && adminStatus == false) {
+                        specifiedUsername = Math.round(Math.random() * 100000);
+                    }
+                };
+            }
+
             document.getElementById("audioOptions").style.display = "block";
             joinView.classList.add("hidden");
             chatsView.classList.remove("hidden");
@@ -186,10 +228,10 @@ sendButton.addEventListener("click", async () => {
         auth.currentUser.reload().then(async user => {
             const message = messageInput.value;
             if (!message == "") {
-                if((message.toLowerCase().includes("<")||message.toLowerCase().includes(">")) && !adminStatus){
+                if ((message.toLowerCase().includes("<") || message.toLowerCase().includes(">")) && !(allowHTMLtags.includes(uid))) {
                     alert("You are unable to send message with a HTML tag in it.");
-                }else{
-                    if(!adminStatus){
+                } else {
+                    if (!adminStatus) {
                         sendButton.style.display = "none";
                         setTimeout(() => {
                             sendButton.style.display = "block";
@@ -238,9 +280,9 @@ function subscribeToNewMessages() {
         if (adminStatus == true) {
             allowShowID = true;
         }
-        if(!tabFocused){
+        if (!tabFocused) {
             newMessagesSinceTabNotFocused += 1;
-            if(!audioMuteStatus){
+            if (!audioMuteStatus) {
                 playSound();
             };
         }
@@ -335,25 +377,25 @@ function messageTemplate(message, username, timestamp, showID, id) {
 document.getElementById("messageListdiv").setAttribute('scrolling', 'yes');
 
 setInterval(() => {
-    
-    if(!authenticatedLogin){
+
+    if (!authenticatedLogin) {
         adminStatus = false;
-        messageCooldown = 12500;
-        if(!adminStatus){
-            messageInput.setAttribute('maxlength','100');
+        messageCooldown = 5000;
+        if (!adminStatus) {
+            messageInput.setAttribute('maxlength', '100');
         }
-        if((messageInput.value.toLowerCase().includes("<")||messageInput.value.toLowerCase().includes(">")) && !adminStatus){
+        if ((messageInput.value.toLowerCase().includes("<") || messageInput.value.toLowerCase().includes(">")) && !adminStatus) {
             messageInput.style.color = "red";
-        }else {
+        } else {
             messageInput.style.color = "black";
         }
     }
-    if(newMessagesSinceTabNotFocused>0){
+    if (newMessagesSinceTabNotFocused > 0) {
         document.title = `(${newMessagesSinceTabNotFocused}) DRAGE Chat`;
-    }else {
+    } else {
         document.title = `DRAGE Chat`;
     }
-    if(tabFocused){
+    if (tabFocused) {
         newMessagesSinceTabNotFocused = 0;
     }
 }, 100);
@@ -378,4 +420,4 @@ window.addEventListener('blur', function () {
 
 setTimeout(() => {
     window.location.reload(true);
-}, (60000*60));
+}, (60000 * 60));
