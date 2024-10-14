@@ -3,19 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRAGE - CS</title>
+    <title>DRAGE-CS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-        
-        h1 {
-            font-family: 'Kanit', cursive;
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: #ff9800;
+        }
+
+        a:hover {
+            color: #f44336;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #1e1e1e;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f44336;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links li {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .nav-links li a {
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .nav-links li a:hover {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(to right, #f44336, #ff9800);
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        #hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        #hero p {
+            font-size: 1.2rem;
+        }
+
+        /* Card Section */
+        #news {
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        #news h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: #ffcc00;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        /* Learn More Section */
+        #learn-more {
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        #learn-more p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: #ddd;
+        }
+
+        /* Roster Section */
+        #roster {
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .roster-item {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .roster-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ffcc00;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1e1e1e;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: #ddd;
+            font-size: 0.9rem;
         }
     </style>
 </head>
-<body style="background-color: rgb(62, 62, 62);">
-    <center style="color: white; margin-top: 40dvh;">
-        <h1>This page is under construction...</h1>
-        <p>Check back later in the season for updates!</p>
-    </center>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">DRAGE-CS</div>
+                <ul class="nav-links">
+                    <li><a href="#news">News</a></li>
+                    <li><a href="#roster">Roster</a></li>
+                    <li><a href="#learn-more">Learn More</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div class="container">
+                <h1>Welcome to DRAGE-CS Esports Team</h1>
+                <p>The upcoming team competing in some CS:2 competitions.</p>
+            </div>
+        </section>
+
+        <section id="news" class="container">
+            <h2>Latest News</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>A Second Player</h3>
+                    <p>We are still looking to fill up 3 more slots for the A-Team. Oceania players only.</p>
+                    <a href="#">Read More</a>
+                </div>
+                <div class="card">
+                    <h3>New Player for the A-Team</h3>
+                    <p>Excited to announce a new addition to our roster. Imapotato has shown us that he is amazing with a wide veriety of weapons, but mainly scoped weapons.</p>
+                    <a href="#">Read More</a>
+                </div>
+                <div class="card">
+                    <h3>Try-Outs Open</h3>
+                    <p>Try-outs for the team have opened up, with a total of 11 spots (5 for A-Team, and 6 for B-Team)
+                        currently available.</p>
+                    <a href="#">Read More</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="learn-more" class="container">
+            <h2>Learn More About Us</h2>
+            <p>We are an upcoming CS:2 team dedicated to competing and providing the best esports content you have seen.
+                Our goal is to dominate the scene with precision and teamwork. Stay tuned for more exciting news and
+                content!</p>
+        </section>
+
+        <section id="roster" class="container">
+            <h2>Our A-Team Roster</h2>
+            <div class="roster-grid">
+                <div class="roster-item">
+                    <h3>DRAGEno01</h3>
+                    <img src="https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg">
+                    <p>Role: In-Game Leader</p>
+                </div>
+                <div class="roster-item">
+                    <h3>Imapotato</h3>
+                    <img src="https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg">
+                    <p>Role: AWPer</p>
+                </div>
+                <div class="roster-item">
+                    <h3>Empty</h3>
+                    <img src="https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg">
+                    <p>Role: Entry Fragger</p>
+                </div>
+                <div class="roster-item">
+                    <h3>Empty</h3>
+                    <img src="https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg">
+                    <p>Role: Support</p>
+                </div>
+                <div class="roster-item">
+                    <h3>Empty</h3>
+                    <img src="https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg">
+                    <p>Role: Lurker</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 DRAGE-CS Esports Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        window.history.pushState("pageTitle", "DRAGE-CS", "/?cs");
+    </script>
 </body>
 </html>
