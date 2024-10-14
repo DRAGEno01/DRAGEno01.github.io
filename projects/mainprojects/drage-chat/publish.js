@@ -163,6 +163,7 @@ joinButton.addEventListener("click", () => {
                     } else if (specifiedUsername == "DRAGEno01" && adminStatus == false) {
                         specifiedUsername = Math.round(Math.random() * 100000);
                     }
+                    specifiedUsername = "<b style='color:orange;'><u>" + specifiedUsername + "</u></b> 🔥✔️";
                 };
             } else {
                 if (vipUID.includes(uid)) {
