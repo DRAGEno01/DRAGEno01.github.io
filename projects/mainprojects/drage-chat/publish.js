@@ -236,22 +236,26 @@ sendButton.addEventListener("click", async () => {
                 if ((message.toLowerCase().includes("<") || message.toLowerCase().includes(">")) && !(allowHTMLtags.includes(uid))) {
                     alert("You are unable to send message with a HTML tag in it.");
                 } else {
-                    if (!adminStatus) {
-                        sendButton.style.display = "none";
-                        setTimeout(() => {
-                            sendButton.style.display = "block";
-                        }, messageCooldown);
+                    if (message.toLowerCase().includes("﷽") && !(adminStatus)) {
+                        alert("You can not send this message.")
+                    } else {
+                        if (!adminStatus) {
+                            sendButton.style.display = "none";
+                            setTimeout(() => {
+                                sendButton.style.display = "block";
+                            }, messageCooldown);
+                        }
+                        messageInput.value = "";
+                        datenow = new Date();
+                        const docRef = await addDoc(collection(db, "messages"), {
+                            user: specifiedUsername,
+                            message: message,
+                            created: datenow,
+                            uid: uid,
+                            email: email,
+                            staff: adminStatus,
+                        });
                     }
-                    messageInput.value = "";
-                    datenow = new Date();
-                    const docRef = await addDoc(collection(db, "messages"), {
-                        user: specifiedUsername,
-                        message: message,
-                        created: datenow,
-                        uid: uid,
-                        email: email,
-                        staff: adminStatus,
-                    });
                 }
             }
         }).catch(error => {
@@ -430,7 +434,7 @@ window.addEventListener('blur', function () {
 });
 
 setTimeout(() => {
-    if(!tabFocused){
+    if (!tabFocused) {
         window.location.reload(true);
     }
 }, (60000 * 120));
