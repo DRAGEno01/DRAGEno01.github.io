@@ -135,6 +135,7 @@ joinButton.addEventListener("click", () => {
                         authenticatedLogin = true;
                         specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> 🪲🔥💎✔️";
                         document.getElementById("staffButtons").style.display = "block";
+                        messageInput.setAttribute('maxlength', '500');
                     } else if (staffUID.includes(uid)) {
                         authenticatedLogin = true;
                         messageInput.setAttribute('maxlength', '3000');
@@ -153,6 +154,7 @@ joinButton.addEventListener("click", () => {
                         authenticatedLogin = true;
                         specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> 🪲🔥✔️";
                         document.getElementById("staffButtons").style.display = "block";
+                        messageInput.setAttribute('maxlength', '500');
                     } else if (staffUID.includes(uid)) {
                         authenticatedLogin = true;
                         messageInput.setAttribute('maxlength', '3000');
@@ -172,6 +174,7 @@ joinButton.addEventListener("click", () => {
                         authenticatedLogin = true;
                         specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> 🪲💎✔️";
                         document.getElementById("staffButtons").style.display = "block";
+                        messageInput.setAttribute('maxlength', '500');
                     } else if (staffUID.includes(uid)) {
                         authenticatedLogin = true;
                         messageInput.setAttribute('maxlength', '3000');
@@ -190,6 +193,7 @@ joinButton.addEventListener("click", () => {
                         authenticatedLogin = true;
                         specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> 🪲✔️";
                         document.getElementById("staffButtons").style.display = "block";
+                        messageInput.setAttribute('maxlength', '500');
                     } else if (staffUID.includes(uid)) {
                         authenticatedLogin = true;
                         messageInput.setAttribute('maxlength', '3000');
@@ -339,6 +343,9 @@ function messageTemplate(message, username, timestamp, showID, id) {
         setTimeout(() => {
             document.getElementById('messageListdiv').scrollTop = (document.getElementById('messageListdiv').scrollHeight);
         }, 100);
+        setTimeout(() => {
+            document.getElementById('messageListdiv').scrollTop = (document.getElementById('messageListdiv').scrollHeight);
+        }, 200);
     }
     if (showID) {
         return `<li>
@@ -385,6 +392,9 @@ setInterval(() => {
         if (!adminStatus) {
             messageInput.setAttribute('maxlength', '100');
         }
+        if (testerUID.includes(uid)) {
+            messageInput.setAttribute('maxlength', '500');
+        }
         if ((messageInput.value.toLowerCase().includes("<") || messageInput.value.toLowerCase().includes(">")) && !adminStatus) {
             messageInput.style.color = "red";
         } else {
@@ -420,5 +430,35 @@ window.addEventListener('blur', function () {
 });
 
 setTimeout(() => {
-    window.location.reload(true);
-}, (60000 * 60));
+    if(!tabFocused){
+        window.location.reload(true);
+    }
+}, (60000 * 120));
+
+
+
+/*
+    This part of the code checks if DRAGEno01 is live.
+    If he is live, it will display a banner to the people using the chat.
+    If he is not live, it will hide the banner as usual.
+*/
+var liveCheck = false;
+
+function check() {
+    let a = fetch(`https://decapi.me/twitch/uptime/DRAGEno01`, { method: 'GET' }).then(response => response.text().then(function (text) {
+        if (text.includes("is offline")) {
+            liveCheck = false;
+        } else if (text.includes(",")) {
+            liveCheck = true;
+        }
+    }))
+}
+
+setInterval(() => {
+    check()
+    if (liveCheck) {
+        document.getElementById("twitchlive").style.display = "block";
+    } else {
+        document.getElementById("twitchlive").style.display = "none";
+    }
+}, 7500);
