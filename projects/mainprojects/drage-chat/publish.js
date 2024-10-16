@@ -3,7 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebas
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"; //signInAnonymously, 
 import { getFirestore, addDoc, collection, onSnapshot, doc, getDocs, query, where, } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
-let clientVersion = 0.00011;
+let clientVersion = 0.00012;
 if (dragechatServerVersion == clientVersion) {
     document.getElementById("outofdateclient").style.display = "none";
 } else {
@@ -73,6 +73,7 @@ if (clientVersion == dragechatServerVersion && dragechatAllowUsage) {
 clientIdDisplay.innerHTML = `Client Version: ${clientVersion} | Server Version: ${dragechatServerVersion} | Chat Usage Allowed: ${dragechatAllowUsage}`;
 
 let messageCooldown = 5000;
+let ableToSendMessage = true;
 let messages = [];
 let specifiedUsername = "";
 let userLoggedIn = false;
@@ -128,84 +129,9 @@ joinButton.addEventListener("click", () => {
             const user = result.user;
             uid = user.uid;
             email = user.email;
-            if (dragecsUID.includes(uid)) {
-                if (vipUID.includes(uid)) {
-                    document.getElementById("patreonThanks").style.display = "block";
-                    if (testerUID.includes(uid)) {
-                        authenticatedLogin = true;
-                        specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> 🪲🔥💎✔️";
-                        document.getElementById("staffButtons").style.display = "block";
-                        messageInput.setAttribute('maxlength', '500');
-                    } else if (staffUID.includes(uid)) {
-                        authenticatedLogin = true;
-                        messageInput.setAttribute('maxlength', '3000');
-                        document.getElementById("body").style.backgroundColor = "#333";
-                        document.getElementById("staffButtons").style.display = "block";
-                        adminStatus = true;
-                        specifiedUsername = "<b style='color:red;'><u>" + specifiedUsername + "</u></b> 🛠️🔥💎✔️";
-                    } else {
-                        if (specifiedUsername == "DRAGEno01" && adminStatus == false) {
-                            specifiedUsername = Math.round(Math.random() * 100000);
-                        };
-                        specifiedUsername = "<span style='color:#17F1F4'>" + specifiedUsername + "</span> 🔥💎";
-                    };
-                } else {
-                    if (testerUID.includes(uid)) {
-                        authenticatedLogin = true;
-                        specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> 🪲🔥✔️";
-                        document.getElementById("staffButtons").style.display = "block";
-                        messageInput.setAttribute('maxlength', '500');
-                    } else if (staffUID.includes(uid)) {
-                        authenticatedLogin = true;
-                        messageInput.setAttribute('maxlength', '3000');
-                        document.getElementById("body").style.backgroundColor = "#333";
-                        document.getElementById("staffButtons").style.display = "block";
-                        adminStatus = true;
-                        specifiedUsername = "<b style='color:red;'><u>" + specifiedUsername + "</u></b> 🛠️🔥✔️";
-                    } else if (specifiedUsername == "DRAGEno01" && adminStatus == false) {
-                        specifiedUsername = Math.round(Math.random() * 100000);
-                    }
-                    specifiedUsername = "<b style='color:orange;'><u>" + specifiedUsername + "</u></b> 🔥✔️";
-                };
-            } else {
-                if (vipUID.includes(uid)) {
-                    document.getElementById("patreonThanks").style.display = "block";
-                    if (testerUID.includes(uid)) {
-                        authenticatedLogin = true;
-                        specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> 🪲💎✔️";
-                        document.getElementById("staffButtons").style.display = "block";
-                        messageInput.setAttribute('maxlength', '500');
-                    } else if (staffUID.includes(uid)) {
-                        authenticatedLogin = true;
-                        messageInput.setAttribute('maxlength', '3000');
-                        document.getElementById("body").style.backgroundColor = "#333";
-                        document.getElementById("staffButtons").style.display = "block";
-                        adminStatus = true;
-                        specifiedUsername = "<b style='color:red;'><u>" + specifiedUsername + "</u></b> 🛠️💎✔️";
-                    } else {
-                        if (specifiedUsername == "DRAGEno01" && adminStatus == false) {
-                            specifiedUsername = Math.round(Math.random() * 100000);
-                        };
-                        specifiedUsername = "<span style='color:#17F1F4'>" + specifiedUsername + "</span> 💎";
-                    };
-                } else {
-                    if (testerUID.includes(uid)) {
-                        authenticatedLogin = true;
-                        specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> 🪲✔️";
-                        document.getElementById("staffButtons").style.display = "block";
-                        messageInput.setAttribute('maxlength', '500');
-                    } else if (staffUID.includes(uid)) {
-                        authenticatedLogin = true;
-                        messageInput.setAttribute('maxlength', '3000');
-                        document.getElementById("body").style.backgroundColor = "#333";
-                        document.getElementById("staffButtons").style.display = "block";
-                        adminStatus = true;
-                        specifiedUsername = "<b style='color:red;'><u>" + specifiedUsername + "</u></b> 🛠️✔️";
-                    } else if (specifiedUsername == "DRAGEno01" && adminStatus == false) {
-                        specifiedUsername = Math.round(Math.random() * 100000);
-                    }
-                };
-            }
+
+            chatBadges()
+            extraStaffFeatures()
 
             document.getElementById("audioOptions").style.display = "block";
             joinView.classList.add("hidden");
@@ -228,42 +154,20 @@ joinButton.addEventListener("click", () => {
         });
 });
 
-sendButton.addEventListener("click", async () => {
-    if (auth.currentUser) {
-        auth.currentUser.reload().then(async user => {
-            const message = messageInput.value;
-            if (!message == "") {
-                if ((message.toLowerCase().includes("<") || message.toLowerCase().includes(">")) && !(allowHTMLtags.includes(uid))) {
-                    alert("You are unable to send message with a HTML tag in it.");
-                } else {
-                    if (message.toLowerCase().includes("﷽") && !(adminStatus)) {
-                        alert("You can not send this message.")
-                    } else {
-                        if (!adminStatus) {
-                            sendButton.style.display = "none";
-                            setTimeout(() => {
-                                sendButton.style.display = "block";
-                            }, messageCooldown);
-                        }
-                        messageInput.value = "";
-                        datenow = new Date();
-                        const docRef = await addDoc(collection(db, "messages"), {
-                            user: specifiedUsername,
-                            message: message,
-                            created: datenow,
-                            uid: uid,
-                            email: email,
-                            staff: adminStatus,
-                        });
-                    }
-                }
-            }
-        }).catch(error => {
-            alert("You are currently unable to send message. Login again to continue.");
-            window.location.href = window.location.href;
-        });
+messageInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        if (ableToSendMessage) {
+            sendingMessageCooldownTrigger()
+            sendMessage()
+        }
     }
+});
 
+sendButton.addEventListener("click", async () => {
+    if (ableToSendMessage) {
+        sendingMessageCooldownTrigger()
+        sendMessage()
+    }
 });
 
 function subscribeToNewMessages() {
@@ -389,7 +293,6 @@ function messageTemplate(message, username, timestamp, showID, id) {
 document.getElementById("messageListdiv").setAttribute('scrolling', 'yes');
 
 setInterval(() => {
-
     if (!authenticatedLogin) {
         adminStatus = false;
         messageCooldown = 5000;
@@ -397,7 +300,10 @@ setInterval(() => {
             messageInput.setAttribute('maxlength', '100');
         }
         if (testerUID.includes(uid)) {
-            messageInput.setAttribute('maxlength', '500');
+            messageInput.setAttribute('maxlength', '300');
+        }
+        if(vipUID.includes(uid)){
+            messageInput.setAttribute('maxlength', '150')
         }
         if ((messageInput.value.toLowerCase().includes("<") || messageInput.value.toLowerCase().includes(">")) && !adminStatus) {
             messageInput.style.color = "red";
@@ -466,3 +372,163 @@ setInterval(() => {
         document.getElementById("twitchlive").style.display = "none";
     }
 }, 7500);
+
+
+/*
+    This section of the code is the part about message cooldowns.
+*/
+
+function sendingMessageCooldownTrigger() {
+    if (!adminStatus) {
+        ableToSendMessage = false;
+        setTimeout(() => {
+            ableToSendMessage = true;
+        }, messageCooldown);
+    }
+}
+
+setInterval(() => {
+    if (!ableToSendMessage) {
+        if (!adminStatus) {
+            sendButton.style.display = "none";
+        }
+    } else {
+        sendButton.style.display = "block";
+    }
+}, 100);
+
+
+/*
+    This might just be the most important section.
+*/
+
+function sendMessage() {
+    if (auth.currentUser) {
+        auth.currentUser.reload().then(async user => {
+            const message = messageInput.value;
+            if (!message == "") {
+                if ((message.toLowerCase().includes("<") || message.toLowerCase().includes(">")) && !(allowHTMLtags.includes(uid))) {
+                    alert("You are unable to send message with a HTML tag in it.");
+                } else {
+                    if (message.toLowerCase().includes("﷽") && !(adminStatus)) {
+                        alert("You can not send this message.")
+                    } else {
+                        messageInput.value = "";
+                        datenow = new Date();
+                        const docRef = await addDoc(collection(db, "messages"), {
+                            user: specifiedUsername,
+                            message: message,
+                            created: datenow,
+                            uid: uid,
+                            email: email,
+                            staff: adminStatus,
+                        });
+                    }
+                }
+            }
+        }).catch(error => {
+            alert("You are currently unable to send message. Login again to continue.");
+            window.location.href = window.location.href;
+        });
+    }
+}
+
+//🛠️🪲🔥💎✔️ (no explanation needed)
+
+function chatBadges() {
+    let patreon = false;
+    let dragecs = false;
+    let tester = false;
+    let staff = false;
+    if (dragecsUID.includes(uid)) {
+        dragecs = true;
+    }
+    if (vipUID.includes(uid)) {
+        patreon = true;
+    }
+    if (testerUID.includes(uid)) {
+        tester = true;
+    }
+    if (staffUID.includes(uid)) {
+        staff = true;
+    }
+    if (staff) {
+        specifiedUsername = "<b style='color:red;'><u>" + specifiedUsername + "</u></b> ";
+    } else if (tester) {
+        if (specifiedUsername == "DRAGEno01") {
+            specifiedUsername = Math.round(Math.random() * 100000);
+        }else {
+            specifiedUsername = "<b style='color:green;'><u>" + specifiedUsername + "</u></b> ";
+        }
+    } else if (dragecs) {
+        if (specifiedUsername == "DRAGEno01") {
+            specifiedUsername = Math.round(Math.random() * 100000);
+        }else {
+            specifiedUsername = "<b style='color:orange;'><u>" + specifiedUsername + "</u></b> ";
+        }
+    } else if (patreon) {
+        if (specifiedUsername == "DRAGEno01") {
+            specifiedUsername = Math.round(Math.random() * 100000);
+        }else {
+            specifiedUsername = "<span style='color:#17F1F4'>" + specifiedUsername + "</span> "
+        }
+    } else {
+        if (specifiedUsername == "DRAGEno01") {
+            specifiedUsername = Math.round(Math.random() * 100000);
+        }else {
+            specifiedUsername = specifiedUsername;
+        }
+    }
+    if (staff) {
+        specifiedUsername = specifiedUsername + "🛠️"
+    }
+    if (tester) {
+        specifiedUsername = specifiedUsername + "🪲"
+    }
+    if (dragecs) {
+        specifiedUsername = specifiedUsername + "🔥"
+    }
+    if (patreon) {
+        specifiedUsername = specifiedUsername + "💎"
+    }
+    if (staff || tester || dragecs) {
+        specifiedUsername = specifiedUsername + "✔️"
+    }
+}
+
+function extraStaffFeatures() {
+    let patreon = false;
+    let dragecs = false;
+    let tester = false;
+    let staff = false;
+    if (dragecsUID.includes(uid)) {
+        dragecs = true;
+    }
+    if (vipUID.includes(uid)) {
+        patreon = true;
+    }
+    if (testerUID.includes(uid)) {
+        tester = true;
+    }
+    if (staffUID.includes(uid)) {
+        staff = true;
+    }
+
+    if (staff) {
+        authenticatedLogin = true;
+        messageInput.setAttribute('maxlength', '3000');
+        document.getElementById("body").style.backgroundColor = "#333";
+        document.getElementById("staffButtonOne").style.display = "block";
+        document.getElementById("staffButtonTwo").style.display = "block";
+        adminStatus = true;
+    } else if (tester) {
+        document.getElementById("staffButtonOne").style.display = "block";
+        document.getElementById("staffButtonTwo").style.display = "block";
+        messageInput.setAttribute('maxlength', '300');
+        authenticatedLogin = true;
+    }
+    if (patreon) {
+        document.getElementById("patreonThanks").style.display = "block";
+        messageInput.setAttribute('maxlength', '150');
+    }
+}

@@ -53,7 +53,7 @@
             </div>
             <div class="alert alert-light alert-dismissible fade show" id="patreonThanks" style="display: none;">
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <strong>Thank you!</strong> Thank you for being a Patreon member. We have given you some extra perks for this. (Perks: VIP Chat Tag)
+                <strong>Thank you!</strong> Thank you for being a Patreon member. We have given you some extra perks for this. (Perks: VIP Chat Tag, 1.5x Longer Messages)
             </div>
             <div class="alert alert-primary alert-dismissible fade show" id="twitchlive" style="display: none;">
         <!-- <button type="button" class="btn-close" data-bs-dismiss="alert"></button> -->
@@ -146,23 +146,19 @@
         </div>
 
         <center style="display: none;" id="audioOptions">
-            <br>
-            <table>
-                <td>
-                    <button id="audioMute" class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md">Mute Tab Sound</button>
-                </td>
-            </table>
-        </center>
-        <center style="display: none;" id="staffButtons">
-            <table>
-                <td><button class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md"
-                        onclick="window.open('https://forms.gle/xEntAFhwddWAgsAb7','_blank')">Bug Report Form</button>
-                </td>
-                <td><button class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md"
-                        onclick="window.open('https://forms.gle/fGiDMQvJaDpyaWZA8','_blank')">User Report Form</button>
-                </td>
-            </table>
-        </center>
+      <br>
+      <table>
+        <td>
+          <button id="audioMute" class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md">Mute Tab Sound</button>
+        </td>
+        <td><button id="staffButtonOne" style="display: none;"
+            class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md"
+            onclick="window.open('https://forms.gle/xEntAFhwddWAgsAb7','_blank')">Bug Report Form</button></td>
+        <td><button id="staffButtonTwo" style="display: none;"
+            class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md"
+            onclick="window.open('https://forms.gle/fGiDMQvJaDpyaWZA8','_blank')">User Report Form</button></td>
+      </table>
+    </center>
     </div>
 
     <div id="emergency" style="display: none;">
