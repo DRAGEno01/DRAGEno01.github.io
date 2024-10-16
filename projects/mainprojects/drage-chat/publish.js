@@ -87,6 +87,8 @@ let newMessagesSinceTabNotFocused = 0;
 let audioMuteStatus = false;
 const regex = /\p{Extended_Pictographic}/ug;
 const regexb = /[\xCC\xCD]/;
+let shownLivestreamMessage = false;
+let channelToCheck = "DRAGEno01"
 
 function playSound() {
     const audio = new Audio("https://notificationsounds.com/storage/sounds/file-sounds-1233-elegant.mp3");
@@ -187,6 +189,9 @@ function subscribeToNewMessages() {
         for (let message of newMessages) {
             if (!existingMessageHash[message.id]) {
                 messages.push(message);
+                if(!tabFocused){
+                    notifyOfNewMessage(message.message);
+                }
             }
         }
         let allowShowID = false;
@@ -340,10 +345,17 @@ window.addEventListener('blur', function () {
 });
 
 setTimeout(() => {
+    let counter = 0;
     if (!tabFocused) {
-        window.location.reload(true);
+        counter += 1;
+        if(counter>(60*10)){
+            window.location.reload(true);
+        }
     }
-}, (60000 * 120));
+    if(tabFocused){
+        counter = 0;
+    }
+}, 1000);
 
 
 
@@ -355,11 +367,18 @@ setTimeout(() => {
 var liveCheck = false;
 
 function check() {
-    let a = fetch(`https://decapi.me/twitch/uptime/DRAGEno01`, { method: 'GET' }).then(response => response.text().then(function (text) {
+    let a = fetch(`https://decapi.me/twitch/uptime/${channelToCheck}`, { method: 'GET' }).then(response => response.text().then(function (text) {
         if (text.includes("is offline")) {
             liveCheck = false;
+            if(shownLivestreamMessage){
+                shownLivestreamMessage = false;
+            }
         } else if (text.includes(",")) {
             liveCheck = true;
+            if(!shownLivestreamMessage){
+                shownLivestreamMessage = true;
+                notifyOfLivestream(channelToCheck)
+            }
         }
     }))
 }
@@ -532,3 +551,50 @@ function extraStaffFeatures() {
         messageInput.setAttribute('maxlength', '150');
     }
 }
+
+/*
+    Push Notifications
+*/
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (!Notification) {
+        alert('Desktop notifications not available in your browser. Try Chromium.');
+        return;
+    }
+
+    if (Notification.permission !== 'granted')
+        Notification.requestPermission();
+});
+
+function notifyOfNewMessage(message) {
+    let shownMessage = message
+    if(message.includes("<") || message.includes(">")){
+        shownMessage = "[MESSAGE FROM STAFF]"
+    }
+    if (Notification.permission !== 'granted')
+        Notification.requestPermission();
+    else {
+        var notification = new Notification('New Message - DRAGE Chat', {
+            icon: 'https://yt3.googleusercontent.com/UqMYqkzSVzqj9h_Fv3cj-P60co_6nbuEuaEuUiC5d3Bf9IyoHKDaZi584ICJnqsNzZ9SHN6UTg=s900-c-k-c0x00ffffff-no-rj',
+            body: `${shownMessage}`,
+        });
+        notification.onclick = function () {
+            window.open('https://drageno01.github.io/?chat');
+        };
+    }
+}
+
+function notifyOfLivestream(channel){
+    if (Notification.permission !== 'granted')
+        Notification.requestPermission();
+    else {
+        var notification = new Notification(`Live Notification - DRAGE Chat`, {
+            icon: 'https://cdn-icons-png.flaticon.com/512/5968/5968819.png',
+            body: `Check out this livestream from ${channel} on Twitch.`,
+        });
+        notification.onclick = function () {
+            window.open(`https://twitch.tv/${channel}`);
+        };
+    }
+}
+// 600 LINES OF CODE !!!!!
