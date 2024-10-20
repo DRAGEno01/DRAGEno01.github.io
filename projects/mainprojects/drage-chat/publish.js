@@ -2,7 +2,7 @@
     -[ Welcome to the DRAGE-Chat Code ]-
     Please do not use this to learn coding, the code is very messy.
     This code is made by DRAGEno01, and is under copyright.
-    Copyright: [CC-BY-ND-SA] (Attribution Required, Commercial Use of Original Allowed, Not allowed to Modify and/or Adapt, Share Alike [and that is if you break the copyright])
+    Copyright: [CC-BY-NC-ND] (This license enables reusers to copy and distribute the material in any medium or format in unadapted form only, for noncommercial purposes only, and only so long as attribution is given to the creator.)
 */
 
 //  Imports
