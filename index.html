@@ -3,100 +3,208 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="https://yt3.googleusercontent.com/UqMYqkzSVzqj9h_Fv3cj-P60co_6nbuEuaEuUiC5d3Bf9IyoHKDaZi584ICJnqsNzZ9SHN6UTg=s900-c-k-c0x00ffffff-no-rj" type="image/x-icon">
-    <title>DRAGEno01 GitHub</title>
+    <meta name="google-adsense-account" content="ca-pub-5327146535138725">
+    <title>Modern Homepage</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kenia&family=Lilita+One&family=Notable&display=swap');
         body {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            height: 90vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ff0000, #ffff00);
         }
 
-        @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        #title {
-            font-family: 'Lilita One',cursive;
-            font-size: 50px;
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
         }
 
-        .buttondiv button{
-            width: 150px;
-            height: 100px;
-            border-radius: 10px;
-            border: 0;
-            background-color: #373737;
-            color: white;
-            font-size: large;
+        nav li {
+            float: left;
         }
 
-        .buttondiv button:hover {
-            background-color: #5b5b5b;
+        nav li a {
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        nav li a:hover {
+            background-color: #111;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 150px 0;
+            color: #fff;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero button {
+            padding: 15px 30px !important;
+            background-color: rgba(255, 255, 255, 0.7) !important;
+            color: #333 !important;
+            border: 2px solid #fff !important;
+            border-radius: 5px !important;
+            cursor: pointer !important;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out !important;
+        }
+
+        .hero button:hover {
+            background-color: #fff !important;
+            color: #333 !important;
+        }
+
+        .features-section {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .features-section h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 50px;
+        }
+
+        .feature {
+            flex: 1 0 30%;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .feature:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            font-size: 16px;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            background-color: #333;
+            color: #fff;
+            border: 2px solid #7a7a7a;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #fff;
+            color: #333;
         }
     </style>
 </head>
 
 <body>
-    <br><br><br><br><br>
-    <center style="color: white;">
-        <h1 id="title">WELCOME</h1>
-        <p>Perhaps you were looking for something else... do any of these match what you need?</p><br>
-        <div id="buttondiv" class="buttondiv">
-            <a href="?notepad"><button>Online Notepad</button></a>
-            <a href="?chat"><button>DRAGE Chat</button></a>
-            <a href="?cs"><button>DRAGE-CS</button></a>
-        </div>
-        <br><br>
-        <p>You are on: <i id="web"></i></p>
+    <header>
+        <nav>
+            <ul>
+                <!-- <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li> -->
+                <li>Creating website applications for the public to use.</li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Welcome to DRAGEno01's Github</h1>
+        <p>Designing online website applications.</p>
+        <button onclick="srl()">Learn More</button>
+    </section>
+    <br><br><br><br><br><br><br>
+    <center>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 15px;">
+            <path
+                d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
+        </svg>
     </center>
-    <script>
-        document.getElementById("web").innerHTML = window.location.href
-    </script>
+
+
+    <section class="features-section">
+        <h2>My Projects</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Online Notepad</h3>
+                <p>A free to use customizable notepad. Hate the installed version on notepad on your device? This
+                    notepad is just for you. No payment involved.</p>
+                <br>
+                <button onclick="window.location.href = 'https://drageno01.github.io/?notepad'">Try Online Notepad</button>
+            </div>
+            <div class="feature">
+                <h3>DRAGE-Chat</h3>
+                <p>A massive group chat that is constantly being worked on, and exploited with all its bugs... Free for
+                    everyone to use.</p>
+                <br>
+                <button onclick="window.location.href = 'https://drageno01.github.io/?chat'">Try DRAGE-Chat</button>
+            </div>
+            <div class="feature">
+                <h3>Upcoming Project</h3>
+                <p>Releasing between late 2024 to mid 2025.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 DRAGEno01</p>
+    </footer>
 
     <script>
-        if(window.location.href != "https://drageno01.github.io/"){
-            if(window.location.href == "https://drageno01.github.io/?notepad" || window.location.href == "https://drageno01.github.io/#notepad"){
-                window.location.replace("https://drageno01.github.io/projects/sideprojects/notepad.html")
-            }
-            if(window.location.href == "https://drageno01.github.io/?articles" || window.location.href == "https://drageno01.github.io/#articles"){
-                window.location.replace("https://drageno01.github.io/404.html")
-            }
-            if(window.location.href == "https://drageno01.github.io/?articleLogin" || window.location.href == "https://drageno01.github.io/#articleLogin"){
-                window.location.replace("https://drageno01.github.io/404.html")
-            }
-            if(window.location.href == "https://drageno01.github.io/?oxley" || window.location.href == "https://drageno01.github.io/#oxley"){
-                window.location.replace("https://drageno01.github.io/projects/mainprojects/OxleyOpenDay/index.html")
-            }
-            if(window.location.href == "https://drageno01.github.io/?andersonmdt" || window.location.href == "https://drageno01.github.io/#andersonmdt"){
-                window.location.replace("https://drageno01.github.io/404.html")
-            }
-            if(window.location.href == "https://drageno01.github.io/?mcc" || window.location.href == "https://drageno01.github.io/#mcc"){
-                window.location.replace("https://drageno01.github.io/projects/sideprojects/mcc/index.html")
-            }
-            if(window.location.href == "https://drageno01.github.io/?chat" || window.location.href == "https://drageno01.github.io/#chat"){
-                window.location.replace("https://drageno01.github.io/projects/mainprojects/drage-chat/index.html")
-            }
-            if(window.location.href == "https://drageno01.github.io/?chatstatus" || window.location.href == "https://drageno01.github.io/#chatstatus"){
-                window.location.replace("https://drageno01.github.io/projects/mainprojects/drage-chat/status.html")
-            }
-            if(window.location.href == "https://drageno01.github.io/?cs" || window.location.href == "https://drageno01.github.io/#cs"){
-                window.location.replace("https://drageno01.github.io/projects/mainprojects/cs/index.html")
-            }
+        function srl() {
+            window.scrollTo(0, 700)
         }
     </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5327146535138725"
+        crossorigin="anonymous"></script>
+</body>
+
 </html>
