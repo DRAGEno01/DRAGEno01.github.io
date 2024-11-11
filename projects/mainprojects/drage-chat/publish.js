@@ -1,4 +1,4 @@
-/*
+window.location.href = "https://drageno01.github.io/chat"/*
     -[ Welcome to the DRAGE-Chat Code ]-
     Please do not use this to learn coding, the code is very messy.
     This code is made by DRAGEno01, and is under copyright.
