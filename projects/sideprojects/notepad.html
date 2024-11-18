@@ -8,40 +8,92 @@
         crossorigin="anonymous"></script>
     <title>Online Notepad</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Dosis&family=Kdam+Thmor+Pro&family=PT+Serif&family=Playpen+Sans&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
     
         #notepad {
             width: 95%;
             height: 75vh;
             resize: vertical;
-            font-size: large;
-            border-radius: 10px;
+            font-size: 16px;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            font-family: 'Poppins', sans-serif;
+            caret-color: transparent;
+            position: relative;
+            line-height: 1.5;
+            tab-size: 4;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            outline: none;
+        }
+    
+        #notepad:focus {
+            outline: none;
+            border: 1px solid #4834d4;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15), 0 0 2px rgba(72, 52, 212, 0.2);
         }
     
         #title {
             margin-left: 4.5vh;
-            font-family: "Kdam Thmor Pro", cursive;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #2c3e50;
         }
     
         input {
-            border-radius: 10px;
-            border-width: 0;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
             width: 30vh;
-            height: 3vh;
+            height: 40px;
             text-align: center;
+            font-family: 'Poppins', sans-serif;
+            margin: 10px;
         }
     
         body {
-            background-color: #c7c7c7;
+            background-color: #f5f6fa;
+            font-family: 'Poppins', sans-serif;
+            opacity: 0;  /* Start hidden */
+            animation: fadeIn 0.8s ease-out forwards;  /* Add animation */
         }
     
         button {
             width: 15vh;
-            border-radius: 10px;
-            border-width: 0;
-            height: 3vh;
-            background-color: #e6e6e6;
+            border-radius: 8px;
+            border: none;
+            height: 40px;
+            background-color: #4834d4;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+    
+        button:hover {
+            background-color: #686de0;
+        }
+    
+        /* Modal styles update */
+        .modal-content {
+            background-color: #ffffff;
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+    
+        .modal-header {
+            background-color: #4834d4;
+            border-radius: 16px 16px 0 0;
+            padding: 20px;
+        }
+    
+        .modal-body {
+            padding: 30px;
+        }
+    
+        /* Update default colors in JavaScript */
     </style>
     <style>
         .modal {
@@ -63,7 +115,7 @@
             /* Enable scroll if needed */
             background-color: rgb(0, 0, 0);
             /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.62);
+            background-color: rgba(0, 0, 0, 0);
             /* Black w/ opacity */
         }
     
@@ -140,45 +192,224 @@
             color: white;
         }
     </style>
+    <style>
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+    
+        .theme-btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    
+        /* Theme-specific button styles */
+        .theme-btn[data-theme="default"] {
+            background-color: #4834d4 !important;
+        }
+    
+        .theme-btn[data-theme="dark"] {
+            background-color: #8c54ff !important;
+        }
+    
+        .theme-btn[data-theme="forest"] {
+            background-color: #1b4332 !important;
+        }
+    
+        .theme-btn[data-theme="sunset"] {
+            background-color: #bc4749 !important;
+        }
+    
+        .theme-btn[data-theme="ocean"] {
+            background-color: #3282b8 !important;
+        }
+    
+        .theme-btn[data-theme="minimal"] {
+            background-color: #495057 !important;
+        }
+    
+        .theme-btn[data-theme="purple"] {
+            background-color: #7c73e6 !important;
+        }
+    
+        .theme-btn[data-theme="coffee"] {
+            background-color: #967259 !important;
+        }
+    
+        .theme-btn[data-theme="mint"] {
+            background-color: #4c956c !important;
+        }
+    
+        .theme-btn[data-theme="coral"] {
+            background-color: #ff7675 !important;
+        }
+    
+        .theme-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+    <style>
+        /* Add this new animation style */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <style>
+        .font-controls input[type="range"] {
+            -webkit-appearance: none;
+            width: 200px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .font-controls input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #4834d4;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+        .font-controls input[type="range"]::-webkit-slider-thumb:hover {
+            background: #686de0;
+        }
+
+        .font-controls #fontSizeDisplay {
+            min-width: 45px;
+            font-size: 14px;
+        }
+
+        .reset-btn {
+            padding: 5px 15px;
+            font-size: 12px;
+            height: 30px;
+            width: auto;
+        }
+    </style>
+    <style>
+        #notepad {
+            caret-color: transparent;  /* Hide default cursor */
+            position: relative;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: currentColor;
+            animation: blink 1s infinite;
+            position: absolute;
+            pointer-events: none;
+            z-index: 1000;
+            margin-top: -7px;  /* Fine-tune vertical alignment */
+            margin-left: -6px; /* Fine-tune horizontal alignment */
+            transform: translateY(-1px); /* Additional vertical adjustment */
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+    <style>
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        #notepad span.new-char {
+            display: inline-block;
+            animation: slideIn 0.2s ease-out forwards;
+        }
+    </style>
+    <!-- This was made by DRAGEno01. -->
 </head>
 <body id="mainbody">
-    <h1 id="title" style="display: inline-block;">Online Notepad</h1>
+    <!-- This was made by DRAGEno01. -->
+    <h1 id="title" style="display: inline-block;">DRAGEno01's Online Notepad</h1>
     <div class="settings" style="display: inline-block;margin-left: 20px;">
         <button id="myBtn" style="width: 200px; height: 30px;margin-top: -20px;">Settings</button>
         <!-- The Modal -->
         <div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content" id="modalbackground1">
-            <div class="modal-header" id="modalbackground2">
-            <span class="close">×</span>
-                <h2>Notepad Settings</h2>
+            <!-- Modal content -->
+            <div class="modal-content" id="modalbackground1">
+                <div class="modal-header" id="modalbackground2">
+                    <span class="close">×</span>
+                    <h2>Notepad Settings</h2>
+                </div>
+                <div class="modal-body" id="modalbackground">
+                    <h3>File Options</h3>
+                    <div class="file-controls">
+                        <div class="download-section" style="display: inline-block;">
+                            <input type="text" placeholder="File Name (.txt)" id="filename">
+                            <input type="file" id="fileInput" accept=".txt" style="display: none;">
+                            <button onclick="document.getElementById('fileInput').click()" id="uploadBtn">Load File</button>
+                            <button onclick="getFileName()" id="downloadBtn">Download</button>
+                        </div>
+                    </div>
+                    
+                    <hr class="section-divider">
+                    
+                    <h3>Font Size</h3>
+                    <div class="font-controls">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <input type="range" id="fontSize" min="12" max="24" value="16">
+                            <span id="fontSizeDisplay">16px</span>
+                            <button onclick="resetFontSize()" class="reset-btn">Reset</button>
+                        </div>
+                    </div>
+
+                    <hr class="section-divider">
+                    
+                    <h3>Select Theme</h3>
+                    <div class="theme-grid">
+                        <button class="theme-btn" data-theme="default" onclick="setTheme('default')">Default</button>
+                        <button class="theme-btn" data-theme="dark" onclick="setTheme('dark')">Dark Mode</button>
+                        <button class="theme-btn" data-theme="forest" onclick="setTheme('forest')">Forest</button>
+                        <button class="theme-btn" data-theme="sunset" onclick="setTheme('sunset')">Sunset</button>
+                        <button class="theme-btn" data-theme="ocean" onclick="setTheme('ocean')">Ocean</button>
+                        <button class="theme-btn" data-theme="minimal" onclick="setTheme('minimal')">Minimal</button>
+                        <button class="theme-btn" data-theme="purple" onclick="setTheme('purple')">Purple</button>
+                        <button class="theme-btn" data-theme="coffee" onclick="setTheme('coffee')">Coffee</button>
+                        <button class="theme-btn" data-theme="mint" onclick="setTheme('mint')">Mint</button>
+                        <button class="theme-btn" data-theme="coral" onclick="setTheme('coral')">Coral</button>
+                    </div>
+
+                    <hr class="section-divider">
+
+                    <h3>Reset Appearance</h3>
+                    <button onclick="window.location.href = 'https://drageno01.github.io/?oldnotepad'" class="reset-btn" style="width: 200px; height: 40px;">Reset to Default Look</button>
+                </div>
+                <br>
             </div>
-            <div class="modal-body" id="modalbackground">
-                <table>
-                    <tbody><tr><td style="width: 30%;"><h3>Background Color</h3></td>
-                    <td style="width: 30%;"><input type="color" name="backgroundcolor" id="backgroundcolorpicker" onchange="setbackgroundcolor()"></td>
-                    <td style="width: 30%;"><button id="change1" onclick="resetbackgroundcolor()">Reset Color</button></td>
-                </tr></tbody></table>
-                <table>
-                    <tbody><tr><td style="width: 30%;"><h3>Text Color (All Text)</h3></td>
-                    <td style="width: 30%;"><input type="color" name="textcolor" id="textcolorpicker" onchange="settextcolor()"></td>
-                    <td style="width: 30%;"><button id="change2" onclick="resettext()">Reset Color</button></td>
-                </tr></tbody></table>
-                <table>
-                    <tbody><tr><td style="width: 30%;"><h3>Notepad Background Color</h3></td>
-                    <td style="width: 30%;"><input type="color" name="notebackgroundcolor" id="notebackgroundcolorpicker" onchange="setnotepadcolor()"></td>
-                    <td style="width: 30%;"><button id="change3" onclick="resetnotepadcolor()">Reset Color</button></td>
-                </tr></tbody></table>
-                <table>
-                    <tbody><tr><td style="width: 30%;"><h3>Button Color (All Buttons)</h3></td>
-                    <td style="width: 30%;"><input type="color" name="buttonbackgroundcolor" id="buttonbackgroundcolorpicker" onchange="setbuttoncolor()"></td>
-                    <td style="width: 30%;"><button id="change4" onclick="resetbuttoncolor()">Reset Color</button></td>
-                </tr></tbody></table>
-            </div>
-            <!-- <div class="modal-footer">
-                <h3>Modal Footer</h3>
-            </div> -->
-        </div>
         </div>    
     </div>
     <br>
@@ -187,109 +418,189 @@
         <textarea id="notepad" placeholder="Place your cursor inside the box by clicking or tapping on it.
 Once the cursor is positioned, you can start typing your desired text.
 The text you enter will appear directly within the box as you type." onchange="saveText()"></textarea>
-        <input type="text" placeholder="File Name (.txt)" id="filename">
-        <button id="change5" onclick="getFileName()" id="downloadBtn">Download</button>
     </center>
     
     <!-- Everything Else JS -->
     <script>
-        var backgroundcolorpicker = document.getElementById("backgroundcolorpicker")
-        var textcolorpicker = document.getElementById("textcolorpicker")
-        var notebackgroundcolorpicker = document.getElementById("notebackgroundcolorpicker")
-        var buttonbackgroundcolorpicker = document.getElementById("buttonbackgroundcolorpicker")
+        const themes = {
+            default: {
+                background: '#f5f6fa',
+                text: '#2c3e50',
+                notepad: '#ffffff',
+                button: '#4834d4',
+                modalHeader: '#4834d4',
+                border: '#4834d4'
+            },
+            dark: {
+                background: '#1a1a1a',
+                text: '#ffffff',
+                notepad: '#2d2d2d',
+                button: '#8c54ff',
+                modalHeader: '#8c54ff',
+                border: '#8c54ff'
+            },
+            forest: {
+                background: '#f0f7f4',
+                text: '#2c392e',
+                notepad: '#ffffff',
+                button: '#1b4332',
+                modalHeader: '#1b4332',
+                border: '#1b4332'
+            },
+            sunset: {
+                background: '#fff1e6',
+                text: '#2d1810',
+                notepad: '#ffffff',
+                button: '#bc4749',
+                modalHeader: '#bc4749',
+                border: '#bc4749'
+            },
+            ocean: {
+                background: '#f0f5f9',
+                text: '#1e2022',
+                notepad: '#ffffff',
+                button: '#3282b8',
+                modalHeader: '#3282b8',
+                border: '#3282b8'
+            },
+            minimal: {
+                background: '#ffffff',
+                text: '#2c3e50',
+                notepad: '#f8f9fa',
+                button: '#495057',
+                modalHeader: '#495057',
+                border: '#495057'
+            },
+            purple: {
+                background: '#f8f7ff',
+                text: '#2c2a4a',
+                notepad: '#ffffff',
+                button: '#7c73e6',
+                modalHeader: '#7c73e6',
+                border: '#7c73e6'
+            },
+            coffee: {
+                background: '#f9f7f3',
+                text: '#3c2a21',
+                notepad: '#ffffff',
+                button: '#967259',
+                modalHeader: '#967259',
+                border: '#967259'
+            },
+            mint: {
+                background: '#f1f7ed',
+                text: '#285943',
+                notepad: '#ffffff',
+                button: '#4c956c',
+                modalHeader: '#4c956c',
+                border: '#4c956c'
+            },
+            coral: {
+                background: '#fff5f5',
+                text: '#2d3436',
+                notepad: '#ffffff',
+                button: '#ff7675',
+                modalHeader: '#ff7675',
+                border: '#ff7675'
+            }
+        };
 
+        function setTheme(themeName) {
+            const theme = themes[themeName];
+            if (!theme) return; // Guard clause in case theme doesn't exist
+            
+            // Set background colors
+            document.body.style.backgroundColor = theme.background;
+            document.getElementById("modalbackground").style.backgroundColor = theme.background;
+            document.getElementById("modalbackground1").style.backgroundColor = theme.background;
+            document.getElementById("modalbackground2").style.backgroundColor = theme.modalHeader;
+            
+            // Set text colors
+            document.body.style.color = theme.text;
+            document.getElementById("notepad").style.color = theme.text;
+            document.getElementById("title").style.color = theme.text;
+            
+            // Set notepad and input colors
+            document.getElementById("notepad").style.backgroundColor = theme.notepad;
+            document.getElementById("filename").style.backgroundColor = theme.notepad;
+            
+            // Set button colors
+            document.querySelectorAll('button').forEach(button => {
+                button.style.backgroundColor = theme.button;
+            });
+            
+            // Save theme preference
+            document.cookie = `notepadTheme=${themeName}; path=/; max-age=31536000`; // Expires in 1 year
+            
+            // Update the CSS for the notepad focus state and slider thumb
+            const style = document.createElement('style');
+            style.textContent = `
+                #notepad:focus {
+                    outline: none;
+                    border: 1px solid ${theme.border};
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.15), 0 0 2px ${theme.border}33;
+                }
+
+                .font-controls input[type="range"]::-webkit-slider-thumb {
+                    background: ${theme.button};
+                }
+
+                .font-controls input[type="range"]::-webkit-slider-thumb:hover {
+                    background: ${theme.border};
+                }
+
+                .font-controls input[type="range"]::-moz-range-thumb {
+                    background: ${theme.button};
+                }
+
+                .font-controls input[type="range"]::-moz-range-thumb:hover {
+                    background: ${theme.border};
+                }
+            `;
+            
+            // Remove any previous dynamic styles
+            const oldStyle = document.getElementById('dynamic-focus-style');
+            if (oldStyle) {
+                oldStyle.remove();
+            }
+            
+            // Add the new style
+            style.id = 'dynamic-focus-style';
+            document.head.appendChild(style);
+        }
+
+        // Function to get cookie value
         function getCookie(name) {
             const value = `; ${document.cookie}`;
             const parts = value.split(`; ${name}=`);
             if (parts.length === 2) return parts.pop().split(';').shift();
         }
 
-        if(getCookie("notepadBackgroundColor")){
-            document.getElementById("mainbody").style.backgroundColor = getCookie("notepadBackgroundColor")
-            document.getElementById("modalbackground").style.backgroundColor = getCookie("notepadBackgroundColor")
-            document.getElementById("modalbackground1").style.backgroundColor = getCookie("notepadBackgroundColor")
-            document.getElementById("modalbackground2").style.backgroundColor = getCookie("notepadBackgroundColor") 
-        }
-        if(getCookie("notepadTextColor")){
-            document.getElementById("mainbody").style.color = getCookie("notepadTextColor")
-            document.getElementById("notepad").style.color = getCookie("notepadTextColor")
-        }
-        if(getCookie("notepadNotepadBackgroundColor")){
-            document.getElementById("notepad").style.backgroundColor = getCookie("notepadNotepadBackgroundColor")
-            document.getElementById("filename").style.backgroundColor = getCookie("notepadNotepadBackgroundColor")
-        }
-        if(getCookie("notepadButtonColor")){
-            document.getElementById("myBtn").style.backgroundColor = getCookie("notepadButtonColor")
-            document.getElementById("change1").style.backgroundColor = getCookie("notepadButtonColor")
-            document.getElementById("change2").style.backgroundColor = getCookie("notepadButtonColor")
-            document.getElementById("change3").style.backgroundColor = getCookie("notepadButtonColor")
-            document.getElementById("change4").style.backgroundColor = getCookie("notepadButtonColor")
-            document.getElementById("change5").style.backgroundColor = getCookie("notepadButtonColor")
-        }
+        // Load saved theme on startup
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = getCookie("notepadTheme");
+            if (savedTheme && themes[savedTheme]) {
+                setTheme(savedTheme);
+            } else {
+                setTheme('default');
+            }
+        });
 
-        function setbackgroundcolor(){
-            document.cookie = `notepadBackgroundColor=${backgroundcolorpicker.value}`
-            document.getElementById("mainbody").style.backgroundColor = backgroundcolorpicker.value
-            document.getElementById("modalbackground").style.backgroundColor = backgroundcolorpicker.value
-            document.getElementById("modalbackground1").style.backgroundColor = backgroundcolorpicker.value
-            document.getElementById("modalbackground2").style.backgroundColor = backgroundcolorpicker.value
-        }
-        function resetbackgroundcolor(){
-            document.cookie = `notepadBackgroundColor=${undefined}`
-            document.getElementById("mainbody").style.backgroundColor = "#c7c7c7"
-            document.getElementById("modalbackground").style.backgroundColor = "#FFFFFF"
-            document.getElementById("modalbackground1").style.backgroundColor = "#FFFFFF"
-            document.getElementById("modalbackground2").style.backgroundColor = "#757575"
-        }
-        function settextcolor(){
-            document.cookie = `notepadTextColor=${textcolorpicker.value}`
-            document.getElementById("mainbody").style.color = textcolorpicker.value
-            document.getElementById("notepad").style.color = textcolorpicker.value
-        }
-        function resettext(){
-            document.cookie = `notepadTextColor=#000000`
-            document.getElementById("mainbody").style.color = "#000000"
-            document.getElementById("notepad").style.color = "#000000"
-        }
-        function setnotepadcolor(){
-            document.cookie = `notepadNotepadBackgroundColor=${notebackgroundcolorpicker.value}`
-            document.getElementById("notepad").style.backgroundColor = notebackgroundcolorpicker.value
-            document.getElementById("filename").style.backgroundColor = notebackgroundcolorpicker.value
-        }
-        function resetnotepadcolor(){
-            document.cookie = `notepadNotepadBackgroundColor=#FFFFFF`
-            document.getElementById("notepad").style.backgroundColor = "#FFFFFF"
-            document.getElementById("filename").style.backgroundColor = "#FFFFFF"
-        }
-        function setbuttoncolor(){
-            document.cookie = `notepadButtonColor=${buttonbackgroundcolorpicker.value}`
-            document.getElementById("myBtn").style.backgroundColor = buttonbackgroundcolorpicker.value
-            document.getElementById("change1").style.backgroundColor = buttonbackgroundcolorpicker.value
-            document.getElementById("change2").style.backgroundColor = buttonbackgroundcolorpicker.value
-            document.getElementById("change3").style.backgroundColor = buttonbackgroundcolorpicker.value
-            document.getElementById("change4").style.backgroundColor = buttonbackgroundcolorpicker.value
-            document.getElementById("change5").style.backgroundColor = buttonbackgroundcolorpicker.value
-        }
-        function resetbuttoncolor(){
-            document.cookie = `notepadButtonColor=#e6e6e6`
-            document.getElementById("myBtn").style.backgroundColor = "#e6e6e6"
-            document.getElementById("change1").style.backgroundColor = "#e6e6e6"
-            document.getElementById("change2").style.backgroundColor = "#e6e6e6"
-            document.getElementById("change3").style.backgroundColor = "#e6e6e6"
-            document.getElementById("change4").style.backgroundColor = "#e6e6e6"
-            document.getElementById("change5").style.backgroundColor = "#e6e6e6"
-        }
-
-
-        let text = "Do you agree to us storing cookies?\nIf you press cancel, you will be redirected.";
-        if (confirm(text) == true) {
-            alert("Thank you.")
-            document.cookie = "allowCookies=true"
-        } else {
-            document.location.replace("https://drageno01.github.io")
-        }
-        
-
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if user has already agreed to cookies
+            const hasAgreed = getCookie("cookieConsent");
+            
+            if (!hasAgreed) {
+                let text = "Do you agree to us storing cookies?\nIf you press cancel, you will be redirected.";
+                if (confirm(text)) {
+                    alert("Thank you.");
+                    // Set cookie consent with a long expiration (1 year)
+                    document.cookie = "cookieConsent=true; path=/; max-age=31536000";
+                } else {
+                    document.location.replace("https://drageno01.github.io");
+                }
+            }
+        });
 
         function getFileName(){
             var fileName = document.getElementById("filename")
@@ -340,6 +651,68 @@ The text you enter will appear directly within the box as you type." onchange="s
             e.preventDefault();
         });
 
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('notepad').value = e.target.result;
+                    // Reset file input so the same file can be loaded again
+                    document.getElementById('fileInput').value = '';
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Font size control
+        const fontSlider = document.getElementById('fontSize');
+        const fontDisplay = document.getElementById('fontSizeDisplay');
+        const notepad = document.getElementById('notepad');
+
+        fontSlider.addEventListener('input', function() {
+            const size = this.value;
+            fontDisplay.textContent = size + 'px';
+            notepad.style.fontSize = size + 'px';
+            // Save font size preference
+            document.cookie = `notepadFontSize=${size}; path=/; max-age=31536000`;
+        });
+
+        // Load saved font size on startup
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedFontSize = getCookie("notepadFontSize");
+            if (savedFontSize) {
+                fontSlider.value = savedFontSize;
+                fontDisplay.textContent = savedFontSize + 'px';
+                notepad.style.fontSize = savedFontSize + 'px';
+            }
+        });
+
+        function resetFontSize() {
+            const defaultSize = 16;
+            fontSlider.value = defaultSize;
+            fontDisplay.textContent = defaultSize + 'px';
+            notepad.style.fontSize = defaultSize + 'px';
+            document.cookie = `notepadFontSize=${defaultSize}; path=/; max-age=31536000`;
+        }
+
+        // Add this new function
+        // function resetAppearance() {
+        //     // Reset theme
+        //     setTheme('default');
+            
+        //     // Reset font size
+        //     const defaultSize = 16;
+        //     fontSlider.value = defaultSize;
+        //     fontDisplay.textContent = defaultSize + 'px';
+        //     notepad.style.fontSize = defaultSize + 'px';
+            
+        //     // Clear cookies
+        //     document.cookie = "notepadTheme=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        //     document.cookie = "notepadFontSize=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            
+        //     // Optional: Show confirmation to user
+        //     alert("Appearance has been reset to default!");
+        // }
     </script>
     <!-- Modal JS -->
     <script>
@@ -385,6 +758,65 @@ The text you enter will appear directly within the box as you type." onchange="s
             // For Safari
             return 'Sure?';
         };
+    </script>
+    <!-- This was made by DRAGEno01. -->
+    <script>
+        const textarea = document.getElementById('notepad');
+        const cursor = document.createElement('div');
+        cursor.className = 'cursor';
+        cursor.style.display = 'none';  // Hide cursor by default
+        textarea.parentElement.appendChild(cursor);
+
+        function getTextWidth(text, font) {
+            const canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement('canvas'));
+            const context = canvas.getContext('2d');
+            context.font = font;
+            return context.measureText(text).width;
+        }
+
+        function updateCursorPosition() {
+            const textareaRect = textarea.getBoundingClientRect();
+            const cursorPosition = textarea.selectionStart;
+            const text = textarea.value;
+            const font = window.getComputedStyle(textarea).font;
+            const lineHeight = parseInt(window.getComputedStyle(textarea).lineHeight);
+            const fontSize = parseInt(window.getComputedStyle(textarea).fontSize);
+
+            // Get text before cursor and split into lines
+            const textBeforeCursor = text.substring(0, cursorPosition);
+            const lines = textBeforeCursor.split('\n');
+            const currentLine = lines[lines.length - 1];
+            
+            // Calculate horizontal position
+            const textWidth = getTextWidth(currentLine, font);
+            const left = textareaRect.left + textWidth + 20 - textarea.scrollLeft; // 20px padding
+
+            // Calculate vertical position with fine-tuned offset
+            const lineCount = lines.length - 1;
+            const verticalOffset = fontSize * 0.2; // Adjust this value to fine-tune vertical alignment
+            const top = textareaRect.top + (lineCount * lineHeight) + 20 - textarea.scrollTop + verticalOffset;
+
+            // Update cursor position
+            cursor.style.left = `${left}px`;
+            cursor.style.top = `${top}px`;
+        }
+
+        // Event listeners
+        const events = ['input', 'click', 'keyup', 'keydown', 'scroll'];
+        events.forEach(event => textarea.addEventListener(event, updateCursorPosition));
+        window.addEventListener('resize', updateCursorPosition);
+
+        // Update focus event listener
+        textarea.addEventListener('focus', () => {
+            if (textarea.matches(':focus')) {  // Only show if textarea is actually focused
+                cursor.style.display = 'block';
+                updateCursorPosition();
+            }
+        });
+        
+        textarea.addEventListener('blur', () => {
+            cursor.style.display = 'none';
+        });
     </script>
     <!-- This was made by DRAGEno01. -->
 </body>
