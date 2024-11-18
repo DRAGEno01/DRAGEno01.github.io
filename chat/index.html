@@ -5,18 +5,21 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google-adsense-account" content="ca-pub-5327146535138725">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5327146535138725"
-        crossorigin="anonymous"></script>
     <title>DRAGE Chat</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="shortcut icon"
-    href="https://yt3.googleusercontent.com/UqMYqkzSVzqj9h_Fv3cj-P60co_6nbuEuaEuUiC5d3Bf9IyoHKDaZi584ICJnqsNzZ9SHN6UTg=s900-c-k-c0x00ffffff-no-rj"
-    type="image/x-icon">
+        href="https://yt3.googleusercontent.com/UqMYqkzSVzqj9h_Fv3cj-P60co_6nbuEuaEuUiC5d3Bf9IyoHKDaZi584ICJnqsNzZ9SHN6UTg=s900-c-k-c0x00ffffff-no-rj"
+        type="image/x-icon">
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src https://*; child-src 'none';" /> -->
     <style>
+        .city {
+            display: none
+        }
+
+
         .showUserId {
             font-family: monospace;
             color: red;
@@ -30,12 +33,67 @@
         }
 
         #chatsView {
-            width: 60% !important;
+            width: 80% !important;
             height: 80dvh !important;
+        }
+
+        #joinView {
+            width: 30% !important;
+            margin-top: 25dvh;
         }
 
         #scrollbutton {
             display: none;
+        }
+
+        #img1 {
+            background-image: url("https://images.pexels.com/photos/620337/pexels-photo-620337.jpeg?cs=srgb&dl=pexels-pripicart-620337.jpg&fm=jpg");
+            background-size: 100% 100%;
+        }
+        #img2 {
+            background-image: url("https://financial-cents.com/resources/wp-content/webpc-passthru.php?src=https://financial-cents.com/resources/wp-content/uploads/2023/10/AM-11.png&nocache=1");
+            background-size: 100% 100%;
+        }
+        #img3 {
+            background-image: url("https://preview.redd.it/like-can-you-not-please-v0-9wtq868yroxd1.jpeg?width=640&crop=smart&auto=webp&s=0e2365db9593ab55b8cdfba0cf1497c7276175e4");
+            background-size: 100% 100%;
+        }
+        #img4 {
+            background-image: url("https://plaky.com/blog/wp-content/uploads/2023/03/Procrastination-meme.png");
+            background-size: 100% 100%;
+        }
+        #img5 {
+            background-image: url("https://miro.medium.com/v2/resize:fit:1400/1*GI-td9gs8D5OKZd19mAOqA.png");
+            background-size: 100% 100%;
+        }
+        #img6 {
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb3WRxwZwCSkq5LiQVqQD6S4QHQjzqFHIXJg&s");
+            background-size: 100% 100%;
+        }
+        
+        #gif1{
+            background-image: url("https://cultofthepartyparrot.com/parrots/hd/parrot.gif");
+            background-size: 100% 100%;
+        }
+        #gif2{
+            background-image: url("https://media3.giphy.com/media/3oEjI5VtIhHvK37WYo/giphy.gif");
+            background-size: 100% 100%;
+        }
+        #gif3{
+            background-image: url("https://i.pinimg.com/originals/0c/64/9a/0c649a17ec1e5f5ca340248b4ef4e4be.gif");
+            background-size: 100% 100%;
+        }
+        #gif4{
+            background-image: url("https://i.pinimg.com/originals/de/05/c3/de05c375cd0c20ed4b5157fe361b5c8e.gif");
+            background-size: 100% 100%;
+        }
+        #gif5{
+            background-image: url("https://www.icegif.com/wp-content/uploads/2022/01/icegif-982.gif");
+            background-size: 100% 100%;
+        }
+        #gif6{
+            background-image: url("https://miro.medium.com/v2/resize:fit:692/1*9PYEkmnHDS2ygawLE0e0XQ.gif");
+            background-size: 100% 100%;
         }
     </style>
 </head>
@@ -46,22 +104,34 @@
         <div class="container mt-3">
             <div class="alert alert-danger alert-dismissible fade show" id="usageshutdown" style="display: none;">
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <strong>Oh no!</strong> We have currently shutdown our servers for some maintenance. Please be patient with us
+                <strong>Oh no!</strong> We have currently shutdown our servers for some maintenance. Please be patient
+                with us
                 while we fix this issue!
             </div>
 
             <div class="alert alert-warning alert-dismissible fade show" id="outofdateclient" style="display: none;">
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <strong>Hey!</strong> If you are seeing this message, it means that you are viewing an outdated version! Click the button to continue: <button onclick="window.location.reload(true)" style="background-color: rgb(103, 92, 0) !important; width: 70px !important; height: 30px !important; border-radius: 5px !important; color: white !important;">Reload</button>
+                <strong>Hey!</strong> If you are seeing this message, it means that you are viewing an outdated version!
+                Click the button to continue: <button onclick="window.location.reload(true)"
+                    style="background-color: rgb(103, 92, 0) !important; width: 70px !important; height: 30px !important; border-radius: 5px !important; color: white !important;">Reload</button>
             </div>
             <div class="alert alert-light alert-dismissible fade show" id="patreonThanks" style="display: none;">
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <strong>Thank you!</strong> Thank you for being a Patreon member. We have given you some extra perks for this. (Perks: VIP Chat Tag, 1.5x Longer Messages)
+                <strong>Thank you!</strong> Thank you for being a Patreon member. We have given you some extra perks for
+                this. (Perks: VIP Chat Tag, 1.5x Longer Messages)
+            </div>
+            <div class="alert alert-info alert-dismissible fade show" id="internetcheck" style="display: none;">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>Info!</strong> Your internet connection is currently offline. You won't be able to see or send
+                new messages.
             </div>
             <div class="alert alert-primary alert-dismissible fade show" id="twitchlive" style="display: none;">
-        <!-- <button type="button" class="btn-close" data-bs-dismiss="alert"></button> -->
-        <strong>LIVE CONTENT!</strong> DRAGEno01 is now live on Twitch. <a href="https://twitch.tv/DRAGEno01" target="_blank"><button style="background-color: rgb(97, 0, 195) !important; width: 100px !important; height: 30px !important; border-radius: 5px !important; color: white !important;">Watch Now</button></a>
-      </div>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="alert"></button> -->
+                <strong>LIVE CONTENT!</strong> DRAGEno01 is now live on Twitch. <a href="https://twitch.tv/DRAGEno01"
+                    target="_blank"><button
+                        style="background-color: rgb(97, 0, 195) !important; width: 100px !important; height: 30px !important; border-radius: 5px !important; color: white !important;">Watch
+                        Now</button></a>
+            </div>
             <!-- <div class="alert alert-danger alert-dismissible fade show">
       <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       <strong>Systems Down</strong> There is currently an issue with our servers. We will be back once we have patched
@@ -130,8 +200,18 @@
                 </ul>
             </div>
             <div class="input h-11 w-full flex border border-slate-200 rounded-md">
-                <input id="messageInput" type="text" class="outline-none flex-1 px-1" placeholder="Type a message to send..." maxlength="100"></input>
-          <div class="p-1">
+                <input id="messageInput" type="text" class="outline-none flex-1 px-1"
+                    placeholder="Type a message to send..." maxlength="100"></input>
+                <div class="p-1">
+                    <button id="imageButton" class="bg-indigo-600 p-2 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 512 512" stroke-width="1.5"
+                            stroke="black" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" fill="#ffffff"
+                                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM164.1 325.5C182 346.2 212.6 368 256 368s74-21.8 91.9-42.5c5.8-6.7 15.9-7.4 22.6-1.6s7.4 15.9 1.6 22.6C349.8 372.1 311.1 400 256 400s-93.8-27.9-116.1-53.5c-5.8-6.7-5.1-16.8 1.6-22.6s16.8-5.1 22.6 1.6zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="p-1">
                     <button id="sendButton" class="bg-indigo-600 p-2 rounded-lg">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="black" class="w-4 h-4">
@@ -148,38 +228,194 @@
             </center>
         </div>
 
+
+
+        <!-- MODAL -->
+
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom">
+                <header class="w3-container w3-blue">
+                    <!-- <span onclick="document.getElementById('id01').style.display='none'"
+                        class="w3-button w3-blue w3-xlarge w3-display-topright">&times;</span> -->
+                    <h1 style="font-size: xx-large !important;">DRAGE Chat</h1>
+                </header>
+
+                <div class="w3-bar w3-border-bottom">
+                    <button class="tablink w3-bar-item w3-button" onclick="openCity(event, 'rules')">Rules</button>
+                    <button class="tablink w3-bar-item w3-button" onclick="openCity(event, 'badges')">Chat
+                        Badges</button>
+                    <button class="tablink w3-bar-item w3-button" onclick="openCity(event, 'important')">Extra
+                        Information</button>
+                </div>
+
+                <div id="rules" class="w3-container city">
+                    <br>
+                    <b>
+                        <h1 style="font-size: x-large !important;">Rules</h1>
+                    </b>
+                    <p>
+                        Welcome to DRAGEno01's chat app. To make this experience the best for everyone, please read and
+                        understand the rules! <i>These rules are just the basics. A full list of them can be found under
+                            the 'Extra Information' page.</i><br><br>
+                        <b>Section One - Usernames</b><br>
+                        Usernames should always be G-PG rated. Any username that is not clean for all ages should be
+                        changed before sending messages. Any username that is not following these rules will be
+                        moderated.<i> </i>
+                        Usernames that contain emojis, spaces should be changed as for our verification system. Any name
+                        that is not changed will be moderated.
+                        <br><br>
+                        <b>Section Two - Messages</b><br>
+                        All messages should be PG and not contain any harsh swearing or racial slurs. Any message that
+                        is will be moderated.<i> </i>
+                        All messages should be in English (unless said so otherwise), and there should be no links in
+                        chat. Accounts will be moderated.
+                        <br><br>
+                        <b>Section Three - Requirements</b><br>
+                        Even though we try to moderate the chat, we do request all users under the age of <b>14</b> to
+                        kindly leave the chat as there may be certain topics/messages that may not be appropriate for
+                        them.<br>
+                        Any accounts will be banned if the user's age is under <b>14</b> to keep everyone safe.<br>
+                        If you are under the age of 14, you can still leave before you get banned for being underage.
+                    </p><br>
+                </div>
+
+                <div id="badges" class="w3-container city">
+                    <br>
+                    <b>
+                        <h1 style="font-size: x-large !important;">Chat Badges</h1>
+                    </b>
+                    <p>They may look fancy, but these badges are here to show who is who.</p><br><br>
+                    <p>
+                        🛠️ - This badge is given to all staff members who work on the code of the chat app.<br>
+                        🪲 - This badge is given to all staff members who are bug testers of our chat app.<br>
+                        🔥 - This badge is given to all the players within the <a target="_blank"
+                            href="https://bit.ly/dragecs"><u style="color: blue !important;">DRAGE-CS</u></a> team.<br>
+                        💎 - This badge is given to all Patreon members who have at least the chat upgrade
+                        membership.<br>
+                        ✔️ - This badge is given to anyone with the following badges to verify their identity: 🛠️, 🪲,
+                        🔥
+                    </p><br>
+                </div>
+
+                <div id="important" class="w3-container city">
+                    <br>
+                    <b>
+                        <h1 style="font-size: x-large !important;">Important Information</h1>
+                    </b>
+                    <p>
+                        Here are a few important links that might be helpful to know.<br><br>
+                        <a href="help.html" target="_blank"><u style="color: blue !important;">Chat App
+                                Rules</u></a><br>
+                        <a href="help.html" target="_blank"><u style="color: blue !important;">Terms &
+                                Conditions</u></a><br>
+                        <a href="help.html" target="_blank"><u style="color: blue !important;">Privacy Policy</u></a>
+                    </p><br>
+                </div>
+
+                <div class="w3-container w3-light-grey w3-padding">
+                    <button class="w3-button w3-right w3-white w3-border"
+                        onclick="document.getElementById('id01').style.display='none'">I Agree to the Rules, Terms &
+                        Conditions, and Privacy Policy</button>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- IMAGE MODAL -->
+        <div id="id02" class="w3-modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom">
+                <header class="w3-container w3-blue">
+                    <!-- <span onclick="document.getElementById('id01').style.display='none'"
+                        class="w3-button w3-blue w3-xlarge w3-display-topright">&times;</span> -->
+                    <h1 style="font-size: xx-large !important;">DRAGE Chat</h1>
+                </header>
+
+                <div class="w3-bar w3-border-bottom">
+                    <button id="imagestab" class="tablink w3-bar-item w3-button" onclick="openCity(event, 'images')">Images</button>
+                    <button class="tablink w3-bar-item w3-button" onclick="openCity(event, 'gifs')">GIFs</button>
+                </div>
+
+                <div id="images" class="w3-container city">
+                    <br>
+                    <b>
+                        <h1 style="font-size: x-large !important;">Images</h1>
+                    </b>
+                    <br>
+                    <center>
+                        <button class="spec bg-blue-600 p-2 rounded-lg" style="width: 200px !important; height: 200px !important;" id="img1"></button>
+                        <button class="spec bg-blue-600 p-2 rounded-lg" style="width: 200px !important; height: 200px !important;" id="img2"></button>
+                        <button class="spec bg-blue-600 p-2 rounded-lg" style="width: 200px !important; height: 200px !important;" id="img3"></button>
+                        <button class="spec bg-blue-600 p-2 rounded-lg" style="width: 200px !important; height: 200px !important;" id="img4"></button>
+                        <button class="spec bg-blue-600 p-2 rounded-lg" style="width: 200px !important; height: 200px !important;" id="img5"></button>
+                        <button class="spec bg-blue-600 p-2 rounded-lg" style="width: 200px !important; height: 200px !important;" id="img6"></button>
+                    </center>
+                </div>
+
+                <div id="gifs" class="w3-container city">
+                    <br>
+                    <b>
+                        <h1 style="font-size: x-large !important;">GIFs</h1>
+                    </b>
+                    <br>
+                    <center>
+                        <button class="spec bg-blue-600 p-2 rounded-lg" style="width: 200px !important; height: 200px !important;" id="gif1"></button>
+                        <button class="spec bg-blue-600 p-2 rounded-lg" style="width: 200px !important; height: 200px !important;" id="gif2"></button>
+                        <button class="spec bg-blue-600 p-2 rounded-lg" style="width: 200px !important; height: 200px !important;" id="gif3"></button>
+                        <button class="spec bg-blue-600 p-2 rounded-lg" style="width: 200px !important; height: 200px !important;" id="gif4"></button>
+                        <button class="spec bg-blue-600 p-2 rounded-lg" style="width: 200px !important; height: 200px !important;" id="gif5"></button>
+                        <button class="spec bg-blue-600 p-2 rounded-lg" style="width: 200px !important; height: 200px !important;" id="gif6"></button>
+                    </center>
+                </div>
+
+                <div class="w3-container w3-light-grey w3-padding">
+                    <button id="specclosebtn" class="w3-button w3-right w3-white w3-border"
+                        onclick="document.getElementById('id02').style.display='none'">Close</button>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
         <center style="display: none;" id="audioOptions">
-      <table>
-        <td>
-          <button id="audioMute" class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md">Mute Tab Sound</button>
-        </td>
-        <td><button id="staffButtonOne" style="display: none;"
-            class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md"
-            onclick="window.open('https://forms.gle/xEntAFhwddWAgsAb7','_blank')">Bug Report Form</button></td>
-        <td><button id="staffButtonTwo" style="display: none;"
-            class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md"
-            onclick="window.open('https://forms.gle/fGiDMQvJaDpyaWZA8','_blank')">User Report Form</button></td>
-      </table>
-    </center>
+            <table>
+                <td>
+                    <button id="audioMute" class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md">Mute Tab
+                        Sound</button>
+                </td>
+                <td><button id="staffButtonOne" style="display: none;"
+                        class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md"
+                        onclick="window.open('https://forms.gle/xEntAFhwddWAgsAb7','_blank')">Bug Report Form</button>
+                </td>
+                <td><button id="staffButtonTwo" style="display: none;"
+                        class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md"
+                        onclick="window.open('https://forms.gle/fGiDMQvJaDpyaWZA8','_blank')">User Report Form</button>
+                </td>
+            </table>
+        </center>
     </div>
 
     <div id="emergency" style="display: none;">
-        <img src="https://drageno01.github.io/projects/mainprojects/drage-chat/seqtalearn.png" style="width: 100dvw; height: 100dvh;">
+        <img src="https://drageno01.github.io/projects/mainprojects/drage-chat/seqtalearn.png"
+            style="width: 100dvw; height: 100dvh;">
     </div>
 
     <script>
-        // window.history.pushState("pageTitle", "DRAGE Chat", "/?chat");
+        window.history.pushState("pageTitle", "DRAGE Chat", "/?chat");
         document.onkeydown = keydown;
         let showingImage = false;
 
         function keydown(evt) {
             if (!evt) evt = event;
             if (evt.altKey) {
-                if(!showingImage){
+                if (!showingImage) {
                     document.getElementById("emergency").style.display = "block";
                     document.getElementById("mainapp").style.display = "none";
                     showingImage = true;
-                }else {
+                } else {
                     document.getElementById("emergency").style.display = "none";
                     document.getElementById("mainapp").style.display = "block";
                     showingImage = false;
@@ -188,6 +424,25 @@
         }
     </script>
 
+    <script>
+        document.getElementsByClassName("tablink")[0].click();
+
+        function openCity(evt, cityName) {
+            var i, x, tablinks;
+            x = document.getElementsByClassName("city");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < x.length; i++) {
+                tablinks[i].classList.remove("w3-light-grey");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.classList.add("w3-light-grey");
+        }
+    </script>
+
     <!-- <img src="https://c.tenor.com/jqv9q8ho5BEAAAAC/tenor.gif" width="80%"> -->
 </body>
+
 </html>
