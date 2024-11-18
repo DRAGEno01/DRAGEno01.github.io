@@ -13,13 +13,13 @@ import { getFirestore, addDoc, collection, onSnapshot, doc, getDocs, query, wher
 
 // Variable Declerations
 let date = new Date();
-let clientVersion = 0.00013;
+let clientVersion = 0.00014;
 let chatAllowUsage = dragechatAllowUsage;
-let staffUID = ["tgtee2L2iKhvXznmgzAx9u3ApKi1"];
+let staffUID = ["tgtee2L2iKhvXznmgzAx9u3ApKi1", "uuftLej5XYUUMEldjqrb1H061Y73"];
 let testerUID = ["Sq3kcDSwZQVGSW4jmQ56r788GOv2"];
-let vipUID = ["tgtee2L2iKhvXznmgzAx9u3ApKi1", "n37sgpejBkW8768m6cyjgCf47sA2", "Sq3kcDSwZQVGSW4jmQ56r788GOv2", "6TGyEmSKy6Qo39H0jPUOQdLfykg2"];
+let vipUID = ["tgtee2L2iKhvXznmgzAx9u3ApKi1", "n37sgpejBkW8768m6cyjgCf47sA2", "Sq3kcDSwZQVGSW4jmQ56r788GOv2"];
 let dragecsUID = ["tgtee2L2iKhvXznmgzAx9u3ApKi1", "jWbwKwxqC5cXTD9xEKWblHQBcuh2"];
-let allowHTMLtags = ["tgtee2L2iKhvXznmgzAx9u3ApKi1", "Sq3kcDSwZQVGSW4jmQ56r788GOv2"];
+let allowHTMLtags = ["tgtee2L2iKhvXznmgzAx9u3ApKi1", "Sq3kcDSwZQVGSW4jmQ56r788GOv2", "uuftLej5XYUUMEldjqrb1H061Y73"];
 let authenticatedLogin = false;
 let day = date.getDate();
 let month = date.getMonth() + 1;
@@ -42,6 +42,7 @@ let audioMuteStatus = false;
 let shownLivestreamMessage = false;
 let channelToCheck = "DRAGEno01"
 let cookieforsession = getCookie("session")
+let lastUsername = getCookie("lastUsername")
 let liveCheck = false;
 const provider = new GoogleAuthProvider();
 const joinButton = document.getElementById("joinButton");
@@ -52,6 +53,7 @@ const joinView = document.getElementById("joinView");
 const chatsView = document.getElementById("chatsView");
 const audioMuteButton = document.getElementById("audioMute");
 const clientIdDisplay = document.getElementById("clientVersion");
+const imageButton = document.getElementById("imageButton")
 const firebaseConfig = { apiKey: "AIzaSyChVEPH5BqCy-mUzPx0vXhcKHEO56Qgv2M", authDomain: "drage-chat.firebaseapp.com", projectId: "drage-chat", storageBucket: "drage-chat.appspot.com", messagingSenderId: "946400520996", appId: "1:946400520996:web:3f7a6caf2bef6913dfa1b1" }
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -93,6 +95,9 @@ if (!(dragechatServerVersion == clientVersion) || !chatAllowUsage) {
 
 //  Standard Code
 
+if (!(lastUsername == null || lastUsername == undefined) && !(lastUsername.includes("<"))) {
+    usernameInput.value = lastUsername
+}
 clientIdDisplay.innerHTML = `Client Version: ${clientVersion} | Server Version: ${dragechatServerVersion} | Chat Usage Allowed: ${chatAllowUsage}`;
 document.getElementById("messageListdiv").setAttribute('scrolling', 'yes');
 
@@ -115,6 +120,7 @@ joinButton.addEventListener("click", () => {
         alert("You have something in the username your not allowed to have.");
         return;
     } else {
+        document.cookie = `lastUsername=${specifiedUsername}`
         joinChat()
     }
 });
@@ -133,7 +139,24 @@ sendButton.addEventListener("click", async () => {
     }
 });
 
+imageButton.addEventListener("click", () => {
+    document.getElementById("id02").style.display = "block";
+    document.getElementById("imagestab").click();
+})
+
+document.querySelectorAll(".spec").forEach(element => {
+    element.addEventListener("click", (e) => {
+        document.getElementById("specclosebtn").click();
+        let styled = e.target.currentStyle || window.getComputedStyle(e.target, false)
+        let backgroundImage = styled.backgroundImage.slice(4, -1).replace(/"/g, "");
+        sendSpecialItem(backgroundImage)
+    })
+})
+
 setInterval(() => {
+    if (adminStatus) {
+        messageInput.setAttribute('maxlength', '5000')
+    }
     if (!authenticatedLogin) {
         adminStatus = false;
         messageCooldown = 5000;
@@ -168,6 +191,13 @@ window.addEventListener('focus', function () {
 
 window.addEventListener('blur', function () {
     tabFocused = false;
+});
+
+window.addEventListener('online', () => {
+    document.getElementById("internetcheck").style.display = "none";
+});
+window.addEventListener('offline', () => {
+    document.getElementById("internetcheck").style.display = "block";
 });
 
 setTimeout(() => {
@@ -244,6 +274,10 @@ function joinChat() {
             await loadHistoricalMessages();
             await subscribeToNewMessages();
             writeMessagesArray();
+            document.getElementById('id01').style.display = 'block'
+            setTimeout(() => {
+                document.getElementById('messageListdiv').scrollTop = (document.getElementById('messageListdiv').scrollHeight)+1000;
+            }, 1250);
         }).catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -259,15 +293,18 @@ function joinChat() {
 }
 
 function sendMessage() {
+    messageInput.readOnly = true;
     if (auth.currentUser) {
         auth.currentUser.reload().then(async user => {
             const message = messageInput.value;
             if (!message == "") {
                 if ((message.toLowerCase().includes("<") || message.toLowerCase().includes(">")) && !(allowHTMLtags.includes(uid))) {
                     alert("You are unable to send message with a HTML tag in it.");
+                    messageInput.readOnly = false;
                 } else {
                     if ((allowHTMLtags.includes(uid) && !(staffUID.includes(uid))) && (message.toLowerCase().includes("img") && message.toLowerCase().includes("src="))) {
                         alert("You are not allowed to send messages the that tag.")
+                        messageInput.readOnly = false;
                     } else {
                         sendingMessageCooldownTrigger()
                         messageInput.value = "";
@@ -277,7 +314,7 @@ function sendMessage() {
                             message: message,
                             created: datenow,
                             uid: uid,
-                            email: email,
+                            email: "{no longer supported}",
                             staff: adminStatus,
                         });
                     }
@@ -339,7 +376,7 @@ async function loadHistoricalMessages() {
             ...doc.data(),
         });
     });
-    console.log(messages);
+    // console.log(messages);
     return messages.sort((a, b) => {
         if (a.created > b.created) {
             return 1;
@@ -441,11 +478,21 @@ function check(chan) {
 }
 
 function sendingMessageCooldownTrigger() {
+    messageInput.readOnly = false;
     if (!adminStatus) {
         ableToSendMessage = false;
         setTimeout(() => {
             ableToSendMessage = true;
         }, messageCooldown);
+    }
+}
+
+function sendSpecialItemCooldownTrigger(){
+    if(!adminStatus){
+        imageButton.style.display = "none";
+        setTimeout(() => {
+            imageButton.style.display = "block";
+        }, (messageCooldown*3));
     }
 }
 
@@ -468,6 +515,8 @@ function chatBadges() {
     }
     if (staff) {
         specifiedUsername = "<b style='color:red;'><u>" + specifiedUsername + "</u></b> ";
+        adminStatus = true;
+        authenticatedLogin = true;
     } else if (tester) {
         if (specifiedUsername == "DRAGEno01") {
             specifiedUsername = "<b style='color:green;'><u>" + Math.round(Math.random() * 100000) + "</u></b> ";
@@ -508,6 +557,7 @@ function chatBadges() {
     if (staff || tester || dragecs) {
         specifiedUsername = specifiedUsername + "✔️"
     }
+    // 🛠️🪲🔥💎✔️
 }
 
 function extraStaffFeatures() {
@@ -529,12 +579,13 @@ function extraStaffFeatures() {
     }
 
     if (staff) {
+        adminStatus = true;
         authenticatedLogin = true;
-        messageInput.setAttribute('maxlength', '3000');
+        messageInput.setAttribute('maxlength', '5000');
         document.getElementById("body").style.backgroundColor = "#333";
         document.getElementById("staffButtonOne").style.display = "block";
         document.getElementById("staffButtonTwo").style.display = "block";
-        adminStatus = true;
+
     } else if (tester) {
         document.getElementById("staffButtonOne").style.display = "block";
         document.getElementById("staffButtonTwo").style.display = "block";
@@ -577,4 +628,17 @@ function notifyOfLivestream(channel) {
             window.open(`https://twitch.tv/${channel}`);
         };
     }
+}
+
+async function sendSpecialItem(item) {
+    sendSpecialItemCooldownTrigger()
+    datenow = new Date();
+    const docRef = await addDoc(collection(db, "messages"), {
+        user: specifiedUsername,
+        message: "<img src='"+item+"' style='width: 180px;'>",
+        created: datenow,
+        uid: uid,
+        email: "{no longer supported}",
+        staff: adminStatus,
+    });
 }
