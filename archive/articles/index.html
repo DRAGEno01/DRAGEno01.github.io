@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="loginBody">
+    <div class="all" id="all">
+
+        <div class="loginHeader" id="loginHead">
+            <center>
+                <h1 id="headerWelcome">Welcome</h1>
+            </center>
+        </div>
+        
+        <center>
+            <div class="loginForm" id="loginFormID">
+                <br>
+                <h1>Login</h1>
+                <a href="./whyLogin.html"><p>Why do I need to login?</p></a>
+                <br>
+                <input placeholder="Username" id="uia">
+                <input type="password" placeholder="Password" id="pia">
+                <br><br>
+                <button onclick="checkLoginInfo()" id="loginButton">Login</button>
+                <br>
+                <p id="checkInfo">Incorrect Username or Password.</p>
+                <button onclick="clearInputs()" id="clearButton">Clear Inputs</button>
+                <br>
+            </div>
+        </center>
+
+    </div>
+    <div class="warning" id="warning">
+        <div>
+            <center>
+                <h1>Oh no...</h1>
+                <p>Your device size is not allowed to be used on our site.</p>
+            </center>
+        </div>
+    </div>
+
+    <script>
+        let user = document.getElementById("uia")
+        let pass = document.getElementById("pia")
+        let warning = document.getElementById("checkInfo")
+        let clearBtn = document.getElementById("clearButton")
+
+        function checkLoginInfo() {
+            if (user.value == "FoodDep" && pass.value == "FoodLearning23") {
+                window.location.replace("./articles/articleHome.html")
+            } else {
+                incorrectUserInfo()
+            }
+        }
+
+        function incorrectUserInfo() {
+            pass.value = ""
+            warning.style.display = "block"
+            clearBtn.style.display = "block"
+        }
+
+        function clearInputs() {
+            user.value = ""
+            pass.value = ""
+            warning.style.display = "none"
+            clearBtn.style.display = "none"
+        }
+
+
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        function ctrlShiftKey(e, keyCode) {
+            return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
+        }
+
+        document.onkeydown = (e) => {
+            // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
+            if (
+                event.keyCode === 123 ||
+                ctrlShiftKey(e, 'I') ||
+                ctrlShiftKey(e, 'J') ||
+                ctrlShiftKey(e, 'C') ||
+                (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))
+            )
+                return false;
+        };
+
+        setInterval(checkDim, 100)
+        setInterval(checkWidth, 100)
+        function checkDim(){
+            if(screen.height<655){
+                document.getElementById("loginHead").style.display = "none"
+                document.getElementById("loginFormID").style.marginTop = "25dvh"
+            }else {
+                document.getElementById("loginHead").style.display = "block"
+                document.getElementById("loginFormID").style.marginTop = "20dvh"
+            }
+        }
+        function checkWidth(){
+            if(screen.width<230 || screen.height<330){
+                document.getElementById("all").style.display = "none"
+                document.getElementById("warning").style.display = "block"
+            }else {
+                document.getElementById("all").style.display = "block"
+                document.getElementById("warning").style.display = "none"
+            }
+        }
+    </script>
+
+    <script>
+        window.history.pushState("pageTitle", "Login - Articles", "/?articleLogin");
+    </script>
+</body>
+
+</html>

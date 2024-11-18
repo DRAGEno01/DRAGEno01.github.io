@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Login?</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="loginBody">
+
+    <div class="loginHeader">
+        <center>
+            <h1 id="headerWelcome">Why do I have to login?</h1>
+        </center>
+    </div>
+
+    <br><br><br>
+
+    <center>
+        <div class="loginForm">
+            <br><br>
+            <a href="./index.html">
+                <button id="button">Return to Login</button>
+            </a>
+            <br>
+            <h2 class="titleh2">You need to login because:</h2>
+            <p>The following content is created by students.</p>
+            <p>The content could be stolen by students and/or used by public.</p>
+            <br><br><br>
+        </div>
+    </center>
+
+    <script>
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        function ctrlShiftKey(e, keyCode) {
+            return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
+        }
+
+        document.onkeydown = (e) => {
+            // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
+            if (
+                event.keyCode === 123 ||
+                ctrlShiftKey(e, 'I') ||
+                ctrlShiftKey(e, 'J') ||
+                ctrlShiftKey(e, 'C') ||
+                (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))
+            )
+                return false;
+        };
+    </script>
+    <script>
+        window.history.pushState("pageTitle", "Why Login - Help - Articles", "/help/whylogin");
+    </script>
+</body>
+
+</html>
