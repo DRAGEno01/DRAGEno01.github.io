@@ -7,9 +7,9 @@ ________________________________________________________________________________
 A few of the projects that can be found are:
 
 ## [Online Notepad](https://drageno01.github.io/?notepad)
-A free online notepad that allows you to download the file you have been working on. The only difference is that you can customize your expirence by customizing the colors.
+A free online notepad that allows you to load up any text file and download the file with the changes you made. With a new face lift (19th of Novemeber 2024), new customization options have been added. You can still use the old version [here](https://drageno01.github.io/?oldnotepad).
 
-## [DRAGE Chat](https://drageno01.github.io/?chat)
+## [DRAGE Chat](https://drageno01.github.io/chat)
 A free chat platform that allows people to communicate in one big chat room. Currently being updated and moderated.
 Paid Patreon members will recieve a special chat badge.
 
