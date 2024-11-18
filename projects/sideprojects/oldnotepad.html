@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-adsense-account" content="ca-pub-5327146535138725">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5327146535138725"
+        crossorigin="anonymous"></script>
+    <title>Online Notepad</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Dosis&family=Kdam+Thmor+Pro&family=PT+Serif&family=Playpen+Sans&display=swap');
+    
+        #notepad {
+            width: 95%;
+            height: 75vh;
+            resize: vertical;
+            font-size: large;
+            border-radius: 10px;
+        }
+    
+        #title {
+            margin-left: 4.5vh;
+            font-family: "Kdam Thmor Pro", cursive;
+        }
+    
+        input {
+            border-radius: 10px;
+            border-width: 0;
+            width: 30vh;
+            height: 3vh;
+            text-align: center;
+        }
+    
+        body {
+            background-color: #c7c7c7;
+        }
+    
+        button {
+            width: 15vh;
+            border-radius: 10px;
+            border-width: 0;
+            height: 3vh;
+            background-color: #e6e6e6;
+        }
+    </style>
+    <style>
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            padding-top: 100px;
+            /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.62);
+            /* Black w/ opacity */
+        }
+    
+        /* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 80%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.425), 0 6px 20px 0 rgba(0, 0, 0, 0.64);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s;
+            border-radius: 20px;
+        }
+    
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0
+            }
+    
+            to {
+                top: 0;
+                opacity: 1
+            }
+        }
+    
+        @keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0
+            }
+    
+            to {
+                top: 0;
+                opacity: 1
+            }
+        }
+    
+        /* The Close Button */
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+    
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    
+        .modal-header {
+            padding: 2px 16px;
+            background-color: #757575;
+            color: white;
+            border-radius: 18px;
+        }
+    
+        .modal-body {
+            padding: 2px 16px;
+        }
+    
+        .modal-footer {
+            padding: 2px 16px;
+            background-color: #5cb85c;
+            color: white;
+        }
+    </style>
+</head>
+<body id="mainbody">
+    <h1 id="title" style="display: inline-block;">Online Notepad</h1>
+    <div class="settings" style="display: inline-block;margin-left: 20px;">
+        <button id="myBtn" style="width: 200px; height: 30px;margin-top: -20px;">Settings</button>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content" id="modalbackground1">
+            <div class="modal-header" id="modalbackground2">
+            <span class="close">×</span>
+                <h2>Notepad Settings</h2>
+            </div>
+            <div class="modal-body" id="modalbackground">
+                <table>
+                    <tbody><tr><td style="width: 30%;"><h3>Background Color</h3></td>
+                    <td style="width: 30%;"><input type="color" name="backgroundcolor" id="backgroundcolorpicker" onchange="setbackgroundcolor()"></td>
+                    <td style="width: 30%;"><button id="change1" onclick="resetbackgroundcolor()">Reset Color</button></td>
+                </tr></tbody></table>
+                <table>
+                    <tbody><tr><td style="width: 30%;"><h3>Text Color (All Text)</h3></td>
+                    <td style="width: 30%;"><input type="color" name="textcolor" id="textcolorpicker" onchange="settextcolor()"></td>
+                    <td style="width: 30%;"><button id="change2" onclick="resettext()">Reset Color</button></td>
+                </tr></tbody></table>
+                <table>
+                    <tbody><tr><td style="width: 30%;"><h3>Notepad Background Color</h3></td>
+                    <td style="width: 30%;"><input type="color" name="notebackgroundcolor" id="notebackgroundcolorpicker" onchange="setnotepadcolor()"></td>
+                    <td style="width: 30%;"><button id="change3" onclick="resetnotepadcolor()">Reset Color</button></td>
+                </tr></tbody></table>
+                <table>
+                    <tbody><tr><td style="width: 30%;"><h3>Button Color (All Buttons)</h3></td>
+                    <td style="width: 30%;"><input type="color" name="buttonbackgroundcolor" id="buttonbackgroundcolorpicker" onchange="setbuttoncolor()"></td>
+                    <td style="width: 30%;"><button id="change4" onclick="resetbuttoncolor()">Reset Color</button></td>
+                </tr></tbody></table>
+            </div>
+            <!-- <div class="modal-footer">
+                <h3>Modal Footer</h3>
+            </div> -->
+        </div>
+        </div>    
+    </div>
+    <br>
+    <br>
+    <center>
+        <textarea id="notepad" placeholder="Place your cursor inside the box by clicking or tapping on it.
+Once the cursor is positioned, you can start typing your desired text.
+The text you enter will appear directly within the box as you type." onchange="saveText()"></textarea>
+        <input type="text" placeholder="File Name (.txt)" id="filename">
+        <button id="change5" onclick="getFileName()" id="downloadBtn">Download</button>
+    </center>
+    
+    <!-- Everything Else JS -->
+    <script>
+        var backgroundcolorpicker = document.getElementById("backgroundcolorpicker")
+        var textcolorpicker = document.getElementById("textcolorpicker")
+        var notebackgroundcolorpicker = document.getElementById("notebackgroundcolorpicker")
+        var buttonbackgroundcolorpicker = document.getElementById("buttonbackgroundcolorpicker")
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        if(getCookie("notepadBackgroundColor")){
+            document.getElementById("mainbody").style.backgroundColor = getCookie("notepadBackgroundColor")
+            document.getElementById("modalbackground").style.backgroundColor = getCookie("notepadBackgroundColor")
+            document.getElementById("modalbackground1").style.backgroundColor = getCookie("notepadBackgroundColor")
+            document.getElementById("modalbackground2").style.backgroundColor = getCookie("notepadBackgroundColor") 
+        }
+        if(getCookie("notepadTextColor")){
+            document.getElementById("mainbody").style.color = getCookie("notepadTextColor")
+            document.getElementById("notepad").style.color = getCookie("notepadTextColor")
+        }
+        if(getCookie("notepadNotepadBackgroundColor")){
+            document.getElementById("notepad").style.backgroundColor = getCookie("notepadNotepadBackgroundColor")
+            document.getElementById("filename").style.backgroundColor = getCookie("notepadNotepadBackgroundColor")
+        }
+        if(getCookie("notepadButtonColor")){
+            document.getElementById("myBtn").style.backgroundColor = getCookie("notepadButtonColor")
+            document.getElementById("change1").style.backgroundColor = getCookie("notepadButtonColor")
+            document.getElementById("change2").style.backgroundColor = getCookie("notepadButtonColor")
+            document.getElementById("change3").style.backgroundColor = getCookie("notepadButtonColor")
+            document.getElementById("change4").style.backgroundColor = getCookie("notepadButtonColor")
+            document.getElementById("change5").style.backgroundColor = getCookie("notepadButtonColor")
+        }
+
+        function setbackgroundcolor(){
+            document.cookie = `notepadBackgroundColor=${backgroundcolorpicker.value}`
+            document.getElementById("mainbody").style.backgroundColor = backgroundcolorpicker.value
+            document.getElementById("modalbackground").style.backgroundColor = backgroundcolorpicker.value
+            document.getElementById("modalbackground1").style.backgroundColor = backgroundcolorpicker.value
+            document.getElementById("modalbackground2").style.backgroundColor = backgroundcolorpicker.value
+        }
+        function resetbackgroundcolor(){
+            document.cookie = `notepadBackgroundColor=${undefined}`
+            document.getElementById("mainbody").style.backgroundColor = "#c7c7c7"
+            document.getElementById("modalbackground").style.backgroundColor = "#FFFFFF"
+            document.getElementById("modalbackground1").style.backgroundColor = "#FFFFFF"
+            document.getElementById("modalbackground2").style.backgroundColor = "#757575"
+        }
+        function settextcolor(){
+            document.cookie = `notepadTextColor=${textcolorpicker.value}`
+            document.getElementById("mainbody").style.color = textcolorpicker.value
+            document.getElementById("notepad").style.color = textcolorpicker.value
+        }
+        function resettext(){
+            document.cookie = `notepadTextColor=#000000`
+            document.getElementById("mainbody").style.color = "#000000"
+            document.getElementById("notepad").style.color = "#000000"
+        }
+        function setnotepadcolor(){
+            document.cookie = `notepadNotepadBackgroundColor=${notebackgroundcolorpicker.value}`
+            document.getElementById("notepad").style.backgroundColor = notebackgroundcolorpicker.value
+            document.getElementById("filename").style.backgroundColor = notebackgroundcolorpicker.value
+        }
+        function resetnotepadcolor(){
+            document.cookie = `notepadNotepadBackgroundColor=#FFFFFF`
+            document.getElementById("notepad").style.backgroundColor = "#FFFFFF"
+            document.getElementById("filename").style.backgroundColor = "#FFFFFF"
+        }
+        function setbuttoncolor(){
+            document.cookie = `notepadButtonColor=${buttonbackgroundcolorpicker.value}`
+            document.getElementById("myBtn").style.backgroundColor = buttonbackgroundcolorpicker.value
+            document.getElementById("change1").style.backgroundColor = buttonbackgroundcolorpicker.value
+            document.getElementById("change2").style.backgroundColor = buttonbackgroundcolorpicker.value
+            document.getElementById("change3").style.backgroundColor = buttonbackgroundcolorpicker.value
+            document.getElementById("change4").style.backgroundColor = buttonbackgroundcolorpicker.value
+            document.getElementById("change5").style.backgroundColor = buttonbackgroundcolorpicker.value
+        }
+        function resetbuttoncolor(){
+            document.cookie = `notepadButtonColor=#e6e6e6`
+            document.getElementById("myBtn").style.backgroundColor = "#e6e6e6"
+            document.getElementById("change1").style.backgroundColor = "#e6e6e6"
+            document.getElementById("change2").style.backgroundColor = "#e6e6e6"
+            document.getElementById("change3").style.backgroundColor = "#e6e6e6"
+            document.getElementById("change4").style.backgroundColor = "#e6e6e6"
+            document.getElementById("change5").style.backgroundColor = "#e6e6e6"
+        }
+
+
+        let text = "Do you agree to us storing cookies?\nIf you press cancel, you will be redirected.";
+        if (confirm(text) == true) {
+            alert("Thank you.")
+            document.cookie = "allowCookies=true"
+        } else {
+            document.location.replace("https://drageno01.github.io")
+        }
+        
+
+
+        function getFileName(){
+            var fileName = document.getElementById("filename")
+            var filenamegiven = fileName.value
+            if(filenamegiven === ""){
+                filenamegiven = "drageno01.github.io?download"
+            }
+            saveTextAsFile(notepad.value,filenamegiven+".txt")
+        }
+
+
+        function saveTextAsFile(textToWrite, fileNameToSaveAs) {
+            var textFileAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+            var downloadLink = document.createElement("a");
+            downloadLink.download = fileNameToSaveAs;
+            downloadLink.innerHTML = "Download File";
+            if (window.webkitURL != null) {
+                downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+            }
+            else {
+                downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+                downloadLink.onclick = destroyClickedElement;
+                downloadLink.style.display = "none";
+                document.body.appendChild(downloadLink);
+            }
+
+            downloadLink.click();
+        }
+
+        document.onkeydown = (e) => {
+            if (e.key == 123) {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.shiftKey && e.key == 'I') {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.shiftKey && e.key == 'C') {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.shiftKey && e.key == 'J') {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.key == 'U') {
+                e.preventDefault();
+            }
+        };
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+    </script>
+    <!-- Modal JS -->
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+        
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+        modal.style.display = "block";
+        }
+        
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+        modal.style.display = "none";
+        }
+        
+        // When the user clicks anywhere outside of the modal, close it
+        // window.onclick = function(event) {
+        // if (event.target == modal) {
+        //     modal.style.display = "none";
+        // }
+        // }
+    </script>
+    <script>
+        window.history.pushState("pageTitle", "Online Notpad", "/?notepad");
+    </script>
+
+    <script>
+        window.onbeforeunload = function (e) {
+            e = e || window.event;
+        
+            // For IE and Firefox prior to version 4
+            if (e) {
+                e.returnValue = 'Sure?';
+            }
+        
+            // For Safari
+            return 'Sure?';
+        };
+    </script>
+    <!-- This was made by DRAGEno01. -->
+</body>
+</html>
