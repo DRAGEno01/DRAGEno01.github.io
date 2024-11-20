@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Club | Dashboard</title>
+    <link rel="stylesheet" href="../styles.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loader" class="loader">
+        <div class="loader-content">
+            <span class="material-icons loader-icon">view_in_ar</span>
+            <div class="loading-text">Loading...</div>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="dashboardScreen" class="login-screen" style="display: none;">
+        <div class="login-container" style="max-width: 1000px;">
+            <!-- Header Section -->
+            <div class="dashboard-header">
+                <span class="material-icons header-icon">dashboard</span>
+                <h1>Dashboard</h1>
+                <p id="welcomeMessage">Welcome!</p>
+            </div>
+
+            <!-- Suspension Alert (hidden by default) -->
+            <div id="suspensionAlert" class="suspension-alert" style="display: none;">
+                <div class="suspension-content">
+                    <span class="material-icons">block</span>
+                    <div class="suspension-details">
+                        <h3>Account Suspended</h3>
+                        <p id="suspensionReason"></p>
+                        <p id="suspensionExpiry"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Club Information Section -->
+            <section id="clubInformation" class="dashboard-section">
+                <h2><span class="material-icons">info</span> Club Information</h2>
+                <div class="info-card">
+                    <p>Welcome to the Minecraft Club! Here you can find information about upcoming sessions and announcements.</p>
+                </div>
+            </section>
+
+            <!-- Announcements Section -->
+            <section id="announcements" class="dashboard-section">
+                <h2><span class="material-icons">campaign</span> Announcements</h2>
+                <div id="announcementsContainer">
+                    <!-- Announcements will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Sessions Section -->
+            <section id="sessions" class="dashboard-section">
+                <h2><span class="material-icons">event</span> Sessions</h2>
+                <div id="sessionsContainer">
+                    <!-- Sessions will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Staff Controls Section -->
+            <section id="adminControls" class="dashboard-section staff-only" style="display: none;">
+                <h2><span class="material-icons">admin_panel_settings</span> Staff Controls</h2>
+                <div class="info-card">
+                    <div class="staff-controls">
+                        <button onclick="switchToStaffDashboard()" class="staff-btn">
+                            <span class="material-icons">dashboard_customize</span>
+                            Switch to Staff Dashboard
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation Buttons -->
+            <div class="nav-buttons">
+                <button onclick="logout()" class="nav-btn danger">
+                    <span class="material-icons">logout</span>
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
