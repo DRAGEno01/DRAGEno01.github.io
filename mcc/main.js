@@ -198,6 +198,7 @@ function showMainContent() {
     loginScreen.style.display = 'none';
     registrationModal.classList.add('hidden');
     mainContent.classList.remove('hidden');
+    window.location.href = "auth/dashboard.html"
 }
 
 function closeRegistrationModal() {
