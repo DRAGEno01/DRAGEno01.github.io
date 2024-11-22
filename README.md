@@ -14,7 +14,7 @@ A free chat platform that allows people to communicate in one big chat room. Cur
 Paid Patreon members will recieve a special chat badge.
 
 ## AdersonMDT
-Made for fun for a roleplay game, but the people were racist so I removed their login.
+Made for fun for a roleplay game, but the fell out of touch. Game shutdown.
 
 ## [Minecraft Club Website](https://drageno01.github.io/?mcc)
 Built for the love of Minecraft. Used to show information about what will be happening in the upcoming weeks. No longer being supported or updated.
