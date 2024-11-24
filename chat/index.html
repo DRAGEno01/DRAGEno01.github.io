@@ -27,9 +27,10 @@
 
         #messageListdiv {
             height: 70dvh !important;
-            /* width: 400px !important; */
             overflow-x: hidden;
             overflow-y: auto;
+            scroll-behavior: smooth;
+            background-color: white;
         }
 
         #chatsView {
@@ -40,6 +41,14 @@
         #joinView {
             width: 30% !important;
             margin-top: 25dvh;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease-out;
+        }
+
+        #joinView.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         #scrollbutton {
@@ -94,6 +103,244 @@
         #gif6{
             background-image: url("https://miro.medium.com/v2/resize:fit:692/1*9PYEkmnHDS2ygawLE0e0XQ.gif");
             background-size: 100% 100%;
+        }
+
+        /* Add these new animation styles */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
+        }
+
+        .fade-in.show {
+            opacity: 1;
+        }
+
+        .slide-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease-out;
+        }
+
+        .slide-up.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Apply animations to specific elements */
+        #chatsView {
+            width: 80% !important;
+            height: 80dvh !important;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease-out;
+        }
+
+        #chatsView.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .alert {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease-out;
+        }
+
+        .alert.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Dark mode styles */
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .dark-mode #joinView {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+        .dark-mode #usernameInput {
+            background-color: #2d2d2d;
+            color: #ffffff;
+            border-color: #404040;
+        }
+
+        .dark-mode #messageInput {
+            background-color: #2d2d2d;
+            color: #ffffff;
+        }
+
+        .dark-mode .messages {
+            background-color: #1e1e1e !important;
+        }
+
+        .dark-mode #messageListdiv {
+            background-color: #1e1e1e !important;
+        }
+
+        .dark-mode .input {
+            background-color: #1e1e1e;
+            border-color: #404040;
+        }
+
+        /* Modal dark mode styles */
+        .dark-mode .w3-modal-content {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+        .dark-mode .w3-container.w3-light-grey {
+            background-color: #2d2d2d !important;
+            color: #ffffff;
+        }
+
+        .dark-mode .w3-bar {
+            background-color: #2d2d2d;
+            border-color: #404040;
+        }
+
+        .dark-mode .w3-bar-item {
+            color: #ffffff;
+        }
+
+        .dark-mode .w3-light-grey {
+            background-color: #363636 !important;
+            color: #ffffff;
+        }
+
+        /* Alert styles in dark mode */
+        .dark-mode .alert {
+            background-color: #2d2d2d;
+            border-color: #404040;
+            color: #ffffff;
+        }
+
+        .dark-mode .alert-danger {
+            background-color: #442726;
+            border-color: #dc3545;
+        }
+
+        .dark-mode .alert-warning {
+            background-color: #443e26;
+            border-color: #ffc107;
+        }
+
+        .dark-mode .alert-info {
+            background-color: #263844;
+            border-color: #0dcaf0;
+        }
+
+        .dark-mode .alert-light {
+            background-color: #2d2d2d;
+            border-color: #404040;
+        }
+
+        .dark-mode .alert-primary {
+            background-color: #26304d;
+            border-color: #0d6efd;
+        }
+
+        /* Text colors in dark mode */
+        .dark-mode .text-gray-400 {
+            color: #a0a0a0;
+        }
+
+        .dark-mode .text-gray-500 {
+            color: #909090;
+        }
+
+        /* Button styles in dark mode */
+        .dark-mode .w3-button.w3-white {
+            background-color: #2d2d2d !important;
+            color: #ffffff;
+            border-color: #404040 !important;
+        }
+
+        .dark-mode .w3-button.w3-white:hover {
+            background-color: #363636 !important;
+        }
+
+        /* Header styles in dark mode */
+        .dark-mode .w3-container.w3-blue {
+            background-color: #1a365d !important;
+        }
+
+        /* Message animation styles */
+        .message-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease-out;
+        }
+
+        .message-item.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Smooth scrolling for message container */
+        #messageListdiv {
+            scroll-behavior: smooth;
+        }
+
+        #usernameInput {
+            color: black !important;
+        }
+
+        .reaction-btn {
+            @apply px-2 py-1 rounded-md text-sm transition-all duration-200 transform hover:scale-105 shadow-sm;
+            @apply bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600;
+        }
+
+        .reaction-btn.reacted {
+            @apply bg-indigo-100 dark:bg-indigo-700 border-indigo-500;
+        }
+
+        /* Mention highlight styles */
+        .mentioned-message {
+            background-color: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid #6366f1;
+            margin-left: -4px;
+        }
+
+        /* Dark mode mention styles */
+        .dark-mode .mentioned-message {
+            background-color: rgba(99, 102, 241, 0.2);
+        }
+
+        /* Optional animation for new mentions */
+        @keyframes mentionPulse {
+            0% { background-color: rgba(99, 102, 241, 0.2); }
+            50% { background-color: rgba(99, 102, 241, 0.1); }
+            100% { background-color: rgba(99, 102, 241, 0.2); }
+        }
+
+        .mentioned-message.new {
+            animation: mentionPulse 2s ease-in-out;
+        }
+
+        /* Light mode */
+        #messageListdiv {
+            height: 70dvh !important;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            background-color: white;
+        }
+
+        /* Dark mode - using very specific selectors */
+        body.dark-mode #chatsView,
+        body.dark-mode #messageListdiv,
+        body.dark-mode #messageList {
+            background-color: #1e1e1e !important;
+        }
+
+        /* Message container in dark mode */
+        body.dark-mode .message-item {
+            background-color: #1e1e1e !important;
+            color: white;
         }
     </style>
 </head>
@@ -157,75 +404,29 @@
                 Status: Loading</p>
         </div>
 
-        <div id="chatsView" class="w-64 h-96 mx-auto flex flex-col mt-10 hidden">
+        <div id="chatsView" class="w-64 h-96 mx-auto flex flex-col mt-10 hidden bg-white dark:bg-gray-800">
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
                 id="scrollbutton">Disable Autoscroll</button>
-            <div class="messages flex-1 bg-gray-100" id="messageListdiv">
-                <ul id="messageList">
-                    <li>
-                        <div class="flex space-x-2 pl-2 pt-2">
-                            <div class="flex flex-col">
-                                <div class="flex items-baseline space-x-2">
-                                    <div class="text-sm font-bold">DRAGE Chat</div>
-                                    <div class="text-sm text-gray-400">Now</div>
-                                </div>
-                                <div class="text-sm text-gray-500">Please wait...</div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="flex space-x-2 pl-2 pt-2">
-                            <div class="flex flex-col">
-                                <div class="flex items-baseline space-x-2">
-                                    <div class="text-sm font-bold">DRAGE Chat</div>
-                                    <div class="text-sm text-gray-400">Now</div>
-                                </div>
-                                <div class="text-sm text-gray-500">Loading messages...</div>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="flex space-x-2 pl-2 pt-2">
-                            <div class="flex flex-col">
-                                <div class="flex items-baseline space-x-2">
-                                    <div class="text-sm font-bold">DRAGE Chat</div>
-                                    <div class="text-sm text-gray-400">Now</div>
-                                </div>
-                                <div class="text-sm text-gray-500">Getting ready to have a blast!</div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+            <div id="messageListdiv" class="flex-1 bg-white dark:bg-gray-800 overflow-y-auto">
+                <ul id="messageList" class="py-2 bg-white dark:bg-gray-800"></ul>
             </div>
-            <div class="input h-11 w-full flex border border-slate-200 rounded-md">
-                <input id="messageInput" type="text" class="outline-none flex-1 px-1"
-                    placeholder="Type a message to send..." maxlength="100"></input>
-                <div class="p-1">
-                    <button id="imageButton" class="bg-indigo-600 p-2 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 512 512" stroke-width="1.5"
-                            stroke="black" class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" fill="#ffffff"
-                                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM164.1 325.5C182 346.2 212.6 368 256 368s74-21.8 91.9-42.5c5.8-6.7 15.9-7.4 22.6-1.6s7.4 15.9 1.6 22.6C349.8 372.1 311.1 400 256 400s-93.8-27.9-116.1-53.5c-5.8-6.7-5.1-16.8 1.6-22.6s16.8-5.1 22.6 1.6zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
-                        </svg>
+            <div class="input-area border-t dark:border-gray-700 p-3">
+                <div class="flex gap-2">
+                    <input 
+                        id="messageInput" 
+                        type="text" 
+                        class="flex-1 px-3 py-1.5 bg-gray-50 dark:bg-gray-700 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-indigo-400 text-white"
+                        placeholder="Message" 
+                        maxlength="100"
+                    >
+                    <button id="imageButton" class="px-4 py-1.5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md shadow-sm transition-all duration-200 transform hover:scale-105">
+                        😊
                     </button>
-                </div>
-                <div class="p-1">
-                    <button id="sendButton" class="bg-indigo-600 p-2 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="black" class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                        </svg>
+                    <button id="sendButton" class="px-4 py-1.5 bg-indigo-500 hover:bg-indigo-600 text-white rounded-md shadow-sm transition-all duration-200 transform hover:scale-105 font-medium">
+                        Send
                     </button>
                 </div>
             </div>
-            <center>
-                <p style="font-size: xx-small;">There is a 100 character limit per message and a 5 second cooldown to
-                    prevent
-                    spam.</p>
-            </center>
         </div>
 
 
@@ -383,16 +584,29 @@
         <center style="display: none;" id="audioOptions">
             <table>
                 <td>
-                    <button id="audioMute" class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md">Mute Tab
-                        Sound</button>
+                    <button id="audioMute" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-md shadow-sm transition-all duration-200 transform hover:scale-105 font-medium">
+                        Mute Tab Sound
+                    </button>
                 </td>
-                <td><button id="staffButtonOne" style="display: none;"
-                        class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md"
-                        onclick="window.open('https://forms.gle/xEntAFhwddWAgsAb7','_blank')">Bug Report Form</button>
+                <td>
+                    <button id="staffButtonOne" style="display: none;" class="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-md shadow-sm transition-all duration-200 transform hover:scale-105 font-medium" onclick="window.open('https://forms.gle/xEntAFhwddWAgsAb7','_blank')">
+                        Bug Report Form
+                    </button>
                 </td>
-                <td><button id="staffButtonTwo" style="display: none;"
-                        class="bg-indigo-600 px-2 py-1 text-sm text-white rounded-md"
-                        onclick="window.open('https://forms.gle/fGiDMQvJaDpyaWZA8','_blank')">User Report Form</button>
+                <td>
+                    <button id="staffButtonTwo" style="display: none;" class="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md shadow-sm transition-all duration-200 transform hover:scale-105 font-medium" onclick="window.open('https://forms.gle/fGiDMQvJaDpyaWZA8','_blank')">
+                        User Report Form
+                    </button>
+                </td>
+                <td>
+                    <button id="themeToggle" class="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-md shadow-sm transition-all duration-200 transform hover:scale-105 font-medium">
+                        Toggle Theme
+                    </button>
+                </td>
+                <td>
+                    <button id="logoutButton" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md shadow-sm transition-all duration-200 transform hover:scale-105 font-medium">
+                        Logout
+                    </button>
                 </td>
             </table>
         </center>
