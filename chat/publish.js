@@ -9,11 +9,11 @@
 import { dragechatServerVersion, dragechatAllowUsage } from "https://drageno01.github.io/version.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"; //signInAnonymously, 
-import { getFirestore, addDoc, collection, onSnapshot, doc, getDocs, query, where, } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+import { getFirestore, addDoc, collection, onSnapshot, doc, getDocs, query, where, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
 // Variable Declerations
 let date = new Date();
-let clientVersion = 0.00014;
+let clientVersion = 0.00015;
 let chatAllowUsage = dragechatAllowUsage;
 let staffUID = ["tgtee2L2iKhvXznmgzAx9u3ApKi1", "uuftLej5XYUUMEldjqrb1H061Y73"];
 let testerUID = ["Sq3kcDSwZQVGSW4jmQ56r788GOv2"];
@@ -61,6 +61,37 @@ const auth = getAuth(app);
 const regex = /\p{Extended_Pictographic}/ug;
 const regexb = /[\xCC\xCD]/;
 auth.languageCode = 'en';
+
+// Add these near the top with other variable declarations
+const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+let isDarkMode = getCookie('darkMode') !== null ? 
+    getCookie('darkMode') === 'true' : 
+    darkModeMediaQuery.matches;
+
+// Add these near other variable declarations
+let currentUser = null;
+
+// Modify the initialization code to check conditions
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        // Add version and usage checks
+        if (dragechatServerVersion !== clientVersion || !chatAllowUsage) {
+            logout();
+            return;
+        }
+
+        currentUser = user;
+        uid = user.uid;
+        email = user.email;
+        
+        // Only auto-join if we have a saved username
+        const savedUsername = getCookie('lastUsername');
+        if (savedUsername && !userLoggedIn) {
+            specifiedUsername = savedUsername;
+            autoJoinChat();
+        }
+    }
+});
 
 //  Starter IF Statements
 
@@ -242,6 +273,14 @@ setInterval(() => {
     }
 }, 7500);
 
+// Add this with your other event listeners
+document.getElementById('themeToggle').addEventListener('click', toggleDarkMode);
+
+// Add this with your other event listeners (near the top where other button listeners are defined)
+document.getElementById('logoutButton').addEventListener("click", async () => {
+    await logout();
+});
+
 //  Functions
 
 function getCookie(name) {
@@ -292,7 +331,47 @@ function joinChat() {
         });
 }
 
-function sendMessage() {
+// Make toggleReaction globally available
+window.toggleReaction = async function(messageId, emoji) {
+    if (!auth.currentUser) return;
+    
+    try {
+        const messageRef = doc(db, "messages", messageId);
+        const messageDoc = await getDoc(messageRef);
+        
+        if (!messageDoc.exists()) {
+            console.error("Message not found");
+            return;
+        }
+
+        const reactions = messageDoc.data().reactions || {
+            "👍": [],
+            "❤️": [],
+            "😄": [],
+            "😮": [],
+            "🎉": []
+        };
+        
+        const userUid = auth.currentUser.uid;
+        
+        // If user has already reacted with this emoji, remove it
+        if (reactions[emoji]?.includes(userUid)) {
+            reactions[emoji] = reactions[emoji].filter(uid => uid !== userUid);
+        } else {
+            // Add the new reaction
+            if (!reactions[emoji]) reactions[emoji] = [];
+            reactions[emoji].push(userUid);
+        }
+
+        await updateDoc(messageRef, { reactions });
+        console.log("Reaction updated successfully", reactions); // Debug log
+    } catch (error) {
+        console.error("Error updating reaction:", error);
+    }
+}
+
+// Update the sendMessage function to include reactions initialization
+async function sendMessage() {
     messageInput.readOnly = true;
     if (auth.currentUser) {
         auth.currentUser.reload().then(async user => {
@@ -316,14 +395,18 @@ function sendMessage() {
                             uid: uid,
                             email: "{no longer supported}",
                             staff: adminStatus,
+                            reactions: {
+                                "👍": [],
+                                "❤️": [],
+                                "😄": [],
+                                "😮": [],
+                                "🎉": []
+                            }
                         });
                     }
                 }
             }
-        }).catch(error => {
-            alert("You are currently unable to send message. You will need to login again to continue using DRAGE-Chat.");
-            window.location.href = window.location.href;
-        });
+        })
     }
 }
 
@@ -337,33 +420,32 @@ function subscribeToNewMessages() {
                 ...doc.data(),
             });
         });
-        let existingMessageHash = {};
-        for (let message of messages) {
-            existingMessageHash[message.id] = true;
-        }
-        for (let message of newMessages) {
-            if (!existingMessageHash[message.id]) {
-                messages.push(message);
-                if (!tabFocused) {
-                    notifyOfNewMessage(message.message);
+        
+        // Sort messages by creation date
+        messages = newMessages.sort((a, b) => {
+            return a.created.seconds - b.created.seconds;
+        });
+        
+        // Check for mentions in new messages
+        const currentUsername = specifiedUsername.replace(/<[^>]*>/g, '');
+        const mentionRegex = new RegExp(`@${currentUsername}\\b`, 'i');
+        
+        const hasNewMention = newMessages.some(msg => 
+            mentionRegex.test(msg.message) && 
+            msg.uid !== auth.currentUser.uid
+        );
+        
+        if (!tabFocused) {
+            newMessagesSinceTabNotFocused += 1;
+            if (!audioMuteStatus && (hasNewMention || !tabFocused)) {
+                playSound();
+                if (hasNewMention) {
+                    notifyOfNewMessage(`Someone mentioned you: @${currentUsername}`);
                 }
             }
         }
-        let allowShowID = false;
-        if (adminStatus == true) {
-            allowShowID = true;
-        }
-        if (!tabFocused) {
-            newMessagesSinceTabNotFocused += 1;
-            if (!audioMuteStatus) {
-                playSound();
-            };
-        }
-        if (allowShowID) {
-            writeMessagesArray(true);
-        } else {
-            writeMessagesArray(false);
-        }
+        
+        writeMessagesArray(adminStatus);
     });
 }
 
@@ -388,67 +470,103 @@ async function loadHistoricalMessages() {
     });
 };
 
-function writeMessagesArray(arg) {
-    const html = [];
-    for (let message of messages) {
-        if (arg == true) {
-            html.push(messageTemplate(message.message, message.user, message.created, true, message.uid));
-        } else {
-            html.push(messageTemplate(message.message, message.user, message.created, false, message.uid));
-        }
-
+// Make deleteMessage globally available
+window.deleteMessage = async function(messageId) {
+    if (!adminStatus) {
+        console.log("Not an admin, cannot delete");
+        return;
     }
-    document.getElementById("messageList").innerHTML = html.join("");
-    if (shouldScroll) {
-        setTimeout(() => {
-            document.getElementById('messageListdiv').scrollTop = (document.getElementById('messageListdiv').scrollHeight);
-        }, 100);
+    
+    try {
+        const messageRef = doc(db, "messages", messageId);
+        await updateDoc(messageRef, {
+            message: "<i style='color: red;'>[Message Deleted by Admin]</i>"
+        });
+        console.log("Message deleted successfully");
+    } catch (error) {
+        console.error("Error deleting message: ", error);
+        alert("Error deleting message. Please try again.");
     }
 }
 
-function messageTemplate(message, username, timestamp, showID, id) {
-    if (shouldScroll) {
-        setTimeout(() => {
-            document.getElementById('messageListdiv').scrollTop = (document.getElementById('messageListdiv').scrollHeight);
-        }, 100);
-        setTimeout(() => {
-            document.getElementById('messageListdiv').scrollTop = (document.getElementById('messageListdiv').scrollHeight);
-        }, 200);
-    }
-    if (showID) {
-        return `<li>
-        <div class="flex space-x-2 pl-2 pt-2">
-          <div class="flex flex-col">
-            <div class="flex items-baseline space-x-2">
-              <div class="text-sm font-bold">${username}</div>
-              <div class="text-sm text-gray-400">${new Date(timestamp.seconds * 1000).toLocaleDateString() +
-            " " +
-            new Date(timestamp.seconds * 1000).toLocaleTimeString()
-            }</div>
+// Update createAnimatedMessage to use the global function
+function createAnimatedMessage(message, username, timestamp, showID, id) {
+    const li = document.createElement('li');
+    li.className = 'message-item slide-up px-3 py-1.5';
+
+    // Only show delete button for admins
+    const deleteButton = adminStatus ? 
+        `<button onclick="deleteMessage('${message.id}')" class="text-red-500 hover:text-red-700 text-sm ml-2 transition-colors duration-200">
+            <span class="font-bold">🗑️</span>
+        </button>` : 
+        '';
+
+    // Initialize reactions if they don't exist
+    const reactions = message.reactions || {
+        "👍": [],
+        "❤️": [],
+        "😄": [],
+        "😮": [],
+        "🎉": []
+    };
+
+    // Create reactions HTML with counts
+    const reactionsHtml = `
+        <div class="flex gap-1 mt-1">
+            ${Object.entries(reactions).map(([emoji, users]) => `
+                <button onclick="toggleReaction('${message.id}', '${emoji}')" 
+                    class="text-sm hover:opacity-100 ${users.includes(uid) ? 'opacity-100' : 'opacity-50'}">
+                    ${emoji}${users.length > 0 ? users.length : ''}
+                </button>
+            `).join('')}
+        </div>
+    `;
+
+    li.innerHTML = `
+        <div>
+            <div class="flex items-center gap-2">
+                <span class="font-bold text-base">${message.user}</span>
+                <span class="text-xs text-gray-400">${new Date(message.created.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                ${deleteButton}
             </div>
-            <div class="text-sm text-gray-500">${message}</div>
-            <p class="showUserId" id="messageID">${id}</p>
-          </div>
+            <div class="text-sm">${message.message}</div>
+            ${reactionsHtml}
+            ${showID ? `<div class="text-xs text-gray-400 mt-0.5" id="messageID">${message.uid}</div>` : ''}
         </div>
-      </li>`;
-    } else {
-        return `<li>
-    <div class="flex space-x-2 pl-2 pt-2">
-      <div class="flex flex-col">
-        <div class="flex items-baseline space-x-2">
-          <div class="text-sm font-bold">${username}</div>
-          <div class="text-sm text-gray-400">${new Date(timestamp.seconds * 1000).toLocaleDateString() +
-            " " +
-            new Date(timestamp.seconds * 1000).toLocaleTimeString()
-            }</div>
-        </div>
-        <div class="text-sm text-gray-500">${message}</div>
-      </div>
-    </div>
-  </li>`;
-    }
+    `;
 
+    return li;
 }
+
+// Update the writeMessagesArray function
+function writeMessagesArray(arg) {
+    const messageList = document.getElementById("messageList");
+    messageList.innerHTML = '';
+    
+    messages.forEach(message => {
+        if (!message || !message.id) {
+            console.log("Invalid message:", message);
+            return;
+        }
+        const messageElement = createAnimatedMessage(message, null, null, arg, null);
+        messageList.appendChild(messageElement);
+        
+        setTimeout(() => {
+            messageElement.classList.add('show');
+        }, 10);
+    });
+
+    if (shouldScroll) {
+        const messageListDiv = document.getElementById('messageListdiv');
+        messageListDiv.style.scrollBehavior = 'smooth';
+        messageListDiv.scrollTop = messageListDiv.scrollHeight;
+        
+        setTimeout(() => {
+            messageListDiv.style.scrollBehavior = 'auto';
+        }, 300);
+    }
+}
+
 
 function scrolloption() {
     if (shouldScroll) {
@@ -582,7 +700,6 @@ function extraStaffFeatures() {
         adminStatus = true;
         authenticatedLogin = true;
         messageInput.setAttribute('maxlength', '5000');
-        document.getElementById("body").style.backgroundColor = "#333";
         document.getElementById("staffButtonOne").style.display = "block";
         document.getElementById("staffButtonTwo").style.display = "block";
 
@@ -642,3 +759,131 @@ async function sendSpecialItem(item) {
         staff: adminStatus,
     });
 }
+
+// When showing joinView
+document.getElementById('joinView').classList.add('show');
+
+// When showing chatsView
+document.getElementById('chatsView').classList.add('show');
+
+// For alerts, modify how they're displayed
+function showAlert(alertId) {
+    const alert = document.getElementById(alertId);
+    alert.style.display = 'block';
+    // Small delay to ensure display:block is processed before adding show class
+    setTimeout(() => {
+        alert.classList.add('show');
+    }, 10);
+}
+
+// Add this function with your other functions
+function toggleDarkMode() {
+    isDarkMode = !isDarkMode;
+    document.cookie = `darkMode=${isDarkMode}; path=/; max-age=31536000`; // Expires in 1 year
+    applyTheme();
+}
+
+function applyTheme() {
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove('dark-mode');
+    }
+}
+
+// Add this to your initialization code (after variable declarations)
+applyTheme();
+
+// Add this new function for auto-joining
+async function autoJoinChat() {
+    chatBadges();
+    extraStaffFeatures();
+
+    document.getElementById("audioOptions").style.display = "block";
+    joinView.classList.add("hidden");
+    chatsView.classList.remove("hidden");
+    userLoggedIn = true;
+    await loadHistoricalMessages();
+    await subscribeToNewMessages();
+    writeMessagesArray();
+    document.getElementById('id01').style.display = 'block';
+    setTimeout(() => {
+        document.getElementById('messageListdiv').scrollTop = (document.getElementById('messageListdiv').scrollHeight) + 1000;
+    }, 1250);
+}
+
+// Update the logout function to handle forced logouts
+async function logout() {
+    try {
+        await auth.signOut();
+        currentUser = null;
+        userLoggedIn = false;
+        
+        // Clear cookies
+        document.cookie = 'lastUsername=; Max-Age=0; path=/;';
+        
+        // Reset UI
+        joinView.classList.remove("hidden");
+        chatsView.classList.add("hidden");
+        document.getElementById("audioOptions").style.display = "none";
+        
+        // Clear messages
+        messages = [];
+        document.getElementById("messageList").innerHTML = '';
+        
+        // Show appropriate message for forced logout
+        if (dragechatServerVersion !== clientVersion) {
+            alert("You have been logged out due to a version mismatch. Please refresh the page.");
+        } else if (!chatAllowUsage) {
+            alert("You have been logged out because chat usage is currently disabled.");
+        }
+        
+        // Reload page to reset all states
+        window.location.reload();
+    } catch (error) {
+        console.error("Error during logout:", error);
+        alert("There was an error logging out. Please try again.");
+    }
+}
+
+// Add this function to show the reaction picker
+function showReactionPicker(messageId) {
+    const picker = document.createElement('div');
+    picker.className = 'reaction-picker fixed bottom-20 right-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 z-50';
+    picker.innerHTML = `
+        <div class="flex space-x-2">
+            <button onclick="addReaction('${messageId}', '👍')" class="hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">👍</button>
+            <button onclick="addReaction('${messageId}', '❤️')" class="hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">❤️</button>
+            <button onclick="addReaction('${messageId}', '😄')" class="hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">😄</button>
+            <button onclick="addReaction('${messageId}', '😮')" class="hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">😮</button>
+            <button onclick="addReaction('${messageId}', '🎉')" class="hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded">🎉</button>
+        </div>
+    `;
+    
+    // Remove any existing picker
+    const existingPicker = document.querySelector('.reaction-picker');
+    if (existingPicker) {
+        existingPicker.remove();
+    }
+    
+    document.body.appendChild(picker);
+    
+    // Close picker when clicking outside
+    document.addEventListener('click', function closePicker(e) {
+        if (!picker.contains(e.target) && !e.target.closest('.add-reaction-btn')) {
+            picker.remove();
+            document.removeEventListener('click', closePicker);
+        }
+    });
+}
+
+// Add this function to handle adding reactions
+async function addReaction(messageId, emoji) {
+    await toggleReaction(messageId, emoji);
+    const picker = document.querySelector('.reaction-picker');
+    if (picker) {
+        picker.remove();
+    }
+}
+
+
