@@ -313,7 +313,22 @@ function joinChat() {
             await loadHistoricalMessages();
             await subscribeToNewMessages();
             writeMessagesArray();
-            document.getElementById('id01').style.display = 'block'
+            
+            // Check if rules agreement is needed
+            const lastAgreed = getCookie('rulesAgreementDismissed');
+            const threeDays = 3 * 24 * 60 * 60 * 1000; // Three days in milliseconds
+            
+            if (!lastAgreed || (Date.now() - parseInt(lastAgreed)) > threeDays) {
+                document.getElementById('id01').style.display = 'block';
+                
+                // Add click handler to the agreement button
+                const agreeButton = document.getElementById('id01').querySelector('.w3-button.w3-right.w3-white.w3-border');
+                agreeButton.addEventListener('click', () => {
+                    // Save the current timestamp when rules are agreed to
+                    document.cookie = `rulesAgreementDismissed=${Date.now()}; path=/; max-age=${60 * 60 * 24 * 3}`; // 3 days expiry
+                });
+            }
+            
             setTimeout(() => {
                 document.getElementById('messageListdiv').scrollTop = (document.getElementById('messageListdiv').scrollHeight)+1000;
             }, 1250);
@@ -494,7 +509,6 @@ function createAnimatedMessage(message, username, timestamp, showID, id) {
     const li = document.createElement('li');
     li.className = 'message-item slide-up px-3 py-1.5';
 
-    // Only show delete button for admins
     const deleteButton = adminStatus ? 
         `<button onclick="deleteMessage('${message.id}')" class="text-red-500 hover:text-red-700 text-sm ml-2 transition-colors duration-200">
             <span class="font-bold">🗑️</span>
@@ -509,6 +523,10 @@ function createAnimatedMessage(message, username, timestamp, showID, id) {
         "😮": [],
         "🎉": []
     };
+
+    // Format date and time
+    const messageDate = new Date(message.created.seconds * 1000);
+    const formattedDateTime = `${messageDate.toLocaleDateString()} ${messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
 
     // Create reactions HTML with counts
     const reactionsHtml = `
@@ -526,7 +544,7 @@ function createAnimatedMessage(message, username, timestamp, showID, id) {
         <div>
             <div class="flex items-center gap-2">
                 <span class="font-bold text-base">${message.user}</span>
-                <span class="text-xs text-gray-400">${new Date(message.created.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                <span class="text-xs text-gray-400">${formattedDateTime}</span>
                 ${deleteButton}
             </div>
             <div class="text-sm">${message.message}</div>
@@ -710,7 +728,20 @@ function extraStaffFeatures() {
         authenticatedLogin = true;
     }
     if (patreon) {
-        document.getElementById("patreonThanks").style.display = "block";
+        // Check if the user has dismissed the banner within the last week
+        const lastDismissed = getCookie('patreonBannerDismissed');
+        const oneWeek = 7 * 24 * 60 * 60 * 1000; // One week in milliseconds
+        
+        if (!lastDismissed || (Date.now() - parseInt(lastDismissed)) > oneWeek) {
+            document.getElementById("patreonThanks").style.display = "block";
+            
+            // Add click handler to the close button
+            const closeBtn = document.getElementById("patreonThanks").querySelector('.btn-close');
+            closeBtn.addEventListener('click', () => {
+                // Save the current timestamp when banner is dismissed
+                document.cookie = `patreonBannerDismissed=${Date.now()}; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 days expiry
+            });
+        }
         messageInput.setAttribute('maxlength', '150');
     }
 }
@@ -806,7 +837,22 @@ async function autoJoinChat() {
     await loadHistoricalMessages();
     await subscribeToNewMessages();
     writeMessagesArray();
-    document.getElementById('id01').style.display = 'block';
+    
+    // Check if rules agreement is needed
+    const lastAgreed = getCookie('rulesAgreementDismissed');
+    const threeDays = 3 * 24 * 60 * 60 * 1000; // Three days in milliseconds
+    
+    if (!lastAgreed || (Date.now() - parseInt(lastAgreed)) > threeDays) {
+        document.getElementById('id01').style.display = 'block';
+        
+        // Add click handler to the agreement button
+        const agreeButton = document.getElementById('id01').querySelector('.w3-button.w3-right.w3-white.w3-border');
+        agreeButton.addEventListener('click', () => {
+            // Save the current timestamp when rules are agreed to
+            document.cookie = `rulesAgreementDismissed=${Date.now()}; path=/; max-age=${60 * 60 * 24 * 3}`; // 3 days expiry
+        });
+    }
+    
     setTimeout(() => {
         document.getElementById('messageListdiv').scrollTop = (document.getElementById('messageListdiv').scrollHeight) + 1000;
     }, 1250);
