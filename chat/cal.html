@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --container-bg: #2d2d2d;
+            --input-bg: #3d3d3d;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-color: #6366f1;
+            --accent-hover: #4f46e5;
+            --error-color: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            padding: 1rem;
+            box-sizing: border-box;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .login-container, .chat-container {
+            background-color: var(--container-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .login-container {
+            max-width: 400px;
+            padding: 2rem;
+        }
+
+        .chat-container {
+            display: none;
+            max-width: 800px;
+            height: calc(100vh - 2rem);
+            padding: 1.5rem;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-container h1 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background-color: var(--input-bg);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: calc(100vh - 10rem);
+        }
+
+        .message {
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            background-color: var(--container-bg);
+            border-radius: 8px;
+            max-width: 80%;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .message.sent {
+            margin-left: auto;
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .message.sent .sender {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .message .sender {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+
+        .message .content {
+            word-break: break-word;
+            line-height: 1.4;
+        }
+
+        .message-input {
+            display: flex;
+            gap: 0.5rem;
+            padding-top: 0.5rem;
+            position: sticky;
+            bottom: 0;
+            background-color: var(--container-bg);
+        }
+
+        .message-input input {
+            flex: 1;
+        }
+
+        .message-input button {
+            width: auto;
+            padding: 0.875rem 1.5rem;
+            white-space: nowrap;
+        }
+
+        /* Improve scrollbar styling */
+        .messages-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .messages-container::-webkit-scrollbar-track {
+            background: var(--input-bg);
+            border-radius: 4px;
+        }
+
+        .messages-container::-webkit-scrollbar-thumb {
+            background: var(--container-bg);
+            border-radius: 4px;
+        }
+
+        .messages-container::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+
+        /* Improve input styling */
+        input {
+            width: 100%;
+            padding: 0.875rem;
+            background-color: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            box-sizing: border-box;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            font-size: 0.9375rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        /* Improve button styling */
+        button {
+            padding: 0.875rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background-color: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .login-container, .chat-container {
+                padding: 1rem;
+            }
+
+            .chat-container {
+                height: calc(100vh - 1rem);
+                padding: 1rem;
+            }
+
+            .messages-container {
+                max-height: calc(100vh - 8rem);
+            }
+
+            .message {
+                padding: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .message-input button {
+                padding: 0.75rem 1rem;
+            }
+        }
+
+        /* Add height constraint for very short screens */
+        @media (max-height: 500px) {
+            .messages-container {
+                max-height: calc(100vh - 7rem);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            font-size: 1.875rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        /* Add subtle animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Update/add these CSS rules */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+
+        .login-container button {
+            width: 50%; /* Or any specific width you prefer */
+            min-width: 120px; /* Ensures minimum width */
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+    <div class="login-container">
+        <h1>Welcome Back</h1>
+        <form id="loginForm" onsubmit="return false;">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <div id="emailError" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <div id="passwordError" class="error-message"></div>
+            </div>
+            <div class="button-container">
+                <button type="submit" onclick="handleLogin()">Sign in</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <h1>Chat Room</h1>
+        <div class="messages-container" id="messagesContainer">
+            <!-- Messages will be inserted here -->
+        </div>
+        <div class="message-input">
+            <input 
+                type="text" 
+                id="messageInput" 
+                placeholder="Type your message..."
+                onkeypress="if(event.key === 'Enter') sendMessage()"
+            >
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Firebase (replace with your config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBjHvu3UBEb0hc7iNBCoNyO0VIvsQZGfrg",
+            authDomain: "szia-app.firebaseapp.com",
+            projectId: "szia-app",
+            storageBucket: "szia-app.firebasestorage.app",
+            messagingSenderId: "317229632528",
+            appId: "1:317229632528:web:2924b0424e6f9957f70e95"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        let currentUser = null;
+
+        async function handleLogin() {
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+
+            // Reset error messages
+            emailError.style.display = 'none';
+            passwordError.style.display = 'none';
+
+            // Basic validation
+            let isValid = true;
+
+            if (!email.value) {
+                emailError.textContent = 'Email is required';
+                emailError.style.display = 'block';
+                isValid = false;
+            } else if (!isValidEmail(email.value)) {
+                emailError.textContent = 'Please enter a valid email';
+                emailError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (!password.value) {
+                passwordError.textContent = 'Password is required';
+                passwordError.style.display = 'block';
+                isValid = false;
+            }
+
+            if (isValid) {
+                try {
+                    const button = document.querySelector('button');
+                    button.disabled = true;
+                    button.textContent = 'Signing in...';
+
+                    const userCredential = await auth.signInWithEmailAndPassword(
+                        email.value,
+                        password.value
+                    );
+
+                    console.log('Logged in successfully:', userCredential.user);
+                    
+                } catch (error) {
+                    console.error('Login error:', error);
+                    
+                    // Handle specific Firebase auth errors
+                    switch (error.code) {
+                        case 'auth/user-not-found':
+                            emailError.textContent = 'No account found with this email';
+                            emailError.style.display = 'block';
+                            break;
+                        case 'auth/wrong-password':
+                            passwordError.textContent = 'Incorrect password';
+                            passwordError.style.display = 'block';
+                            break;
+                        case 'auth/invalid-email':
+                            emailError.textContent = 'Invalid email format';
+                            emailError.style.display = 'block';
+                            break;
+                        case 'auth/too-many-requests':
+                            passwordError.textContent = 'Too many attempts. Please try again later';
+                            passwordError.style.display = 'block';
+                            break;
+                        default:
+                            passwordError.textContent = 'An error occurred. Please try again';
+                            passwordError.style.display = 'block';
+                    }
+                } finally {
+                    const button = document.querySelector('button');
+                    button.disabled = false;
+                    button.textContent = 'Sign in';
+                }
+            }
+        }
+
+        // Add auth state observer
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                document.querySelector('.login-container').style.display = 'none';
+                document.getElementById('chatContainer').style.display = 'block';
+                loadMessages();
+            } else {
+                document.querySelector('.login-container').style.display = 'block';
+                document.getElementById('chatContainer').style.display = 'none';
+            }
+        });
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        // Add this function to map emails to usernames
+        function getDisplayName(email) {
+            switch (email.toLowerCase()) {
+                case 'dan@chat.com':
+                    return 'Dan';
+                case 'cal@chat.com':
+                    return 'Cal';
+                default:
+                    return email; // Fallback to email if no custom username
+            }
+        }
+
+        // Update the message loading function
+        function loadMessages() {
+            const messagesContainer = document.getElementById('messagesContainer');
+            
+            db.collection('messages')
+                .orderBy('timestamp', 'desc')
+                .limit(100)
+                .onSnapshot((snapshot) => {
+                    messagesContainer.innerHTML = '';
+                    
+                    const messages = [];
+                    snapshot.forEach((doc) => {
+                        messages.push(doc.data());
+                    });
+                    messages.reverse();
+
+                    messages.forEach((message) => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = `message ${message.userId === currentUser.uid ? 'sent' : ''}`;
+                        
+                        // Use the display name instead of email
+                        messageDiv.innerHTML = `
+                            <div class="sender">${getDisplayName(message.email)}</div>
+                            <div class="content">${message.text}</div>
+                        `;
+                        
+                        messagesContainer.appendChild(messageDiv);
+                    });
+                    
+                    requestAnimationFrame(() => {
+                        messagesContainer.scrollTo({
+                            top: messagesContainer.scrollHeight,
+                            behavior: 'smooth'
+                        });
+                    });
+                }, (error) => {
+                    console.error("Error loading messages: ", error);
+                });
+        }
+
+        // Function to send a message
+        async function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            
+            if (message && currentUser) {
+                try {
+                    await db.collection('messages').add({
+                        text: message,
+                        userId: currentUser.uid,
+                        email: currentUser.email,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    messageInput.value = '';
+                } catch (error) {
+                    console.error("Error sending message: ", error);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
