@@ -350,6 +350,25 @@
             animation: slideIn 0.2s ease-out forwards;
         }
     </style>
+    <style>
+        #statusContainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 2.5% 10px 2.5%;  /* Match notepad width (95%) */
+            font-size: 14px;
+            color: #666;
+        }
+
+        #statusIndicator {
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        #counter {
+            margin-right: 10px;
+        }
+    </style>
     <!-- This was made by DRAGEno01. -->
 </head>
 <body id="mainbody">
@@ -695,24 +714,86 @@ The text you enter will appear directly within the box as you type." onchange="s
             document.cookie = `notepadFontSize=${defaultSize}; path=/; max-age=31536000`;
         }
 
-        // Add this new function
-        // function resetAppearance() {
-        //     // Reset theme
-        //     setTheme('default');
-            
-        //     // Reset font size
-        //     const defaultSize = 16;
-        //     fontSlider.value = defaultSize;
-        //     fontDisplay.textContent = defaultSize + 'px';
-        //     notepad.style.fontSize = defaultSize + 'px';
-            
-        //     // Clear cookies
-        //     document.cookie = "notepadTheme=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        //     document.cookie = "notepadFontSize=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-            
-        //     // Optional: Show confirmation to user
-        //     alert("Appearance has been reset to default!");
-        // }
+        // Autosave functionality
+        let saveTimeout;
+        function autoSave() {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                localStorage.setItem('notepadContent', notepad.value);
+                showStatus('Changes saved');
+            }, 1000);
+        }
+
+        function showStatus(message) {
+            const status = document.getElementById('statusIndicator');
+            status.textContent = message;
+            status.style.opacity = '1';
+            setTimeout(() => {
+                status.style.opacity = '0';
+            }, 2000);
+        }
+
+        // Word and character counter
+        function updateCounter() {
+            const text = notepad.value;
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const chars = text.length;
+            document.getElementById('counter').textContent = 
+                `${words} words | ${chars} characters`;
+        }
+
+        // Copy to clipboard
+        function copyToClipboard() {
+            notepad.select();
+            document.execCommand('copy');
+            showStatus('Copied to clipboard');
+        }
+
+        // Clear notepad
+        function clearNotepad() {
+            if (confirm('Are you sure you want to clear the notepad?')) {
+                notepad.value = '';
+                updateCounter();
+                autoSave();
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey) {
+                switch(e.key.toLowerCase()) {
+                    case 's':
+                        e.preventDefault();
+                        getFileName();
+                        break;
+                    case 'c':
+                        if (!window.getSelection().toString()) {
+                            e.preventDefault();
+                            copyToClipboard();
+                        }
+                        break;
+                    case 'l':
+                        e.preventDefault();
+                        clearNotepad();
+                        break;
+                }
+            }
+        });
+
+        // Load saved content
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedContent = localStorage.getItem('notepadContent');
+            if (savedContent) {
+                notepad.value = savedContent;
+                updateCounter();
+            }
+        });
+
+        // Add event listeners
+        notepad.addEventListener('input', () => {
+            autoSave();
+            updateCounter();
+        });
     </script>
     <!-- Modal JS -->
     <script>
@@ -819,5 +900,9 @@ The text you enter will appear directly within the box as you type." onchange="s
         });
     </script>
     <!-- This was made by DRAGEno01. -->
+    <div id="statusContainer">
+        <div id="counter">0 words | 0 characters</div>
+        <div id="statusIndicator">Changes saved</div>
+    </div>
 </body>
 </html>
