@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Club - Admin Panel</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: #1a1a1a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        .admin-container {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+        }
+
+        .admin-container::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 193, 7, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dashboard-logo {
+            width: 32px;
+            height: 32px;
+        }
+
+        .dashboard-header h1 {
+            color: #fff;
+            font-size: 20px;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-button {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .logout-button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+        }
+
+        .logout-button:hover {
+            background: #ff2222;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .admin-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-2px);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .admin-card h3 {
+            color: #4CAF50;
+            margin: 0 0 8px 0;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-card p {
+            color: #aaa;
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 800px;
+            margin: 40px auto;
+            position: relative;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h2 {
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .modal-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, #4CAF50, transparent);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 8px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-modal:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .filter-container {
+            margin: 32px 0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+        }
+
+        .filter-select {
+            padding: 12px 24px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            min-width: 200px;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-select:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .request-card, .user-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .request-card:hover, .user-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .request-header, .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .request-name, .user-name {
+            color: #4CAF50;
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .request-email, .user-email {
+            color: #aaa;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .request-card:hover .request-email,
+        .user-card:hover .user-email {
+            color: #fff;
+        }
+
+        .request-details, .user-details {
+            color: #fff;
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .request-details p, .user-details p {
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .request-details strong, .user-details strong {
+            color: #4CAF50;
+            min-width: 120px;
+        }
+
+        .request-actions, .user-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .accept-button, .make-admin-button, .remove-admin-button,
+        .suspend-button, .unaccept-button, .back-button, .logout-button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .accept-button::before, .make-admin-button::before,
+        .remove-admin-button::before, .suspend-button::before,
+        .unaccept-button::before, .back-button::before,
+        .logout-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .accept-button:hover::before, .make-admin-button:hover::before,
+        .remove-admin-button:hover::before, .suspend-button:hover::before,
+        .unaccept-button:hover::before, .back-button:hover::before,
+        .logout-button:hover::before {
+            transform: translateX(100%);
+        }
+
+        .accept-button {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .accept-button:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .make-admin-button {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .make-admin-button:hover {
+            background: #ffb300;
+            transform: translateY(-2px);
+        }
+
+        .remove-admin-button {
+            background: #ff4444;
+            color: white;
+        }
+
+        .remove-admin-button:hover {
+            background: #ff2222;
+            transform: translateY(-2px);
+        }
+
+        .suspend-button {
+            background: #ff9800;
+            color: white;
+        }
+
+        .suspend-button:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+        }
+
+        .unaccept-button {
+            background: #9c27b0;
+            color: white;
+        }
+
+        .unaccept-button:hover {
+            background: #7b1fa2;
+            transform: translateY(-2px);
+        }
+
+        .back-button {
+            background: #666;
+            color: white;
+        }
+
+        .back-button:hover {
+            background: #777;
+            transform: translateY(-2px);
+        }
+
+        .logout-button {
+            background: #ff4444;
+            color: white;
+        }
+
+        .logout-button:hover {
+            background: #ff2222;
+            transform: translateY(-2px);
+        }
+
+        .status-badge, .role-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: capitalize;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-badge::before, .role-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status-pending::before {
+            background: #ffc107;
+            box-shadow: 0 0 8px #ffc107;
+        }
+
+        .status-accepted {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+
+        .status-accepted::before {
+            background: #4CAF50;
+            box-shadow: 0 0 8px #4CAF50;
+        }
+
+        .status-rejected {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+
+        .status-rejected::before {
+            background: #f44336;
+            box-shadow: 0 0 8px #f44336;
+        }
+
+        .role-member {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+
+        .role-member::before {
+            background: #4CAF50;
+            box-shadow: 0 0 8px #4CAF50;
+        }
+
+        .role-admin {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .role-admin::before {
+            background: #ffc107;
+            box-shadow: 0 0 8px #ffc107;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .suspend-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1100;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .suspend-modal-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 500px;
+            margin: 40px auto;
+            position: relative;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.4s ease;
+        }
+
+        .suspend-form {
+            margin-top: 32px;
+        }
+
+        .suspend-form label {
+            display: block;
+            margin-bottom: 16px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .suspend-form input {
+            width: 100%;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .suspend-form input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .suspend-form .button-group {
+            display: flex;
+            gap: 16px;
+            justify-content: flex-end;
+        }
+
+        .suspend-form .cancel-button,
+        .suspend-form .confirm-button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .suspend-form .cancel-button {
+            background: #666;
+            color: white;
+        }
+
+        .suspend-form .confirm-button {
+            background: #ff9800;
+            color: white;
+        }
+
+        .suspend-form .cancel-button:hover,
+        .suspend-form .confirm-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .suspend-form .cancel-button:hover {
+            background: #777;
+        }
+
+        .suspend-form .confirm-button:hover {
+            background: #f57c00;
+        }
+
+        .join-code-grid {
+            background: #C6C6C6;
+            border: 2px solid #373737;
+            border-radius: 4px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .join-code-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #8B8B8B;
+            border: 2px solid #373737;
+        }
+
+        .join-code-items {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .join-code-item {
+            width: 64px;
+            height: 64px;
+            background: #8B8B8B;
+            border: 2px solid #373737;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .join-code-item:hover {
+            background: #A8A8A8;
+        }
+
+        .join-code-item.selected {
+            background: #A8A8A8;
+            border-color: #4CAF50;
+        }
+
+        .join-code-item.empty {
+            background: #8B8B8B url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2r9//38GIGBiQAf//wMEGABYLAizYg9RAQAAAABJRU5ErkJggg==') repeat;
+        }
+
+        .join-code-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .join-code-button {
+            padding: 8px 24px;
+            font-size: 14px;
+            border: 2px solid #373737;
+            background: #C6C6C6;
+            cursor: pointer;
+            min-width: 160px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .join-code-button:hover {
+            background: #D4D4D4;
+        }
+
+        .join-code-button.confirm {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .join-code-button.confirm:hover {
+            background: #45a049;
+        }
+
+        [data-item="book"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/thumbnail/width/360/height/360?cb=20240724193510') center/80% no-repeat; }
+        [data-item="balloon"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/78/Red_Balloon_BE1.png/revision/latest?cb=20200219042717') center/80% no-repeat; }
+        [data-item="rail"] { background: #8B8B8B url('https://cdn.gamever.io/content/ckeditor/2023/06/19/image-20230619150730-1.png') center/80% no-repeat; }
+        [data-item="alex"] { background: #8B8B8B url('https://i.pinimg.com/564x/a9/a4/ec/a9a4ec03fa9afc407028ca40c20ed774.jpg') center/80% no-repeat; }
+        [data-item="cookie"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b3/Cookie_JE2_BE2.png/revision/latest/thumbnail/width/360/height/360?cb=20190505051355') center/80% no-repeat; }
+        [data-item="fish"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/ad/Tropical_Fish_JE2_BE2.png/revision/latest/thumbnail/width/360/height/360?cb=20191230044407') center/80% no-repeat; }
+        [data-item="agent"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/f3/Agent.png/revision/latest?cb=20191227121728') center/80% no-repeat; }
+        [data-item="cake"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e6/Cake_BE2.png/revision/latest?cb=20200518184636') center/80% no-repeat; }
+        [data-item="pickaxe"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d1/Iron_Pickaxe_JE3_BE2.png/revision/latest/scale-to-width/360?cb=20200105053011') center/80% no-repeat; }
+        [data-item="bucket"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/fc/Bucket_JE2_BE2.png/revision/latest/thumbnail/width/360/height/360?cb=20200510234539') center/80% no-repeat; }
+        [data-item="steve"] { background: #8B8B8B url('https://minecraftfaces.com/wp-content/bigfaces/big-steve-face.png') center/80% no-repeat; }
+        [data-item="apple"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/af/Apple_JE3_BE3.png/revision/latest?cb=20200519232834') center/80% no-repeat; }
+        [data-item="carrot"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4e/Carrot_JE3_BE2.png/revision/latest?cb=20200510235333') center/80% no-repeat; }
+        [data-item="panda"] { background: #8B8B8B url('https://minecraftfaces.com/wp-content/bigfaces/big-panda-face.png') center/80% no-repeat; }
+        [data-item="sign"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/bf/Oak_Sign_%2814%29_JE5.png/revision/latest?cb=20211227090631') center/80% no-repeat; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <button class="back-button" onclick="window.location.href='dashboard.html'">
+                    ← Back to Dashboard
+                </button>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Grass_block_stylized.svg/2048px-Grass_block_stylized.svg.png" alt="Minecraft" class="dashboard-logo">
+                <h1>Admin Panel</h1>
+            </div>
+            <div class="header-right">
+                <button class="logout-button" onclick="logout()">Logout</button>
+            </div>
+        </header>
+
+        <div class="admin-grid">
+            <div class="admin-card" onclick="openRequestsModal()">
+                <h3>Membership Requests</h3>
+                <p>View and manage pending membership requests</p>
+            </div>
+            <div class="admin-card" onclick="openUsersModal()">
+                <h3>User Management</h3>
+                <p>Manage user roles and permissions</p>
+            </div>
+            <div class="admin-card" onclick="openJoinCodeModal()">
+                <h3>Join Code</h3>
+                <p>Set the server join code for members</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Requests Modal -->
+    <div class="modal" id="requestsModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <h2>Membership Requests</h2>
+            <div class="filter-container">
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">All Requests</option>
+                    <option value="pending">Pending</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+            <div class="requests-list" id="requestsList">
+                <!-- Requests will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Users Modal -->
+    <div class="modal" id="usersModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeUsersModal">&times;</button>
+            <h2>User Management</h2>
+            <div class="filter-container">
+                <select id="roleFilter" class="filter-select">
+                    <option value="all">All Users</option>
+                    <option value="member">Members</option>
+                    <option value="admin">Admins</option>
+                </select>
+            </div>
+            <div class="users-list" id="usersList">
+                <!-- Users will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Suspend Modal -->
+    <div class="suspend-modal" id="suspendModal">
+        <div class="suspend-modal-content">
+            <button class="close-modal" id="closeSuspendModal">&times;</button>
+            <h2>Suspend User</h2>
+            <form class="suspend-form" id="suspendForm">
+                <label for="suspendWeeks">Number of Weeks:</label>
+                <input type="number" id="suspendWeeks" min="1" max="52" required>
+                <div class="button-group">
+                    <button type="button" class="cancel-button" id="cancelSuspend">Cancel</button>
+                    <button type="submit" class="confirm-button">Confirm Suspend</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Join Code Modal -->
+    <div class="modal" id="joinCodeModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeJoinCodeModal">&times;</button>
+            <h2>Set Join Code</h2>
+            <div class="join-code-grid">
+                <div class="join-code-row top-row">
+                    <div class="join-code-item"></div>
+                    <div class="join-code-item"></div>
+                    <div class="join-code-item"></div>
+                    <div class="join-code-item empty"></div>
+                </div>
+                <div class="join-code-items">
+                    <div class="join-code-item" data-item="book"></div>
+                    <div class="join-code-item" data-item="balloon"></div>
+                    <div class="join-code-item" data-item="rail"></div>
+                    <div class="join-code-item" data-item="alex"></div>
+                    <div class="join-code-item" data-item="cookie"></div>
+                    <div class="join-code-item" data-item="fish"></div>
+                    <div class="join-code-item" data-item="agent"></div>
+                    <div class="join-code-item" data-item="cake"></div>
+                    <div class="join-code-item" data-item="pickaxe"></div>
+                    <div class="join-code-item" data-item="bucket"></div>
+                    <div class="join-code-item" data-item="steve"></div>
+                    <div class="join-code-item" data-item="apple"></div>
+                    <div class="join-code-item" data-item="carrot"></div>
+                    <div class="join-code-item" data-item="panda"></div>
+                    <div class="join-code-item" data-item="sign"></div>
+                </div>
+                <div class="join-code-buttons">
+                    <button id="clearJoinCode" class="join-code-button">Clear</button>
+                    <button id="confirmJoinCode" class="join-code-button confirm">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs, doc, setDoc, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBBV5c68h4vdyK9F4DQUlOPgozOeogY4QU",
+            authDomain: "oxleyminecraftclub.firebaseapp.com",
+            databaseURL: "https://oxleyminecraftclub-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "oxleyminecraftclub",
+            storageBucket: "oxleyminecraftclub.firebasestorage.app",
+            messagingSenderId: "123681657887",
+            appId: "1:123681657887:web:a776a7a0232b44a9b0712a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let selectedItems = [];
+
+        function updateTopRow() {
+            const topRowItems = document.querySelectorAll('.top-row .join-code-item:not(.empty)');
+            topRowItems.forEach((item, index) => {
+                if (selectedItems[index]) {
+                    item.setAttribute('data-item', selectedItems[index]);
+                } else {
+                    item.removeAttribute('data-item');
+                }
+            });
+        }
+
+        // Make openJoinCodeModal available globally
+        window.openJoinCodeModal = function() {
+            const joinCodeModal = document.getElementById('joinCodeModal');
+            joinCodeModal.style.display = 'block';
+            selectedItems = [];
+            updateTopRow();
+        };
+
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const joinCodeModal = document.getElementById('joinCodeModal');
+            const closeJoinCodeModal = document.getElementById('closeJoinCodeModal');
+            const clearJoinCodeBtn = document.getElementById('clearJoinCode');
+            const confirmJoinCodeBtn = document.getElementById('confirmJoinCode');
+
+            // Add click handlers for selectable items
+            const selectableItems = document.querySelectorAll('.join-code-items .join-code-item');
+            selectableItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const itemType = item.getAttribute('data-item');
+                    if (itemType && selectedItems.length < 3) {
+                        selectedItems.push(itemType);
+                        updateTopRow();
+                    }
+                });
+            });
+
+            closeJoinCodeModal.addEventListener('click', () => {
+                joinCodeModal.style.display = 'none';
+            });
+
+            clearJoinCodeBtn.addEventListener('click', () => {
+                selectedItems = [];
+                updateTopRow();
+            });
+
+            confirmJoinCodeBtn.addEventListener('click', async () => {
+                if (selectedItems.length === 3) {
+                    try {
+                        await addDoc(collection(db, "joinCodes"), {
+                            code: selectedItems,
+                            createdAt: new Date().toISOString()
+                        });
+                        joinCodeModal.style.display = 'none';
+                    } catch (error) {
+                        console.error("Error saving join code:", error);
+                    }
+                }
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === joinCodeModal) {
+                    joinCodeModal.style.display = 'none';
+                }
+            });
+        });
+
+        // Check if user is admin
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = '../index.html';
+                return;
+            }
+
+            // Check if user is admin
+            const userDoc = await getDocs(query(collection(db, "users"), where("userId", "==", user.uid)));
+            if (userDoc.empty || userDoc.docs[0].data().role !== "admin") {
+                window.location.href = '../index.html';
+                return;
+            }
+        });
+
+        // Logout functionality
+        window.logout = function() {
+            signOut(auth)
+                .then(() => {
+                    window.location.href = '../index.html';
+                })
+                .catch((error) => {
+                    console.error("Error signing out:", error);
+                });
+        };
+    </script>
+</body>
+</html>
