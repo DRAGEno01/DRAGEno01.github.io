@@ -27,26 +27,26 @@ async function checkUserStatus(userId) {
             const userDoc = querySnapshot.docs[0].data();
             if (userDoc.status === 'accepted') {
                 // Only redirect to dashboard if we're on the login/register page
-                if (window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '/register.html') {
-                    window.location.href = '/auth/dashboard.html';
+                if (window.location.pathname === './' || window.location.pathname === './index.html' || window.location.pathname === './register.html') {
+                    window.location.href = './auth/dashboard.html';
                 }
             } else {
                 // Only redirect to login if we're on the dashboard
                 if (window.location.pathname.includes('dashboard')) {
-                    window.location.href = '/index.html';
+                    window.location.href = './index.html';
                 }
             }
         } else {
             // Only redirect to login if we're on the dashboard
             if (window.location.pathname.includes('dashboard')) {
-                window.location.href = '/index.html';
+                window.location.href = './index.html';
             }
         }
     } catch (error) {
         console.error("Error checking user status:", error);
         // Only redirect to login if we're on the dashboard
         if (window.location.pathname.includes('dashboard')) {
-            window.location.href = '/index.html';
+            window.location.href = './index.html';
         }
     }
 }
@@ -57,7 +57,7 @@ onAuthStateChanged(auth, (user) => {
         checkUserStatus(user.uid);
     } else if (window.location.pathname.includes('dashboard')) {
         // If not logged in and on dashboard, redirect to login
-        window.location.href = '/index.html';
+        window.location.href = './index.html';
     }
 });
 
@@ -139,7 +139,7 @@ if (document.getElementById('loginForm')) {
                 
                 // Redirect to dashboard
                 setTimeout(() => {
-                    window.location.href = '/auth/dashboard.html';
+                    window.location.href = './auth/dashboard.html';
                 }, 1000);
             } else {
                 throw new Error('not-approved');
