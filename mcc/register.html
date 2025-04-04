@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oxley Minecraft Club - Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box register-box">
+            <div class="register-columns">
+                <div class="left-column">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Grass_block_stylized.svg/2048px-Grass_block_stylized.svg.png" alt="Minecraft" class="pickaxe">
+                    <h1>Join the Club</h1>
+                    <p class="subtitle">CREATE YOUR ACCOUNT</p>
+
+                    <form id="registerForm">
+                        <div class="name-group">
+                            <div class="input-group half">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" required>
+                            </div>
+                            
+                            <div class="input-group half">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" required>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="right-column">
+                    <div class="input-group">
+                        <label for="yearLevel">Year Level</label>
+                        <select id="yearLevel" required form="registerForm">
+                            <option value="">Select Year Level</option>
+                            <option value="7">Year 7</option>
+                            <option value="8">Year 8</option>
+                            <option value="9">Year 9</option>
+                            <option value="10">Year 10</option>
+                            <option value="11">Year 11</option>
+                            <option value="12">Year 12</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="reason">Why do you want to join the club?</label>
+                        <textarea id="reason" rows="4" required form="registerForm"></textarea>
+                    </div>
+
+                    <div class="input-group checkbox-group">
+                        <input type="checkbox" id="terms" required form="registerForm">
+                        <label for="terms">I agree to the club terms and conditions.</label>
+                    </div>
+                    
+                    <button type="submit" form="registerForm">Create Account</button>
+
+                    <p class="login-link">
+                        Already have an account? <a href="index.html">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="register.js"></script>
+</body>
+</html>
