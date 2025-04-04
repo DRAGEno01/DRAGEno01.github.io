@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Club - Dashboard</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+
+        .dashboard-container {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            position: relative;
+            box-sizing: border-box;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dashboard-logo {
+            width: 32px;
+            height: 32px;
+        }
+
+        .dashboard-header h1 {
+            color: #fff;
+            font-size: 20px;
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        .logout-button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            width: fit-content;
+            white-space: nowrap;
+        }
+
+        .logout-button:hover {
+            background: #ff2222;
+        }
+
+        #user-preview {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #4CAF50;
+            border: 2px solid rgba(76, 175, 80, 0.2);
+            overflow: hidden;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .user-name {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .user-meta {
+            color: #aaa;
+            font-size: 13px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-separator {
+            width: 4px;
+            height: 4px;
+            background: #666;
+            border-radius: 50%;
+        }
+
+        .user-role {
+            color: #4CAF50;
+            font-weight: 500;
+        }
+
+        .admin-button {
+            background: #ffc107;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            width: fit-content;
+            margin-left: auto;
+        }
+
+        .admin-button:hover {
+            background: #ffb300;
+        }
+
+        .admin-button svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-top: 16px;
+            overflow-y: auto;
+        }
+
+        .join-code-display {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .join-code-display h3 {
+            color: #4CAF50;
+            margin: 0 0 16px 0;
+            font-size: 18px;
+        }
+
+        .join-code-items {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .join-code-item {
+            width: 48px;
+            height: 48px;
+            background: #8B8B8B;
+            border: 2px solid #373737;
+            border-radius: 4px;
+        }
+
+        [data-item="book"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e9/Book_and_Quill_JE2_BE2.png/revision/latest/thumbnail/width/360/height/360?cb=20240724193510') center/80% no-repeat; }
+        [data-item="balloon"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/78/Red_Balloon_BE1.png/revision/latest?cb=20200219042717') center/80% no-repeat; }
+        [data-item="rail"] { background: #8B8B8B url('https://cdn.gamever.io/content/ckeditor/2023/06/19/image-20230619150730-1.png') center/80% no-repeat; }
+        [data-item="alex"] { background: #8B8B8B url('https://i.pinimg.com/564x/a9/a4/ec/a9a4ec03fa9afc407028ca40c20ed774.jpg') center/80% no-repeat; }
+        [data-item="cookie"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b3/Cookie_JE2_BE2.png/revision/latest/thumbnail/width/360/height/360?cb=20190505051355') center/80% no-repeat; }
+        [data-item="fish"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/ad/Tropical_Fish_JE2_BE2.png/revision/latest/thumbnail/width/360/height/360?cb=20191230044407') center/80% no-repeat; }
+        [data-item="agent"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/f3/Agent.png/revision/latest?cb=20191227121728') center/80% no-repeat; }
+        [data-item="cake"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e6/Cake_BE2.png/revision/latest?cb=20200518184636') center/80% no-repeat; }
+        [data-item="pickaxe"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d1/Iron_Pickaxe_JE3_BE2.png/revision/latest/scale-to-width/360?cb=20200105053011') center/80% no-repeat; }
+        [data-item="bucket"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/fc/Bucket_JE2_BE2.png/revision/latest/thumbnail/width/360/height/360?cb=20200510234539') center/80% no-repeat; }
+        [data-item="steve"] { background: #8B8B8B url('https://minecraftfaces.com/wp-content/bigfaces/big-steve-face.png') center/80% no-repeat; }
+        [data-item="apple"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/af/Apple_JE3_BE3.png/revision/latest?cb=20200519232834') center/80% no-repeat; }
+        [data-item="carrot"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4e/Carrot_JE3_BE2.png/revision/latest?cb=20200510235333') center/80% no-repeat; }
+        [data-item="panda"] { background: #8B8B8B url('https://minecraftfaces.com/wp-content/bigfaces/big-panda-face.png') center/80% no-repeat; }
+        [data-item="sign"] { background: #8B8B8B url('https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/bf/Oak_Sign_%2814%29_JE5.png/revision/latest?cb=20211227090631') center/80% no-repeat; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="header-left">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Grass_block_stylized.svg/2048px-Grass_block_stylized.svg.png" alt="Minecraft" class="dashboard-logo">
+                <h1>Welcome to Minecraft Club</h1>
+            </div>
+            <div class="header-right">
+                <button id="logoutBtn" class="logout-button">Logout</button>
+            </div>
+        </div>
+        <div id="user-preview">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <!-- First letter of name will be inserted here -->
+                </div>
+                <div class="user-details">
+                    <h2 class="user-name">Loading...</h2>
+                    <p class="user-meta">
+                        <span class="user-year">Year --</span>
+                        <span class="meta-separator"></span>
+                        <span class="user-role">Loading...</span>
+                    </p>
+                </div>
+            </div>
+            <button id="adminDashboardBtn" class="admin-button" style="display: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 4L20 8.5L12 13L4 8.5L12 4Z"></path>
+                    <path d="M20 15.5L12 20L4 15.5"></path>
+                </svg>
+                Admin Dashboard
+            </button>
+        </div>
+        <div class="join-code-display" id="joinCodeDisplay" style="display: none;">
+            <h3>Server Join Code</h3>
+            <div class="join-code-items">
+                <div class="join-code-item" id="item1"></div>
+                <div class="join-code-item" id="item2"></div>
+                <div class="join-code-item" id="item3"></div>
+            </div>
+        </div>
+        <div class="main-content">
+            <!-- Main dashboard content will be loaded here -->
+        </div>
+    </div>
+    <script type="module" src="../main.js"></script>
+    <script type="module">
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, collection, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+
+        const auth = getAuth();
+        const db = getFirestore();
+
+        // Update user preview with data
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                try {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        
+                        // Update avatar with photo or first name initial
+                        const avatar = document.querySelector('.user-avatar');
+                        if (userData.dashphoto) {
+                            avatar.innerHTML = `<img src="${userData.dashphoto}" alt="Profile Photo">`;
+                        } else {
+                            avatar.textContent = userData.firstName ? userData.firstName.charAt(0).toUpperCase() : '?';
+                        }
+
+                        // Update name with full name
+                        const fullName = userData.firstName && userData.lastName 
+                            ? `${userData.firstName} ${userData.lastName}`
+                            : 'Unknown User';
+                        document.querySelector('.user-name').textContent = fullName;
+                        
+                        // Update year level
+                        document.querySelector('.user-year').textContent = userData.yearLevel ? `Year ${userData.yearLevel}` : 'Year --';
+                        
+                        // Update role with capitalized first letter
+                        const role = userData.role ? userData.role.charAt(0).toUpperCase() + userData.role.slice(1) : 'Member';
+                        document.querySelector('.user-role').textContent = role;
+
+                        // Show admin button if user is admin
+                        const adminButton = document.getElementById('adminDashboardBtn');
+                        if (userData.role === 'admin') {
+                            adminButton.style.display = 'flex';
+                            adminButton.addEventListener('click', () => {
+                                window.location.href = 'admin.html';
+                            });
+                        }
+                    } else {
+                        // Handle case where user document doesn't exist
+                        document.querySelector('.user-avatar').textContent = '?';
+                        document.querySelector('.user-name').textContent = 'Unknown User';
+                        document.querySelector('.user-year').textContent = 'Year --';
+                        document.querySelector('.user-role').textContent = 'Member';
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                    // Show error state in UI
+                    document.querySelector('.user-avatar').textContent = '!';
+                    document.querySelector('.user-name').textContent = 'Error Loading User';
+                    document.querySelector('.user-year').textContent = 'Year --';
+                    document.querySelector('.user-role').textContent = 'Unknown';
+                }
+            } else {
+                // Handle not logged in state
+                window.location.href = '../index.html';
+            }
+        });
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                window.location.href = '../index.html';
+            } catch (error) {
+                console.error('Error signing out:', error);
+            }
+        });
+
+        // Function to check and display join code
+        async function checkAndDisplayJoinCode() {
+            try {
+                const joinCodesRef = collection(db, "joinCodes");
+                const q = query(joinCodesRef, orderBy("createdAt", "desc"), limit(1));
+                const querySnapshot = await getDocs(q);
+                
+                if (!querySnapshot.empty) {
+                    const joinCode = querySnapshot.docs[0].data();
+                    const createdAt = new Date(joinCode.createdAt);
+                    const now = new Date();
+                    const hoursDiff = (now - createdAt) / (1000 * 60 * 60);
+                    
+                    if (hoursDiff < 1) {
+                        const joinCodeDisplay = document.getElementById('joinCodeDisplay');
+                        joinCodeDisplay.style.display = 'block';
+                        
+                        joinCode.code.forEach((item, index) => {
+                            const itemElement = document.getElementById(`item${index + 1}`);
+                            itemElement.setAttribute('data-item', item);
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching join code:", error);
+            }
+        }
+
+        // Call the function when the page loads
+        checkAndDisplayJoinCode();
+
+        // Check for new join codes every minute
+        setInterval(checkAndDisplayJoinCode, 5000);
+    </script>
+</body>
+</html>
