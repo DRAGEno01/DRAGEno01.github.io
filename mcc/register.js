@@ -75,7 +75,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 
         // Redirect to a success page or dashboard after a brief delay
         setTimeout(() => {
-            window.location.href = '/index.html';
+            window.location.href = './index.html';
         }, 1000);
 
     } catch (error) {
