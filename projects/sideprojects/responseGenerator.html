@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Display</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            text-align: center;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .header a {
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .header a:hover {
+            color: #333;
+        }
+        .header .separator {
+            margin: 0 8px;
+            color: #ccc;
+        }
+        .text-container {
+            text-align: center;
+            padding: 20px;
+            max-width: 80%;
+            margin: auto;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .main-text {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #000000;
+            word-break: break-all;
+            overflow-wrap: anywhere;
+        }
+        .author {
+            font-size: 1.2em;
+            font-style: italic;
+            color: #000000;
+        }
+        .project-info {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .project-info h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .project-info p {
+            margin-bottom: 15px;
+        }
+        .project-info code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .button-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(255,255,255,1) 60%, rgba(255,255,255,0));
+            display: flex;
+            justify-content: center;
+        }
+        .generate-button {
+            padding: 12px 24px;
+            font-size: 1.1em;
+            background-color: #ffffff;
+            color: #000000;
+            border: 2px solid #000000;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .generate-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.2),
+                       0 4px 6px -2px rgba(0, 0, 0, 0.1);
+            background-color: #f8f8f8;
+        }
+        .generate-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .generate-button .fa-cog {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+            color: #000000;
+        }
+        .generate-button:hover .fa-cog {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                       0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { 
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s ease;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .close:hover {
+            color: #000;
+            background-color: #f3f4f6;
+            transform: rotate(90deg);
+        }
+        .modal-content h2 {
+            margin: 0 0 25px 0;
+            color: #111827;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+        .form-group textarea {
+            width: 100%;
+            min-height: 80px;
+            max-height: 220px;
+            resize: vertical;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            background-color: #f9fafb;
+            font-family: inherit;
+            box-sizing: border-box;
+            word-break: break-all;
+            overflow-wrap: anywhere;
+        }
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #6366f1;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+        .form-group textarea::placeholder {
+            color: #9ca3af;
+        }
+        .char-counter {
+            text-align: right;
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 4px;
+            margin-bottom: -10px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background-color: #f9fafb;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        .checkbox-group:hover {
+            background-color: #f3f4f6;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            cursor: pointer;
+        }
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            user-select: none;
+        }
+        .copy-link {
+            margin-top: 25px;
+            padding: 16px;
+            background-color: #f3f4f6;
+            border-radius: 10px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.9em;
+            border: 2px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 32px;
+        }
+        .copy-link-text {
+            flex: 1 1 auto;
+            overflow-wrap: anywhere;
+        }
+        .copy-button {
+            position: static;
+            padding: 8px;
+            background: transparent;
+            color: #666;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            width: 32px;
+        }
+        .copy-button:hover {
+            background-color: #e5e7eb;
+            color: #000;
+        }
+        .copy-button:active {
+            transform: scale(0.95);
+        }
+        .copy-button i {
+            font-size: 1.2em;
+        }
+        .form-group input[type="text"]#author {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            background-color: #f9fafb;
+            font-family: inherit;
+            box-sizing: border-box;
+            margin-top: 4px;
+        }
+        .form-group input[type="text"]#author:focus {
+            outline: none;
+            border-color: #6366f1;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+        .form-group input[type="text"]#author:hover {
+            background-color: #f3f4f6;
+        }
+        .form-group input[type="text"]#author::placeholder {
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        Created by <a href="https://github.com/DRAGEno01" target="_blank"><u>DRAGEno01</u></a> <span class="separator">|</span> <a href="https://drageno01.web.app" target="_blank"><u>About Me</u></a> <span class="separator">|</span> A simple text display generator
+    </div>
+    <div class="text-container">
+        <div id="mainText" class="main-text"></div>
+        <div id="authorText" class="author"></div>
+        <div id="projectInfo" class="project-info" style="display: none;">
+            <h2>About This Project</h2>
+            <p>This is a simple text display generator that allows you to create shareable links with custom text, optional quotation marks, and author attribution.</p>
+            <p>To use it:</p>
+            <ol>
+                <li>Click the "Generate a Response" button below</li>
+                <li>Enter your text, check the quote box if needed, and add an author</li>
+                <li>Copy the generated link and share it</li>
+            </ol>
+            <p>Example URL format:</p>
+            <code id="exampleUrl"></code>
+        </div>
+    </div>
+    <div class="button-container">
+        <button class="generate-button" onclick="openModal()">
+            <i class="fas fa-cog"></i>
+            Generate a Response
+        </button>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Generate Text Display</h2>
+            <div class="form-group">
+                <label for="text">Text to Display:</label>
+                <textarea id="text" placeholder="Enter your text here..." maxlength="1000"></textarea>
+                <div class="char-counter" id="charCounter">0 / 1000</div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="quotedText">
+                    <label for="quotedText">Add quotation marks</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="author">Author:</label>
+                <input type="text" id="author" placeholder="Enter author name (optional)">
+            </div>
+            <div class="copy-link">
+                <span class="copy-link-text" id="generatedLink"></span>
+                <button class="copy-button" onclick="copyToClipboard()" title="Copy to clipboard">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getUrlParameters() {
+            try {
+                const queryString = window.location.search;
+                const jsonStr = queryString.substring(1);
+                const decodedStr = decodeURIComponent(jsonStr);
+                
+                const jsonObjects = decodedStr.match(/\{[^}]+\}/g);
+                if (!jsonObjects) return null;
+
+                const params = {};
+                jsonObjects.forEach(objStr => {
+                    try {
+                        const obj = JSON.parse(objStr);
+                        Object.assign(params, obj);
+                    } catch (e) {
+                        console.warn('Failed to parse object:', objStr);
+                    }
+                });
+
+                return params;
+            } catch (e) {
+                console.error('Error parsing URL parameters:', e);
+                return null;
+            }
+        }
+
+        function updateDisplay() {
+            const params = getUrlParameters();
+            const mainText = document.getElementById('mainText');
+            const authorText = document.getElementById('authorText');
+            const projectInfo = document.getElementById('projectInfo');
+
+            if (params && params.text) {
+                mainText.textContent = params.quotedText ? `"${params.text}"` : params.text;
+                mainText.style.display = 'block';
+                authorText.style.display = 'block';
+                projectInfo.style.display = 'none';
+
+                if (params.author) {
+                    authorText.textContent = `- ${params.author}`;
+                } else {
+                    authorText.textContent = '';
+                }
+
+                if (params.quotedText) {
+                    mainText.style.fontStyle = 'italic';
+                } else {
+                    mainText.style.fontStyle = 'normal';
+                }
+            } else {
+                mainText.style.display = 'none';
+                authorText.style.display = 'none';
+                projectInfo.style.display = 'block';
+            }
+        }
+
+        function openModal() {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'block';
+            updateGeneratedLink();
+            document.getElementById('charCounter').textContent = `${document.getElementById('text').value.length} / 1000`;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
+        }
+
+        function updateGeneratedLink() {
+            const text = document.getElementById('text').value;
+            const quotedText = document.getElementById('quotedText').checked;
+            const author = document.getElementById('author').value;
+
+            const params = [];
+            if (text) params.push(`{"text":"${text}"}`);
+            if (quotedText) params.push('{"quotedText":true}');
+            if (author) params.push(`{"author":"${author}"}`);
+
+            const baseUrl = window.location.href.split('?')[0];
+            const generatedLink = `${baseUrl}?[${params.join(',')}]`;
+            document.getElementById('generatedLink').textContent = generatedLink;
+            document.getElementById('charCounter').textContent = `${text.length} / 1000`;
+        }
+
+        function copyToClipboard() {
+            const link = document.getElementById('generatedLink').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                alert('Link copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy link:', err);
+            });
+        }
+
+        // Add event listeners for form inputs
+        document.getElementById('text').addEventListener('input', updateGeneratedLink);
+        document.getElementById('quotedText').addEventListener('change', updateGeneratedLink);
+        document.getElementById('author').addEventListener('input', updateGeneratedLink);
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Update display when page loads
+        window.onload = updateDisplay;
+
+        // Set the example URL dynamically
+        (function() {
+            var example = '[{"text":"Hello World"},{"quotedText":true},{"author":"John Doe"}]';
+            var base = window.location.origin + window.location.pathname;
+            // Remove protocol and www.
+            var cleanBase = base.replace(/^https?:\/\//, '').replace(/^www\./, '');
+            document.getElementById('exampleUrl').textContent = cleanBase + '?' + example;
+        })();
+    </script>
+</body>
+</html>
