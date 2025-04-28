@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DRAGE-Chat V1 Archives</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #232526;
+            color: #e0e0e0;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 48px auto;
+            background: rgba(30, 30, 40, 0.98);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px #000a;
+            padding: 40px 28px 28px 28px;
+            border: 1.5px solid #333;
+            position: relative;
+        }
+
+        .header {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2em;
+            color: #ffb347;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            text-align: center;
+            text-shadow: 0 2px 8px #0008;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-content {
+            background-color: #232526;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #fff;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            color: #fff;
+        }
+
+        .modal-header {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #ffb347;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+            font-size: 1em;
+        }
+
+        .close {
+            color: #ff5e62;
+            font-size: 1.5em;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        /* Container for messages */
+        .sub-header {
+            text-align: center;
+            color: #bdbdbd;
+            font-size: 1.1em;
+            margin-bottom: 18px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filters label {
+            color: #ffe082;
+            font-size: 1em;
+            margin-right: 6px;
+        }
+
+        .filters input, .filters select {
+            background: #232526;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 1em;
+        }
+
+        .archive-message {
+            background: #232526;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px #0004;
+            margin-bottom: 28px;
+            padding: 22px 20px 18px 20px;
+            transition: box-shadow 0.2s;
+            border-left: 5px solid #fff;
+            position: relative;
+        }
+
+        .archive-message:hover {
+            box-shadow: 0 4px 24px #0007;
+            border-left: 5px solid #ff5e62;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            .container { padding: 10px 2vw; }
+            .header { font-size: 1.3em; }
+            .archive-message { padding: 12px 6px 10px 10px; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">🗃️ DRAGE-Chat V1 Archives</div>
+        <div class="sub-header">Sort and Filter</div>
+        <div class="filters">
+            <label for="userFilter">User:</label>
+            <input type="text" id="userFilter" placeholder="Filter by user...">
+            <label for="sortOrder">Order:</label>
+            <select id="sortOrder">
+                <option value="desc">Newest First</option>
+                <option value="asc">Oldest First</option>
+            </select>
+        </div>
+        <div id="archive">Loading messages...</div>
+
+        <!-- Modal Structure -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeModal">&times;</span>
+                <div class="modal-header">About the Archive</div>
+                <div class="modal-body">
+                    This archive was provided by DRAGEno01 on 28/04/2025. It contains all messages from the DRAGE-Chat V1, which was a online chatroom coded by DRAGEno01.<br><br>
+                    The archive is not the full list of archives as many many chats from before this archive date were lost/deleted due to security and preformance reasons. The archive is sorted by date (newest first), and the messages are color-coded by the user who sent them. The list of messages are as they were in the chatroom, and are not edited in any way since the 28/02/2025.<br><br>
+                    Thank you to everyone who participated in the V1 chatroom. You can click the x top right or click anywhere outside the modal to close it.
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Firebase App (the core Firebase SDK) -->
+     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+     <!-- Firebase Firestore -->
+     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('myModal');
+        const closeModal = document.getElementById('closeModal');
+
+        // Show modal (for example, on page load)
+        window.onload = () => {
+            modal.style.display = 'block';
+        };
+
+        // Close the modal
+        closeModal.onclick = function () {
+            modal.style.display = 'none';
+        }
+
+        // If user clicks anywhere outside the modal, close it
+        window.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+
+        // Firebase code (same as your provided one)
+        const firebaseConfig = {
+            apiKey: "AIzaSyChVEPH5BqCy-mUzPx0vXhcKHEO56Qgv2M",
+            authDomain: "drage-chat.firebaseapp.com",
+            projectId: "drage-chat",
+            storageBucket: "drage-chat.firebasestorage.app",
+            messagingSenderId: "946400520996",
+            appId: "1:946400520996:web:3f7a6caf2bef6913dfa1b1"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        function formatDate(dateStr) {
+            if (typeof dateStr === "string" && dateStr.match(/\d{4}/)) return dateStr;
+            if (dateStr && dateStr.toDate) {
+                const d = dateStr.toDate();
+                return d.toLocaleString();
+            }
+            return dateStr || "";
+        }
+
+        let allMessages = [];
+        db.collection('messages').orderBy('created', 'desc').get().then(snapshot => {
+            const messages = [];
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                messages.push({
+                    created: formatDate(data.created),
+                    email: data.email,
+                    message: data.message,
+                    staff: data.staff,
+                    uid: data.uid,
+                    user: data.user,
+                    createdRaw: data.created
+                });
+            });
+            allMessages = messages;
+            renderArchive(messages);
+        }).catch(err => {
+            document.getElementById('archive').innerHTML = 'Failed to load messages: ' + err.message;
+        });
+
+        function renderArchive(messages) {
+            const archive = document.getElementById('archive');
+            if (!messages.length) {
+                archive.innerHTML = "<div style='color:#ff7675;'>No messages found.</div>";
+                return;
+            }
+            archive.innerHTML = '';
+            messages.forEach(msg => {
+                const div = document.createElement('div');
+                div.className = 'archive-message';
+                let borderColor = '#fff';
+                if (msg.user && msg.user.includes('style')) {
+                    const colorMatch = msg.user.match(/color\s*:\s*([^;"']+)/i);
+                    if (colorMatch && colorMatch[1]) {
+                        borderColor = colorMatch[1].trim();
+                    }
+                }
+                div.style.borderLeft = `5px solid ${borderColor}`;
+                div.innerHTML = `
+                    <div class="created"><span class="field-label">created:</span> <span class="field-value">${msg.created}</span></div>
+                    <div><span class="field-label">user:</span> <span class="field-value user-content">${msg.user}</span></div>
+                    <div><span class="field-label">message:</span>
+                        <div class="message-content">${msg.message}</div>
+                    </div>
+                `;
+                archive.appendChild(div);
+            });
+        }
+
+        document.getElementById('userFilter').addEventListener('input', applyFilters);
+        document.getElementById('sortOrder').addEventListener('change', applyFilters);
+
+        function applyFilters() {
+            const userValue = document.getElementById('userFilter').value.trim().toLowerCase();
+            const sortOrder = document.getElementById('sortOrder').value;
+            let filtered = allMessages;
+            if (userValue) {
+                filtered = filtered.filter(m => (m.user || '').toLowerCase().includes(userValue));
+            }
+            if (sortOrder === 'asc') {
+                filtered = filtered.slice().reverse();
+            }
+            renderArchive(filtered);
+        }
+    </script>
+</body>
+
+</html>
