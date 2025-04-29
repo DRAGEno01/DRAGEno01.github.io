@@ -167,45 +167,11 @@
         </div>
     </div>
 
-     <!-- Firebase App (the core Firebase SDK) -->
-     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-     <!-- Firebase Firestore -->
-     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- Remove Firebase SDKs since we don't need them anymore -->
     <script>
-        // Modal functionality
-        const modal = document.getElementById('myModal');
-        const closeModal = document.getElementById('closeModal');
+        let allMessages = [];
 
-        // Show modal (for example, on page load)
-        window.onload = () => {
-            modal.style.display = 'block';
-        };
-
-        // Close the modal
-        closeModal.onclick = function () {
-            modal.style.display = 'none';
-        }
-
-        // If user clicks anywhere outside the modal, close it
-        window.onclick = function (event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        };
-
-        // Firebase code (same as your provided one)
-        const firebaseConfig = {
-            apiKey: "AIzaSyChVEPH5BqCy-mUzPx0vXhcKHEO56Qgv2M",
-            authDomain: "drage-chat.firebaseapp.com",
-            projectId: "drage-chat",
-            storageBucket: "drage-chat.firebasestorage.app",
-            messagingSenderId: "946400520996",
-            appId: "1:946400520996:web:3f7a6caf2bef6913dfa1b1"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
+        // Helper: format date if needed
         function formatDate(dateStr) {
             if (typeof dateStr === "string" && dateStr.match(/\d{4}/)) return dateStr;
             if (dateStr && dateStr.toDate) {
@@ -215,26 +181,16 @@
             return dateStr || "";
         }
 
-        let allMessages = [];
-        db.collection('messages').orderBy('created', 'desc').get().then(snapshot => {
-            const messages = [];
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                messages.push({
-                    created: formatDate(data.created),
-                    email: data.email,
-                    message: data.message,
-                    staff: data.staff,
-                    uid: data.uid,
-                    user: data.user,
-                    createdRaw: data.created
-                });
+        // Load messages from JSON file
+        fetch('drage-chat-v1-messages.json')
+            .then(response => response.json())
+            .then(messages => {
+                allMessages = messages;
+                renderArchive(messages);
+            })
+            .catch(err => {
+                document.getElementById('archive').innerHTML = 'Failed to load messages: ' + err.message;
             });
-            allMessages = messages;
-            renderArchive(messages);
-        }).catch(err => {
-            document.getElementById('archive').innerHTML = 'Failed to load messages: ' + err.message;
-        });
 
         function renderArchive(messages) {
             const archive = document.getElementById('archive');
@@ -246,7 +202,8 @@
             messages.forEach(msg => {
                 const div = document.createElement('div');
                 div.className = 'archive-message';
-                let borderColor = '#fff';
+                // Extract color from user HTML if present
+                let borderColor = '#fff'; // default is now white
                 if (msg.user && msg.user.includes('style')) {
                     const colorMatch = msg.user.match(/color\s*:\s*([^;"']+)/i);
                     if (colorMatch && colorMatch[1]) {
@@ -255,16 +212,17 @@
                 }
                 div.style.borderLeft = `5px solid ${borderColor}`;
                 div.innerHTML = `
-                    <div class="created"><span class="field-label">created:</span> <span class="field-value">${msg.created}</span></div>
-                    <div><span class="field-label">user:</span> <span class="field-value user-content">${msg.user}</span></div>
-                    <div><span class="field-label">message:</span>
-                        <div class="message-content">${msg.message}</div>
-                    </div>
-                `;
+          <div class="created"><span class="field-label">created:</span> <span class="field-value">${msg.created}</span></div>
+          <div><span class="field-label">user:</span> <span class="field-value user-content">${msg.user}</span></div>
+          <div><span class="field-label">message:</span>
+            <div class="message-content">${msg.message}</div>
+          </div>
+        `;
                 archive.appendChild(div);
             });
         }
 
+        // Filtering and sorting logic
         document.getElementById('userFilter').addEventListener('input', applyFilters);
         document.getElementById('sortOrder').addEventListener('change', applyFilters);
 
@@ -279,6 +237,20 @@
                 filtered = filtered.slice().reverse();
             }
             renderArchive(filtered);
+        }
+
+        function saveMessages(messages) {
+            const jsonData = messages.map(msg => ({
+                created: msg.created,
+                message: msg.message,
+                user: msg.user
+            }));
+            const blob = new Blob([JSON.stringify(jsonData, null, 2)]);
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'drage-chat-v1-messages.json';
+            link.click();
+            URL.revokeObjectURL(link.href);
         }
     </script>
 
